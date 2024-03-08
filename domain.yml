@@ -17,11 +17,11 @@ slots:
     values:
       - '돌봄'
       - '동행'
-    # influence_conversation: false
+    influence_conversation: false
 
   name:
     type: text
-    # influence_conversation: false
+    influence_conversation: false
 
 ## 폴백 행동 설정
 fallback_action: utter_default
@@ -30,13 +30,10 @@ forms:
   booking_form:
     required_slots:
       service_type:
-        - type: from_entity
-          entity: service_type
-        - utter: 'utter_ask_service_type'
+        - type: from_text
       name:
         - type: from_entity
           entity: name
-        - utter: 'utter_ask_name'
 
 # 봇의 답변
 responses:
