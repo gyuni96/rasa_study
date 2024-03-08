@@ -12,14 +12,14 @@ entities:
   - name
 
 slots:
-  service_type: # 서비스 타입
+  service_type:
     type: categorical
     values:
       - '돌봄'
       - '동행'
     # influence_conversation: false
 
-  name: #이름
+  name:
     type: text
     # influence_conversation: false
 
@@ -30,10 +30,12 @@ forms:
   booking_form:
     required_slots:
       service_type:
-        - type: from_text
+        - type: from_entity
+          entity: service_type
         - utter: 'utter_ask_service_type'
       name:
-        - type: from_text
+        - type: from_entity
+          entity: name
         - utter: 'utter_ask_name'
 
 # 봇의 답변

@@ -13,10 +13,13 @@ rules:
       - slot_was_set:
           - service_type: true
     steps:
-      - intent: greet
-      - action: utter_greet
+      - intent: introduce
+      - action: utter_introduce
 
   - rule: Activate booking form
+    condition:
+      - slot_was_set:
+          - service_type: true
     steps:
       - intent: booking
       - action: booking_form
