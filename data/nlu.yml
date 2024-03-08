@@ -1,0 +1,41 @@
+version: '2.0'
+
+nlu:
+  - intent: greet
+    examples: |
+      - 좋은 아침
+      - 안녕
+      - 반가워
+
+  - intent: booking
+    examples: |
+      - [동행](service_type) 예약 해줘
+      - [동행](service_type) 예약하고 싶어
+      - [동행](service_type)이용
+      - [동행](service_type) 이용하기
+      - [동행](service_type) 이용할게
+
+  - intent: introduce
+    examples: |
+      - [동행](service_type) 소개해줘
+      - [동행](service_type) 알려줘
+      - [동행](service_type) 뭐에요?
+      - [동행](service_type) 뭐야?
+
+  # - intent: respone_date
+  #   example: |
+  #     - [2024-04-24](time)
+  #     - [2024-3-1](time)
+  #     - [2024-4-24](time)
+  # - intent: respone_time
+  #   example: |
+  #     - [14:00](time)
+  #     - [1400](time)
+  #     - [14시](time)
+  #     - [14시 30분](time)
+  # - intent: respone
+  #   example: |
+  #     - 인천시
+  #     - 서울
+  #     - 인천
+  #     - 가산동

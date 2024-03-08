@@ -1,0 +1,30 @@
+version: '2.0'
+
+rules:
+  # 인사
+  - rule: greeting
+    steps:
+      - intent: greet
+      - action: utter_greet
+
+  # 소개
+  - rule: introduce
+    condition:
+      - slot_was_set:
+          - service_type: true
+    steps:
+      - intent: greet
+      - action: utter_greet
+
+  - rule: Activate booking form
+    steps:
+      - intent: booking
+      - action: booking_form
+      - active_loop: booking_form
+
+  - rule: Submit booking form
+    condition:
+      - active_loop: booking_form
+    steps:
+      - action: action_submit_booking_form
+      - active_loop: null
