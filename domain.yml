@@ -63,6 +63,7 @@ actions:
   - utter_greet
   - utter_default
   - booking_form
+  - action_submit_booking_form
 
 session_config:
   session_expiration_time: 60

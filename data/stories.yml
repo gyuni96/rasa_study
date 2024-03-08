@@ -13,11 +13,27 @@ stories:
       - intent: introduce
       - action: utter_introduce
 
+  # - story: User wants to book
+  #   steps:
+  #     - intent: booking
+  #     - action: booking_form
+  #     - active_loop: booking_form
+
+  # - story: User completes booking
+  #   steps:
+  #     - intent: booking
+  #     - action: booking_form
+  #     - active_loop: booking_form
+  #     - action: action_submit_booking_form
+  #     - active_loop: null
   - story: User wants to book
     steps:
       - intent: booking
       - action: booking_form
       - active_loop: booking_form
+      - action: action_submit_booking_form
+      - active_loop: null
+
   - story: User completes booking
     steps:
       - intent: booking
