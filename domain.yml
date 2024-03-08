@@ -3,8 +3,8 @@ version: '2.0'
 # 사용자의 의도로 뽑아낼 intent 정의
 intents:
   - greet
-  - booking
   - introduce
+  - booking
 
 # 사용자의 말에서 뽑아내고 싶은 주요단어
 entities:
@@ -28,12 +28,13 @@ fallback_action: utter_default
 
 forms:
   booking_form:
-    service_type:
-      - type: from_text
-      - utter: 'utter_ask_service_type'
-    name:
-      - type: from_text
-      - utter: 'utter_ask_name'
+    required_slots:
+      service_type:
+        - type: from_text
+        - utter: 'utter_ask_service_type'
+      name:
+        - type: from_text
+        - utter: 'utter_ask_name'
 
 # 봇의 답변
 responses:

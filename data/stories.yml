@@ -8,7 +8,7 @@ stories:
       - action: utter_greet
 
   # 소개
-  - story:
+  - story: introduce
     steps:
       - intent: introduce
       - action: utter_introduce
