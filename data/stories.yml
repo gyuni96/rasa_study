@@ -7,37 +7,17 @@ stories:
       - intent: greet
       - action: utter_greet
 
-  # 소개
-  - story: introduce
-    steps:
-      - intent: introduce
-      - action: utter_introduce
-
-  # - story: User wants to book
+  # # 소개
+  # - story: introduce
   #   steps:
-  #     - intent: booking
-  #     - action: booking_form
-  #     - active_loop: booking_form
+  #     - intent: introduce
+  #     - action: utter_introduce
 
-  # - story: User completes booking
-  #   steps:
-  #     - intent: booking
-  #     - action: booking_form
-  #     - active_loop: booking_form
-  #     - action: action_submit_booking_form
-  #     - active_loop: null
-  - story: User wants to book
+  # 예약 정상 실행
+  - story: booking
     steps:
-      - intent: booking
+      - intent: request_booking
       - action: booking_form
       - active_loop: booking_form
-      - action: action_submit_booking_form
-      - active_loop: null
-
-  - story: User completes booking
-    steps:
-      - intent: booking
-      - action: booking_form
-      - active_loop: booking_form
-      - action: action_submit_booking_form
-      - active_loop: null
+      - action: utter_booking_slots_values
+      - action: action_check_termination

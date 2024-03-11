@@ -1,29 +1,34 @@
-from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
-from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.forms import FormAction
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import Restarted
+from rasa_sdk.events import FollowupAction
+from typing import Any, Dict, List, Text, Optional
 
-class SubmitBookingForm(FormAction):
+
+class ActionRestarted(Action):
+
     def name(self) -> Text:
-        return "booking_form"
+        return "action_restart"
 
-    @staticmethod
-    def required_slots(tracker: Tracker) -> List[Text]:
-        return ["service_type", "name"]
+    async def run(
+            self, dispatcher, tracker: Tracker, domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
+        print('ActionRestarted domain', domain)
+        return [Restarted()]
 
-    def submit(
-        self,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any],
-    ) -> List[Dict]:
+class ActionCheckTermination(Action):
 
-        service_type = tracker.get_slot("service_type")
-        name = tracker.get_slot("name")
+    def name(self):
+        return "action_check_termination"
 
-        # 여기에 예약 처리 로직을 추가합니다.
-        # 예약 처리가 완료되면 메시지를 반환합니다.
-        dispatcher.utter_message(template="utter_submit")
+    def run(self, dispatcher, tracker, domain):
+        print('ActionCheckTermination self', self)
+        print('ActionCheckTermination dispatcher', dispatcher.messages)
+        print('ActionCheckTermination tracker', tracker.slots)
+        print('ActionCheckTermination domain', domain)
+        # your business logic here
+        # should_terminate = check_for_termination(<params>)
 
-        return []
+        # if should_terminate:
+        #     return [FollowupAction("action_listen")]
+
+        return [FollowupAction("action_listen")]

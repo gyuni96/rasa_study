@@ -8,31 +8,20 @@ rules:
       - action: utter_greet
 
   # 소개
-  - rule: introduce
-    condition:
-      - slot_was_set:
-          - service_type: true
-    steps:
-      - intent: introduce
-      - action: utter_introduce
-
-  - rule: handling active loops and forms - booking_form - action_listen
-    steps:
-      - intent: booking
-      - active_loop: booking_form
-      - action: action_submit_booking_form
-  # - rule: Activate booking form
+  # - rule: introduce
   #   condition:
   #     - slot_was_set:
   #         - service_type: true
   #   steps:
-  #     - intent: booking
-  #     - action: booking_form
-  #     - active_loop: booking_form
+  #     - intent: introduce
+  #     - action: utter_introduce
 
-  # - rule: Submit booking form
-  #   condition:
-  #     - active_loop: booking_form
-  #   steps:
-  #     - action: action_submit_booking_form
-  #     - active_loop: null
+  # 서비스
+  - rule: submit booking form
+    condition:
+      - active_loop: booking_form
+    steps:
+      - action: booking_form
+      - active_loop: null
+      - action: utter_booking_slots_values
+      - action: action_check_termination

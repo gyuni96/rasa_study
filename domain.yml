@@ -3,23 +3,43 @@ version: '2.0'
 # 사용자의 의도로 뽑아낼 intent 정의
 intents:
   - greet
-  - introduce
-  - booking
+  - affirm
+  - request_booking
 
 # 사용자의 말에서 뽑아내고 싶은 주요단어
 entities:
-  - service_type
-  - name
+  - serviceType
+  - userName
+  - serviceStartDate
+  - serviceEndDate
+  - departure
+  - destination
 
 slots:
-  service_type:
+  serviceType: # 서비스 타입
     type: categorical
     values:
-      - '돌봄'
       - '동행'
+      - '돌봄'
     influence_conversation: false
 
-  name:
+  userName: # 이용자명
+    type: text
+    influence_conversation: false
+
+  serviceStartDate: # 시작일
+    type: text
+    influence_conversation: false
+
+  serviceEndDate: # 종료일
+    type: text
+    influence_conversation: false
+
+  departure: # 출발지
+    type: text
+    influence_conversation: false
+
+  destination: # 도착지
     type: text
     influence_conversation: false
 
@@ -28,12 +48,27 @@ fallback_action: utter_default
 
 forms:
   booking_form:
+    ignored_intents:
+
     required_slots:
-      service_type:
-        - type: from_text
-      name:
+      serviceType:
         - type: from_entity
-          entity: name
+          entity: serviceType
+
+      userName:
+        - type: from_text
+
+      serviceStartDate:
+        - type: from_text
+
+      serviceEndDate:
+        - type: from_text
+
+      departure:
+        - type: from_text
+
+      destination:
+        - type: from_text
 
 # 봇의 답변
 responses:
@@ -43,27 +78,66 @@ responses:
   utter_greet:
     - text: '안녕하세요 모시미 입니다.'
 
-  utter_introduce:
+  utter_ask_userName:
+    - text: '이용자명을 입력해주세요.'
+
+  utter_ask_serviceStartDate: # 서비스 시작일
     - condition:
         - type: slot
-          name: service_type
+          name: serviceType
           value: '동행'
-      text: '모시미는 고객님의 병원 동행에 도움을 주는 서비스 플랫폼입니다.'
-
-  utter_ask_service_type:
-    - text: '어떤 종류의 서비스를 예약하고 싶으세요?'
-
-  utter_ask_name:
-    - text: '예약을 위해 이름을 알려주세요.'
-
-  utter_submit:
-    - text: '예약이 완료되었습니다. 감사합니다.'
+      text: "서비스 시작일을 말씀해주세요.\n
+        \nex) 2022-08-23 "
+    - condition:
+        - type: slot
+          name: serviceType
+          value: '돌봄'
+      text: "서비스 시작일을 말씀해주세요.\n
+        \nex) 2022-08-23 "
+  utter_ask_serviceEndDate: # 서비스 종료일
+    - condition:
+        - type: slot
+          name: serviceType
+          value: '동행'
+      text: "서비스 종료일을 말씀해주세요.\n
+        \nex) 2022-08-23 "
+    - condition:
+        - type: slot
+          name: serviceType
+          value: '돌봄'
+      text: "서비스 종료일을 말씀해주세요.\n
+        \nex) 2022-08-23 "
+  utter_ask_departure:
+    - text: '출발지를 입력해주세요.'
+  utter_ask_destination:
+    - text: '도착지를 입력해주세요.'
+  utter_booking_slots_values:
+    - condition:
+        - type: slot
+          name: serviceType
+          value: '동행'
+      text: "서비스 요청이 완료 됐습니다.\n
+        - 서비스명: {serviceType}\n
+        - 이용자명: {userName}\n
+        - 서비스 시작일: {serviceStartDate}\n
+        - 서비스 종료일: {serviceEndDate}\n
+        - 출발지: {departure}\n
+        - 도착지: {destination}\n"
+    - condition:
+        - type: slot
+          name: serviceType
+          value: '돌봄'
+      text: "서비스 요청이 완료 됐습니다.\n
+        - 서비스명: {serviceType}\n
+        - 이용자명: {userName}\n
+        - 서비스 시작일: {serviceStartDate}\n
+        - 서비스 종료일: {serviceEndDate}\n
+        - 출발지: {departure}\n
+        - 도착지: {destination}\n"
 
 actions:
-  - utter_greet
-  - utter_default
-  - booking_form
-  - action_submit_booking_form
+  - action_restart
+  - action_check_termination
 
 session_config:
   session_expiration_time: 60

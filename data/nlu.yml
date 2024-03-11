@@ -1,5 +1,8 @@
 version: '2.0'
 
+## 작성 방식
+## [entity명](slot명) ...
+
 nlu:
   - intent: greet
     examples: |
@@ -7,35 +10,14 @@ nlu:
       - 안녕
       - 반가워
 
-  - intent: booking
+  - intent: request_booking
     examples: |
-      - [동행](service_type) 예약 해줘
-      - [동행](service_type) 예약하고 싶어
-      - [동행](service_type)이용
-      - [동행](service_type) 이용하기
-      - [동행](service_type) 이용할게
-
-  - intent: introduce
-    examples: |
-      - [동행](service_type) 소개해줘
-      - [동행](service_type) 알려줘
-      - [동행](service_type) 뭐에요?
-      - [동행](service_type) 뭐야?
-
-  # - intent: respone_date
-  #   example: |
-  #     - [2024-04-24](time)
-  #     - [2024-3-1](time)
-  #     - [2024-4-24](time)
-  # - intent: respone_time
-  #   example: |
-  #     - [14:00](time)
-  #     - [1400](time)
-  #     - [14시](time)
-  #     - [14시 30분](time)
-  # - intent: respone
-  #   example: |
-  #     - 인천시
-  #     - 서울
-  #     - 인천
-  #     - 가산동
+      - 서비스 예약해줘
+      - 서비스 예약하고 싶어
+      - 서비스 예약해줘요
+      - [동행](serviceType) 서비스 예약해줘
+      - [동행](serviceType) 서비스 예약하고 싶어
+      - [동행](serviceType) 서비스 예약할래요
+      - [돌봄](serviceType) 서비스 예약해줘
+      - [돌봄](serviceType) 서비스 예약하고 싶어
+      - [돌봄](serviceType) 서비스 예약할래요
