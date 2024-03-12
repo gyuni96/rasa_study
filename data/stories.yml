@@ -17,7 +17,13 @@ stories:
   - story: booking
     steps:
       - intent: request_booking
+      - action: action_return_sender_id
       - action: booking_form
       - active_loop: booking_form
-      - action: utter_booking_slots_values
+      # - action: utter_booking_slots_values
       - action: action_check_termination
+
+  - story: 사용자 비활동으로 인한 대화 종료
+    steps:
+      - action: action_check_inactivity
+      - action: action_restart

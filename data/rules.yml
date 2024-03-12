@@ -21,7 +21,14 @@ rules:
     condition:
       - active_loop: booking_form
     steps:
+      - action: action_return_sender_id
       - action: booking_form
       - active_loop: null
-      - action: utter_booking_slots_values
+      # - action: utter_booking_slots_values
       - action: action_check_termination
+      # - action: action_restart
+
+  - rule: 사용자 비활동으로 인한 대화 종료
+    steps:
+      - action: action_check_inactivity
+      - action: action_restart

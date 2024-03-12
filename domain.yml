@@ -78,6 +78,15 @@ responses:
   utter_greet:
     - text: '안녕하세요 모시미 입니다.'
 
+  utter_login:
+    - text: '해당 서비스는 로그인후 이용가능합니다.'
+      buttons:
+        - title: 'signUp'
+          payload: 'button'
+          text: '회원가입'
+        - title: 'login'
+          payload: 'button'
+          text: '로그인'
   utter_ask_userName:
     - text: '이용자명을 입력해주세요.'
 
@@ -88,6 +97,13 @@ responses:
           value: '동행'
       text: "서비스 시작일을 말씀해주세요.\n
         \nex) 2022-08-23 "
+      buttons:
+        - title: 'year'
+          payload: 'date'
+        - title: 'month'
+          payload: 'date'
+        - title: 'day'
+          payload: 'date'
     - condition:
         - type: slot
           name: serviceType
@@ -138,7 +154,8 @@ responses:
 actions:
   - action_restart
   - action_check_termination
-
+  - action_return_sender_id
+  - action_check_inactivity
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
