@@ -5,11 +5,13 @@ intents:
   - greet
   - affirm
   - request_booking
+  - request_guide
 
 # 사용자의 말에서 뽑아내고 싶은 주요단어
 entities:
   - serviceType
   - userName
+  - phoneNumber
   - serviceStartDate
   - serviceEndDate
   - departure
@@ -24,6 +26,10 @@ slots:
     influence_conversation: false
 
   userName: # 이용자명
+    type: text
+    influence_conversation: false
+
+  phoneNumber:
     type: text
     influence_conversation: false
 
@@ -52,10 +58,12 @@ forms:
 
     required_slots:
       serviceType:
-        - type: from_entity
-          entity: serviceType
+        - type: from_text
 
       userName:
+        - type: from_text
+
+      phoneNumber:
         - type: from_text
 
       serviceStartDate:
@@ -87,8 +95,23 @@ responses:
         - title: 'login'
           payload: 'button'
           text: '로그인'
+
+  utter_ask_serviceType:
+    - text: '어떤 서비스를 이용하시겠습니까?'
+      buttons:
+        - type: 'button'
+          btnList: ['동행', '돌봄']
+
   utter_ask_userName:
     - text: '이용자명을 입력해주세요.'
+
+  utter_ask_phoneNumber:
+    - text: '연락처를 입력해주세요'
+      buttons:
+        - type: 'select'
+          selectList: ['010']
+        - type: 'input'
+          inputList: ['number', 'number']
 
   utter_ask_serviceStartDate: # 서비스 시작일
     - condition:
@@ -98,18 +121,15 @@ responses:
       text: "서비스 시작일을 말씀해주세요.\n
         \nex) 2022-08-23 "
       buttons:
-        - title: 'year'
-          payload: 'date'
-        - title: 'month'
-          payload: 'date'
-        - title: 'day'
-          payload: 'date'
+        - type: date
     - condition:
         - type: slot
           name: serviceType
           value: '돌봄'
       text: "서비스 시작일을 말씀해주세요.\n
         \nex) 2022-08-23 "
+      buttons:
+        - type: date
   utter_ask_serviceEndDate: # 서비스 종료일
     - condition:
         - type: slot
@@ -117,12 +137,16 @@ responses:
           value: '동행'
       text: "서비스 종료일을 말씀해주세요.\n
         \nex) 2022-08-23 "
+      buttons:
+        - type: date
     - condition:
         - type: slot
           name: serviceType
           value: '돌봄'
       text: "서비스 종료일을 말씀해주세요.\n
         \nex) 2022-08-23 "
+      buttons:
+        - type: date
   utter_ask_departure:
     - text: '출발지를 입력해주세요.'
   utter_ask_destination:
@@ -150,6 +174,26 @@ responses:
         - 서비스 종료일: {serviceEndDate}\n
         - 출발지: {departure}\n
         - 도착지: {destination}\n"
+
+  utter_request_guide: # 안내
+    - condition:
+        - type: slot
+          name: serviceType
+          value: ''
+      text: '모시미 안내'
+      buttons:
+        - type: 'button'
+          btnList: ['동행', '안내', '가격안내']
+    - condition:
+        - type: slot
+          name: serviceType
+          value: '동행'
+      text: '동행 안내'
+    - condition:
+        - type: slot
+          name: serviceType
+          value: '돌봄'
+      text: '돌봄 안내'
 
 actions:
   - action_restart

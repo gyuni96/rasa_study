@@ -21,3 +21,16 @@ nlu:
       - [돌봄](serviceType) 서비스 예약해줘
       - [돌봄](serviceType) 서비스 예약하고 싶어
       - [돌봄](serviceType) 서비스 예약할래요
+  
+  - intent: request_guide
+    examples: |
+      - 모시미가 뭐야?
+      - 모시미가 궁금해
+      - 모시미 알려줘
+      - 모시미가 뭔대?
+      - [동행](serviceType)가 뭐야?
+      - [동행](serviceType)에 대해 알려줘
+      - [동행](serviceType)안내해줘
+      - [동행](serviceType)에 설명해줘
+      - [동행](serviceType)가 뭔대?
+      - [동행](serviceType)가 궁금해
