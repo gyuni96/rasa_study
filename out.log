@@ -1,0 +1,1135 @@
+2024-05-20 15:26:32,574 [DEBUG]  Issuing ticket for conversation '0001'.
+2024-05-20 15:26:32,575 [DEBUG]  Acquiring lock for conversation '0001'.
+2024-05-20 15:26:32,575 [DEBUG]  Acquired lock for conversation '0001'.
+2024-05-20 15:26:32,575 [DEBUG]  Recreating tracker for id '0001'
+2024-05-20 15:26:32,592 [DEBUG]  There is no trained model for 'ResponseSelector': The component is either not trained or didn't receive enough training data.
+2024-05-20 15:26:32,593 [DEBUG]  Adding following selector key to message property: default
+2024-05-20 15:26:32,593 [DEBUG]  Received user message '동행' with intent '{'id': -433874785546492062, 'name': 'int00002', 'confidence': 0.9544349908828735}' and entities '[{'entity': 'Service', 'start': 0, 'end': 2, 'confidence_entity': 0.9550744295120239, 'value': '동행', 'extractor': 'DIETClassifier'}]'
+2024-05-20 15:26:32,594 [DEBUG]  Current slot values: 
+	Departure: None
+	Destination: None
+	EndDate: None
+	memberRelationCd: None
+	Name: None
+	requestContent: None
+	reserveDate: None
+	reserveTime: None
+	reserveYn: None
+	Service: 동행
+	service_detail_for_int00002: None
+	ServiceDetail: None
+	StartDate: None
+	userBirthDate: None
+	userGenderCd: None
+	userHealthCd: None
+	userPhoneNo: None
+	requested_slot: None
+	session_started_metadata: None
+2024-05-20 15:26:32,596 [DEBUG]  Logged UserUtterance - tracker now has 17 events.
+2024-05-20 15:26:32,597 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: action_listen
+[state 1] user intent: int00001 | previous action name: utter_ask_Service
+[state 2] user intent: int00001 | previous action name: action_listen
+[state 3] user intent: int00001 | previous action name: utter_ask_Service
+[state 4] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+2024-05-20 15:26:32,598 [DEBUG]  There is no memorised next action
+2024-05-20 15:26:32,598 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user text: 동행 | previous action name: action_listen
+2024-05-20 15:26:32,600 [DEBUG]  There is no applicable rule.
+2024-05-20 15:26:32,600 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+2024-05-20 15:26:32,601 [DEBUG]  There is a rule for the next action 'int00002_form'.
+2024-05-20 15:26:32,602 [DEBUG]  There is no active form
+2024-05-20 15:26:32,607 [DEBUG]  Querying for intent `int00002`.
+2024-05-20 15:26:32,608 [DEBUG]  Score for intent `int00002` is `1.9071649312973022`, while threshold is `-1.9272170066833496`.
+2024-05-20 15:26:32,608 [DEBUG]  Top 5 intents (in ascending order) that are likely here are: `[('out_of_scope', -1.2028667), ('restart', -1.2028667), ('session_start', -1.2028667), ('int00003', 1.7980859), ('int00002', 1.9071649)]`.
+2024-05-20 15:26:32,615 [DEBUG]  TED predicted 'int00002_form' based on user intent.
+2024-05-20 15:26:32,616 [DEBUG]  Made prediction using user intent.
+2024-05-20 15:26:32,616 [DEBUG]  Added `DefinePrevUserUtteredFeaturization(False)` event.
+2024-05-20 15:26:32,616 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:26:32,618 [DEBUG]  Predicted next action 'int00002_form' with confidence 1.00.
+2024-05-20 15:26:32,618 [DEBUG]  Activated the form 'int00002_form'.
+2024-05-20 15:26:32,618 [DEBUG]  Validating pre-filled required slots: {'Service': '동행'}
+2024-05-20 15:26:32,619 [DEBUG]  Validating extracted slots: {'Service': '동행'}
+2024-05-20 15:26:32,619 [DEBUG]  Calling action endpoint to run action 'validate_int00002_form'.
+2024-05-20 15:26:34,676 [DEBUG]  Validating user input 'UserUttered(text: 동행, intent: int00002, entities: 동행 (Type: Service, Role: None, Group: None), use_text_for_featurization: False)'.
+2024-05-20 15:26:34,677 [DEBUG]  Extracted '동행' for extra slot 'Service'.
+2024-05-20 15:26:34,677 [DEBUG]  Validating extracted slots: {'Service': '동행'}
+2024-05-20 15:26:34,678 [DEBUG]  Calling action endpoint to run action 'validate_int00002_form'.
+2024-05-20 15:26:36,746 [DEBUG]  Request next slot 'service_detail_for_int00002'
+2024-05-20 15:26:36,747 [ERROR]  Failed to replace placeholders in response '[{'type':'button','intent':'','text':'기타동행'},{'type':'button','intent':'','text':'One Day(9시간)'},{'type':'button','intent':'','text':'투석전용(5시간)'},{'type':'button','intent':'','text':'한시간전용(1시간)'},{'type':'button','intent':'','text':'정기검진'},{'type':'button','intent':'','text':'외래진료'}]'. Tried to replace ''type':'button','intent':'','text':'기타동행'' but could not find a value for it. There is no slot with this name nor did you pass the value explicitly when calling the response. Return response without filling the response. 
+Traceback (most recent call last):
+  File "C:\Users\gyuni\anaconda3\envs\rasa\lib\site-packages\rasa\core\nlg\interpolator.py", line 27, in interpolate_text
+    text = text.format(values)
+KeyError: "'type':'button','intent':'','text':'기타동행'"
+2024-05-20 15:26:36,749 [DEBUG]  Policy prediction ended with events '[<rasa.shared.core.events.DefinePrevUserUtteredFeaturization object at 0x00000196644CDFC8>]'.
+2024-05-20 15:26:36,750 [DEBUG]  Action 'int00002_form' ended with events '[<rasa.shared.core.events.ActiveLoop object at 0x000001964627D408>, <rasa.shared.core.events.SlotSet object at 0x000001967E0ED488>, <rasa.shared.core.events.SlotSet object at 0x000001967D069788>, <rasa.shared.core.events.SlotSet object at 0x000001964627D588>, BotUttered('이용하실 서비스를 선택해 주세요', {"elements": null, "quick_replies": null, "buttons": [{"title": "BUTTON", "payload": "[{'type':'button','intent':'','text':'\uae30\ud0c0\ub3d9\ud589'},{'type':'button','intent':'','text':'One Day(9\uc2dc\uac04)'},{'type':'button','intent':'','text':'\ud22c\uc11d\uc804\uc6a9(5\uc2dc\uac04)'},{'type':'button','intent':'','text':'\ud55c\uc2dc\uac04\uc804\uc6a9(1\uc2dc\uac04)'},{'type':'button','intent':'','text':'\uc815\uae30\uac80\uc9c4'},{'type':'button','intent':'','text':'\uc678\ub798\uc9c4\ub8cc'}]"}], "attachment": null, "image": null, "custom": null}, {"utter_action": "utter_ask_service_detail_for_int00002"}, 1716186396.749977)]'.
+2024-05-20 15:26:36,751 [DEBUG]  Current slot values: 
+	Departure: None
+	Destination: None
+	EndDate: None
+	memberRelationCd: None
+	Name: None
+	requestContent: None
+	reserveDate: None
+	reserveTime: None
+	reserveYn: None
+	Service: 동행
+	service_detail_for_int00002: None
+	ServiceDetail: None
+	StartDate: None
+	userBirthDate: None
+	userGenderCd: None
+	userHealthCd: None
+	userPhoneNo: None
+	requested_slot: service_detail_for_int00002
+	session_started_metadata: None
+2024-05-20 15:26:36,753 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: utter_ask_Service
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 4] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+2024-05-20 15:26:36,754 [DEBUG]  There is no memorised next action
+2024-05-20 15:26:36,754 [DEBUG]  Predicted 'action_listen' after loop 'int00002_form'.
+2024-05-20 15:26:36,755 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:26:36,756 [DEBUG]  Skipping predictions for UnexpecTEDIntentPolicy as either there is no event of type `UserUttered`, event's intent is new and not in domain or there is an event of type `ActionExecuted` after the last `UserUttered`.
+2024-05-20 15:26:36,763 [DEBUG]  TED predicted 'utter_int00002_message' based on user intent.
+2024-05-20 15:26:36,764 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:26:36,765 [DEBUG]  Predicted next action 'action_listen' with confidence 1.00.
+2024-05-20 15:26:36,765 [DEBUG]  Policy prediction ended with events '[]'.
+2024-05-20 15:26:36,766 [DEBUG]  Action 'action_listen' ended with events '[]'.
+2024-05-20 15:26:36,766 [DEBUG]  Deleted lock for conversation '0001'.
+2024-05-20 15:28:50,576 [DEBUG]  Issuing ticket for conversation '0001'.
+2024-05-20 15:28:50,577 [DEBUG]  Acquiring lock for conversation '0001'.
+2024-05-20 15:28:50,577 [DEBUG]  Acquired lock for conversation '0001'.
+2024-05-20 15:28:50,577 [DEBUG]  Recreating tracker for id '0001'
+2024-05-20 15:28:50,594 [DEBUG]  There is no trained model for 'ResponseSelector': The component is either not trained or didn't receive enough training data.
+2024-05-20 15:28:50,595 [DEBUG]  Adding following selector key to message property: default
+2024-05-20 15:28:50,595 [DEBUG]  NLU confidence 0.7898303866386414 for intent 'int00012' is lower than NLU threshold 0.90.
+2024-05-20 15:28:50,595 [DEBUG]  Received user message '기타동행' with intent '{'name': 'nlu_fallback', 'confidence': 0.9}' and entities '[]'
+2024-05-20 15:28:50,596 [DEBUG]  Logged UserUtterance - tracker now has 26 events.
+2024-05-20 15:28:50,597 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: action_listen
+[state 1] user intent: int00001 | previous action name: utter_ask_Service
+[state 2] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 4] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:28:50,598 [DEBUG]  There is no memorised next action
+2024-05-20 15:28:50,599 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] user text: 기타동행 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:28:50,600 [DEBUG]  There is no applicable rule.
+2024-05-20 15:28:50,601 [DEBUG]  Predicted loop 'int00002_form'.
+2024-05-20 15:28:50,601 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:28:50,608 [DEBUG]  Querying for intent `nlu_fallback`.
+2024-05-20 15:28:50,608 [DEBUG]  Query intent index 18 not found in label thresholds - {1: -1.796614, 2: -1.927217, 3: -1.9066072}. Check for `action_unlikely_intent` prediction will be skipped.
+2024-05-20 15:28:50,615 [DEBUG]  TED predicted 'int00003_form' based on user intent.
+2024-05-20 15:28:50,616 [DEBUG]  Made prediction using user intent.
+2024-05-20 15:28:50,616 [DEBUG]  Added `DefinePrevUserUtteredFeaturization(False)` event.
+2024-05-20 15:28:50,616 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:28:50,616 [DEBUG]  Predicted next action 'int00002_form' with confidence 1.00.
+2024-05-20 15:28:50,617 [DEBUG]  Validating user input 'UserUttered(text: 기타동행, intent: nlu_fallback, use_text_for_featurization: False)'.
+2024-05-20 15:28:50,617 [DEBUG]  Trying to extract requested slot 'service_detail_for_int00002' ...
+2024-05-20 15:28:50,617 [DEBUG]  Got mapping '{'type': 'from_entity', 'entity': 'service_detail_for_int00002'}'
+2024-05-20 15:28:50,618 [DEBUG]  Failed to extract requested slot 'service_detail_for_int00002'
+2024-05-20 15:28:50,618 [DEBUG]  Validating extracted slots: {}
+2024-05-20 15:28:50,619 [DEBUG]  Calling action endpoint to run action 'validate_int00002_form'.
+2024-05-20 15:28:52,697 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: action_listen
+[state 1] user intent: int00001 | previous action name: utter_ask_Service
+[state 2] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 4] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:28:52,698 [DEBUG]  There is no memorised next action
+2024-05-20 15:28:52,699 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:28:52,700 [DEBUG]  There is no applicable rule.
+2024-05-20 15:28:52,701 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:28:52,702 [DEBUG]  There is a rule for the next action 'action_default_fallback'.
+2024-05-20 15:28:52,703 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:28:52,710 [DEBUG]  Querying for intent `nlu_fallback`.
+2024-05-20 15:28:52,710 [DEBUG]  Query intent index 18 not found in label thresholds - {1: -1.796614, 2: -1.927217, 3: -1.9066072}. Check for `action_unlikely_intent` prediction will be skipped.
+2024-05-20 15:28:52,717 [DEBUG]  TED predicted 'int00003_form' based on user intent.
+2024-05-20 15:28:52,718 [DEBUG]  Execution of 'int00002_form' was rejected. Setting its confidence to 0.0 in all predictions.
+2024-05-20 15:28:52,718 [DEBUG]  Made prediction using user intent.
+2024-05-20 15:28:52,718 [DEBUG]  Added `DefinePrevUserUtteredFeaturization(False)` event.
+2024-05-20 15:28:52,719 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:28:52,719 [DEBUG]  Predicted next action 'action_default_fallback' with confidence 1.00.
+2024-05-20 15:28:52,720 [DEBUG]  Calling action endpoint to run action 'action_default_fallback'.
+2024-05-20 15:28:54,770 [DEBUG]  Policy prediction ended with events '[<rasa.shared.core.events.DefinePrevUserUtteredFeaturization object at 0x00000196462ACD48>]'.
+2024-05-20 15:28:54,772 [DEBUG]  Action 'action_default_fallback' ended with events '[BotUttered('제가 잘 이해하지 못했어요. 다시 말씀해주시겠어요?', {"elements": null, "quick_replies": null, "buttons": null, "attachment": null, "image": null, "custom": null}, {"utter_action": "utter_default"}, 1716186534.770109)]'.
+2024-05-20 15:28:54,772 [DEBUG]  Current slot values: 
+	Departure: None
+	Destination: None
+	EndDate: None
+	memberRelationCd: None
+	Name: None
+	requestContent: None
+	reserveDate: None
+	reserveTime: None
+	reserveYn: None
+	Service: 동행
+	service_detail_for_int00002: None
+	ServiceDetail: None
+	StartDate: None
+	userBirthDate: None
+	userGenderCd: None
+	userHealthCd: None
+	userPhoneNo: None
+	requested_slot: service_detail_for_int00002
+	session_started_metadata: None
+2024-05-20 15:28:54,775 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: action_listen
+[state 1] user intent: int00001 | previous action name: utter_ask_Service
+[state 2] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 4] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:28:54,776 [DEBUG]  There is no memorised next action
+2024-05-20 15:28:54,777 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 9] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+2024-05-20 15:28:54,778 [DEBUG]  Predicted loop 'int00002_form' by overwriting 'action_listen' predicted by general rule.
+2024-05-20 15:28:54,779 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:28:54,779 [DEBUG]  Skipping predictions for UnexpecTEDIntentPolicy as either there is no event of type `UserUttered`, event's intent is new and not in domain or there is an event of type `ActionExecuted` after the last `UserUttered`.
+2024-05-20 15:28:54,787 [DEBUG]  TED predicted 'int00002_form' based on user intent.
+2024-05-20 15:28:54,788 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:28:54,788 [DEBUG]  Predicted next action 'int00002_form' with confidence 1.00.
+2024-05-20 15:28:54,789 [DEBUG]  Validating extracted slots: {}
+2024-05-20 15:28:54,790 [DEBUG]  Calling action endpoint to run action 'validate_int00002_form'.
+2024-05-20 15:28:56,821 [DEBUG]  Request next slot 'service_detail_for_int00002'
+2024-05-20 15:28:56,822 [ERROR]  Failed to replace placeholders in response '[{'type':'button','intent':'','text':'기타동행'},{'type':'button','intent':'','text':'One Day(9시간)'},{'type':'button','intent':'','text':'투석전용(5시간)'},{'type':'button','intent':'','text':'한시간전용(1시간)'},{'type':'button','intent':'','text':'정기검진'},{'type':'button','intent':'','text':'외래진료'}]'. Tried to replace ''type':'button','intent':'','text':'기타동행'' but could not find a value for it. There is no slot with this name nor did you pass the value explicitly when calling the response. Return response without filling the response. 
+Traceback (most recent call last):
+  File "C:\Users\gyuni\anaconda3\envs\rasa\lib\site-packages\rasa\core\nlg\interpolator.py", line 27, in interpolate_text
+    text = text.format(values)
+KeyError: "'type':'button','intent':'','text':'기타동행'"
+2024-05-20 15:28:56,823 [DEBUG]  Policy prediction ended with events '[]'.
+2024-05-20 15:28:56,824 [DEBUG]  Action 'int00002_form' ended with events '[<rasa.shared.core.events.SlotSet object at 0x000001960002D088>, BotUttered('이용하실 서비스를 선택해 주세요', {"elements": null, "quick_replies": null, "buttons": [{"title": "BUTTON", "payload": "[{'type':'button','intent':'','text':'\uae30\ud0c0\ub3d9\ud589'},{'type':'button','intent':'','text':'One Day(9\uc2dc\uac04)'},{'type':'button','intent':'','text':'\ud22c\uc11d\uc804\uc6a9(5\uc2dc\uac04)'},{'type':'button','intent':'','text':'\ud55c\uc2dc\uac04\uc804\uc6a9(1\uc2dc\uac04)'},{'type':'button','intent':'','text':'\uc815\uae30\uac80\uc9c4'},{'type':'button','intent':'','text':'\uc678\ub798\uc9c4\ub8cc'}]"}], "attachment": null, "image": null, "custom": null}, {"utter_action": "utter_ask_service_detail_for_int00002"}, 1716186536.8233583)]'.
+2024-05-20 15:28:56,825 [DEBUG]  Current slot values: 
+	Departure: None
+	Destination: None
+	EndDate: None
+	memberRelationCd: None
+	Name: None
+	requestContent: None
+	reserveDate: None
+	reserveTime: None
+	reserveYn: None
+	Service: 동행
+	service_detail_for_int00002: None
+	ServiceDetail: None
+	StartDate: None
+	userBirthDate: None
+	userGenderCd: None
+	userHealthCd: None
+	userPhoneNo: None
+	requested_slot: service_detail_for_int00002
+	session_started_metadata: None
+2024-05-20 15:28:56,828 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: utter_ask_Service
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 4] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+2024-05-20 15:28:56,829 [DEBUG]  There is no memorised next action
+2024-05-20 15:28:56,829 [DEBUG]  Predicted 'action_listen' after loop 'int00002_form'.
+2024-05-20 15:28:56,829 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:28:56,830 [DEBUG]  Skipping predictions for UnexpecTEDIntentPolicy as either there is no event of type `UserUttered`, event's intent is new and not in domain or there is an event of type `ActionExecuted` after the last `UserUttered`.
+2024-05-20 15:28:56,836 [DEBUG]  TED predicted 'utter_int00002_message' based on user intent.
+2024-05-20 15:28:56,837 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:28:56,837 [DEBUG]  Predicted next action 'action_listen' with confidence 1.00.
+2024-05-20 15:28:56,837 [DEBUG]  Policy prediction ended with events '[]'.
+2024-05-20 15:28:56,838 [DEBUG]  Action 'action_listen' ended with events '[]'.
+2024-05-20 15:28:56,838 [DEBUG]  Deleted lock for conversation '0001'.
+2024-05-20 15:31:38,916 [DEBUG]  Issuing ticket for conversation '0001'.
+2024-05-20 15:31:38,916 [DEBUG]  Acquiring lock for conversation '0001'.
+2024-05-20 15:31:38,916 [DEBUG]  Acquired lock for conversation '0001'.
+2024-05-20 15:31:38,917 [DEBUG]  Recreating tracker for id '0001'
+2024-05-20 15:31:38,934 [DEBUG]  There is no trained model for 'ResponseSelector': The component is either not trained or didn't receive enough training data.
+2024-05-20 15:31:38,935 [DEBUG]  Adding following selector key to message property: default
+2024-05-20 15:31:38,935 [DEBUG]  NLU confidence 0.7898303866386414 for intent 'int00012' is lower than NLU threshold 0.90.
+2024-05-20 15:31:38,936 [DEBUG]  Received user message '기타동행' with intent '{'name': 'nlu_fallback', 'confidence': 0.9}' and entities '[]'
+2024-05-20 15:31:38,937 [DEBUG]  Logged UserUtterance - tracker now has 35 events.
+2024-05-20 15:31:38,938 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: action_listen
+[state 1] user intent: int00001 | previous action name: utter_ask_Service
+[state 2] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 4] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:31:38,938 [DEBUG]  There is no memorised next action
+2024-05-20 15:31:38,939 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 9] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 10] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 11] user text: 기타동행 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:31:38,941 [DEBUG]  There is no applicable rule.
+2024-05-20 15:31:38,942 [DEBUG]  Predicted loop 'int00002_form'.
+2024-05-20 15:31:38,942 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:31:38,949 [DEBUG]  Querying for intent `nlu_fallback`.
+2024-05-20 15:31:38,949 [DEBUG]  Query intent index 18 not found in label thresholds - {1: -1.796614, 2: -1.927217, 3: -1.9066072}. Check for `action_unlikely_intent` prediction will be skipped.
+2024-05-20 15:31:38,957 [DEBUG]  TED predicted 'int00003_form' based on user intent.
+2024-05-20 15:31:38,958 [DEBUG]  Made prediction using user intent.
+2024-05-20 15:31:38,958 [DEBUG]  Added `DefinePrevUserUtteredFeaturization(False)` event.
+2024-05-20 15:31:38,959 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:31:38,959 [DEBUG]  Predicted next action 'int00002_form' with confidence 1.00.
+2024-05-20 15:31:38,959 [DEBUG]  Validating user input 'UserUttered(text: 기타동행, intent: nlu_fallback, use_text_for_featurization: False)'.
+2024-05-20 15:31:38,960 [DEBUG]  Trying to extract requested slot 'service_detail_for_int00002' ...
+2024-05-20 15:31:38,960 [DEBUG]  Got mapping '{'type': 'from_entity', 'entity': 'service_detail_for_int00002'}'
+2024-05-20 15:31:38,960 [DEBUG]  Failed to extract requested slot 'service_detail_for_int00002'
+2024-05-20 15:31:38,961 [DEBUG]  Validating extracted slots: {}
+2024-05-20 15:31:38,961 [DEBUG]  Calling action endpoint to run action 'validate_int00002_form'.
+2024-05-20 15:31:41,020 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: action_listen
+[state 1] user intent: int00001 | previous action name: utter_ask_Service
+[state 2] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 4] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:31:41,021 [DEBUG]  There is no memorised next action
+2024-05-20 15:31:41,022 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 9] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 10] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 11] previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:31:41,024 [DEBUG]  There is no applicable rule.
+2024-05-20 15:31:41,025 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 9] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 10] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 11] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:31:41,026 [DEBUG]  There is a rule for the next action 'action_default_fallback'.
+2024-05-20 15:31:41,027 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:31:41,034 [DEBUG]  Querying for intent `nlu_fallback`.
+2024-05-20 15:31:41,035 [DEBUG]  Query intent index 18 not found in label thresholds - {1: -1.796614, 2: -1.927217, 3: -1.9066072}. Check for `action_unlikely_intent` prediction will be skipped.
+2024-05-20 15:31:41,042 [DEBUG]  TED predicted 'int00003_form' based on user intent.
+2024-05-20 15:31:41,042 [DEBUG]  Execution of 'int00002_form' was rejected. Setting its confidence to 0.0 in all predictions.
+2024-05-20 15:31:41,043 [DEBUG]  Made prediction using user intent.
+2024-05-20 15:31:41,043 [DEBUG]  Added `DefinePrevUserUtteredFeaturization(False)` event.
+2024-05-20 15:31:41,043 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:31:41,044 [DEBUG]  Predicted next action 'action_default_fallback' with confidence 1.00.
+2024-05-20 15:31:41,045 [DEBUG]  Calling action endpoint to run action 'action_default_fallback'.
+2024-05-20 15:31:43,092 [DEBUG]  Policy prediction ended with events '[<rasa.shared.core.events.DefinePrevUserUtteredFeaturization object at 0x000001967D069748>]'.
+2024-05-20 15:31:43,093 [DEBUG]  Action 'action_default_fallback' ended with events '[BotUttered('제가 잘 이해하지 못했어요. 다시 말씀해주시겠어요?', {"elements": null, "quick_replies": null, "buttons": null, "attachment": null, "image": null, "custom": null}, {"utter_action": "utter_default"}, 1716186703.0929458)]'.
+2024-05-20 15:31:43,093 [DEBUG]  Current slot values: 
+	Departure: None
+	Destination: None
+	EndDate: None
+	memberRelationCd: None
+	Name: None
+	requestContent: None
+	reserveDate: None
+	reserveTime: None
+	reserveYn: None
+	Service: 동행
+	service_detail_for_int00002: None
+	ServiceDetail: None
+	StartDate: None
+	userBirthDate: None
+	userGenderCd: None
+	userHealthCd: None
+	userPhoneNo: None
+	requested_slot: service_detail_for_int00002
+	session_started_metadata: None
+2024-05-20 15:31:43,096 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: action_listen
+[state 1] user intent: int00001 | previous action name: utter_ask_Service
+[state 2] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 4] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:31:43,097 [DEBUG]  There is no memorised next action
+2024-05-20 15:31:43,098 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 9] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 10] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 11] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 12] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+2024-05-20 15:31:43,100 [DEBUG]  Predicted loop 'int00002_form' by overwriting 'action_listen' predicted by general rule.
+2024-05-20 15:31:43,101 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:31:43,101 [DEBUG]  Skipping predictions for UnexpecTEDIntentPolicy as either there is no event of type `UserUttered`, event's intent is new and not in domain or there is an event of type `ActionExecuted` after the last `UserUttered`.
+2024-05-20 15:31:43,109 [DEBUG]  TED predicted 'int00002_form' based on user intent.
+2024-05-20 15:31:43,109 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:31:43,110 [DEBUG]  Predicted next action 'int00002_form' with confidence 1.00.
+2024-05-20 15:31:43,110 [DEBUG]  Validating extracted slots: {}
+2024-05-20 15:31:43,111 [DEBUG]  Calling action endpoint to run action 'validate_int00002_form'.
+2024-05-20 15:31:45,153 [DEBUG]  Request next slot 'service_detail_for_int00002'
+2024-05-20 15:31:45,154 [ERROR]  Failed to replace placeholders in response '[{'type':'button','intent':'','text':'기타동행'},{'type':'button','intent':'','text':'One Day(9시간)'},{'type':'button','intent':'','text':'투석전용(5시간)'},{'type':'button','intent':'','text':'한시간전용(1시간)'},{'type':'button','intent':'','text':'정기검진'},{'type':'button','intent':'','text':'외래진료'}]'. Tried to replace ''type':'button','intent':'','text':'기타동행'' but could not find a value for it. There is no slot with this name nor did you pass the value explicitly when calling the response. Return response without filling the response. 
+Traceback (most recent call last):
+  File "C:\Users\gyuni\anaconda3\envs\rasa\lib\site-packages\rasa\core\nlg\interpolator.py", line 27, in interpolate_text
+    text = text.format(values)
+KeyError: "'type':'button','intent':'','text':'기타동행'"
+2024-05-20 15:31:45,155 [DEBUG]  Policy prediction ended with events '[]'.
+2024-05-20 15:31:45,156 [DEBUG]  Action 'int00002_form' ended with events '[<rasa.shared.core.events.SlotSet object at 0x000001960003E388>, BotUttered('이용하실 서비스를 선택해 주세요', {"elements": null, "quick_replies": null, "buttons": [{"title": "BUTTON", "payload": "[{'type':'button','intent':'','text':'\uae30\ud0c0\ub3d9\ud589'},{'type':'button','intent':'','text':'One Day(9\uc2dc\uac04)'},{'type':'button','intent':'','text':'\ud22c\uc11d\uc804\uc6a9(5\uc2dc\uac04)'},{'type':'button','intent':'','text':'\ud55c\uc2dc\uac04\uc804\uc6a9(1\uc2dc\uac04)'},{'type':'button','intent':'','text':'\uc815\uae30\uac80\uc9c4'},{'type':'button','intent':'','text':'\uc678\ub798\uc9c4\ub8cc'}]"}], "attachment": null, "image": null, "custom": null}, {"utter_action": "utter_ask_service_detail_for_int00002"}, 1716186705.1553266)]'.
+2024-05-20 15:31:45,156 [DEBUG]  Current slot values: 
+	Departure: None
+	Destination: None
+	EndDate: None
+	memberRelationCd: None
+	Name: None
+	requestContent: None
+	reserveDate: None
+	reserveTime: None
+	reserveYn: None
+	Service: 동행
+	service_detail_for_int00002: None
+	ServiceDetail: None
+	StartDate: None
+	userBirthDate: None
+	userGenderCd: None
+	userHealthCd: None
+	userPhoneNo: None
+	requested_slot: service_detail_for_int00002
+	session_started_metadata: None
+2024-05-20 15:31:45,158 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: utter_ask_Service
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 4] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+2024-05-20 15:31:45,159 [DEBUG]  There is no memorised next action
+2024-05-20 15:31:45,160 [DEBUG]  Predicted 'action_listen' after loop 'int00002_form'.
+2024-05-20 15:31:45,160 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:31:45,161 [DEBUG]  Skipping predictions for UnexpecTEDIntentPolicy as either there is no event of type `UserUttered`, event's intent is new and not in domain or there is an event of type `ActionExecuted` after the last `UserUttered`.
+2024-05-20 15:31:45,167 [DEBUG]  TED predicted 'utter_int00002_message' based on user intent.
+2024-05-20 15:31:45,168 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:31:45,168 [DEBUG]  Predicted next action 'action_listen' with confidence 1.00.
+2024-05-20 15:31:45,168 [DEBUG]  Policy prediction ended with events '[]'.
+2024-05-20 15:31:45,169 [DEBUG]  Action 'action_listen' ended with events '[]'.
+2024-05-20 15:31:45,169 [DEBUG]  Deleted lock for conversation '0001'.
+2024-05-20 15:38:44,657 [DEBUG]  Issuing ticket for conversation '0001'.
+2024-05-20 15:38:44,658 [DEBUG]  Acquiring lock for conversation '0001'.
+2024-05-20 15:38:44,658 [DEBUG]  Acquired lock for conversation '0001'.
+2024-05-20 15:38:44,658 [DEBUG]  Recreating tracker for id '0001'
+2024-05-20 15:38:44,677 [DEBUG]  There is no trained model for 'ResponseSelector': The component is either not trained or didn't receive enough training data.
+2024-05-20 15:38:44,678 [DEBUG]  Adding following selector key to message property: default
+2024-05-20 15:38:44,678 [DEBUG]  Received user message '예약해줘' with intent '{'id': 430812780738396880, 'name': 'int00001', 'confidence': 0.9952378869056702}' and entities '[]'
+2024-05-20 15:38:44,679 [DEBUG]  Logged UserUtterance - tracker now has 44 events.
+2024-05-20 15:38:44,680 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: action_listen
+[state 1] user intent: int00001 | previous action name: utter_ask_Service
+[state 2] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 4] user intent: int00001 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:38:44,682 [DEBUG]  There is no memorised next action
+2024-05-20 15:38:44,683 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 9] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 10] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 11] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 12] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 13] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 14] user text: 예약해줘 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:38:44,685 [DEBUG]  There is no applicable rule.
+2024-05-20 15:38:44,685 [DEBUG]  Predicted loop 'int00002_form'.
+2024-05-20 15:38:44,685 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:38:44,692 [DEBUG]  Querying for intent `int00001`.
+2024-05-20 15:38:44,693 [DEBUG]  Score for intent `int00001` is `-0.7462232112884521`, while threshold is `-1.7966140508651733`.
+2024-05-20 15:38:44,693 [DEBUG]  Top 5 intents (in ascending order) that are likely here are: `[('restart', -1.4705763), ('session_start', -1.4705763), ('int00001', -0.7462232), ('int00003', 0.5608577), ('int00002', 0.6922448)]`.
+2024-05-20 15:38:44,700 [DEBUG]  TED predicted 'utter_ask_Service' based on user intent.
+2024-05-20 15:38:44,701 [DEBUG]  Made prediction using user intent.
+2024-05-20 15:38:44,701 [DEBUG]  Added `DefinePrevUserUtteredFeaturization(False)` event.
+2024-05-20 15:38:44,701 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:38:44,702 [DEBUG]  Predicted next action 'int00002_form' with confidence 1.00.
+2024-05-20 15:38:44,702 [DEBUG]  Validating user input 'UserUttered(text: 예약해줘, intent: int00001, use_text_for_featurization: False)'.
+2024-05-20 15:38:44,703 [DEBUG]  Trying to extract requested slot 'service_detail_for_int00002' ...
+2024-05-20 15:38:44,703 [DEBUG]  Got mapping '{'type': 'from_entity', 'entity': 'service_detail_for_int00002'}'
+2024-05-20 15:38:44,703 [DEBUG]  Failed to extract requested slot 'service_detail_for_int00002'
+2024-05-20 15:38:44,703 [DEBUG]  Validating extracted slots: {}
+2024-05-20 15:38:44,704 [DEBUG]  Calling action endpoint to run action 'validate_int00002_form'.
+2024-05-20 15:38:46,777 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: action_listen
+[state 1] user intent: int00001 | previous action name: utter_ask_Service
+[state 2] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 4] user intent: int00001 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:38:46,779 [DEBUG]  There is no memorised next action
+2024-05-20 15:38:46,780 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 9] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 10] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 11] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 12] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 13] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 14] previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:38:46,781 [DEBUG]  There is no applicable rule.
+2024-05-20 15:38:46,782 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 9] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 10] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 11] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 12] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 13] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 14] user intent: int00001 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:38:46,784 [DEBUG]  There is no applicable rule.
+2024-05-20 15:38:46,785 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:38:46,792 [DEBUG]  Querying for intent `int00001`.
+2024-05-20 15:38:46,793 [DEBUG]  Score for intent `int00001` is `-0.7462232112884521`, while threshold is `-1.7966140508651733`.
+2024-05-20 15:38:46,793 [DEBUG]  Top 5 intents (in ascending order) that are likely here are: `[('restart', -1.4705763), ('session_start', -1.4705763), ('int00001', -0.7462232), ('int00003', 0.5608577), ('int00002', 0.6922448)]`.
+2024-05-20 15:38:46,800 [DEBUG]  TED predicted 'utter_ask_Service' based on user intent.
+2024-05-20 15:38:46,801 [DEBUG]  Execution of 'int00002_form' was rejected. Setting its confidence to 0.0 in all predictions.
+2024-05-20 15:38:46,801 [DEBUG]  Made prediction using user intent.
+2024-05-20 15:38:46,802 [DEBUG]  Added `DefinePrevUserUtteredFeaturization(False)` event.
+2024-05-20 15:38:46,802 [DEBUG]  Predicted next action using policy_4_TEDPolicy.
+2024-05-20 15:38:46,802 [DEBUG]  Predicted next action 'utter_ask_Service' with confidence 0.89.
+2024-05-20 15:38:46,804 [ERROR]  Failed to replace placeholders in response '[{'type':'button','intent':'int00002','text':'동행'},{'type':'button','intent':'int00003','text':'돌봄'}]'. Tried to replace ''type':'button','intent':'int00002','text':'동행'' but could not find a value for it. There is no slot with this name nor did you pass the value explicitly when calling the response. Return response without filling the response. 
+Traceback (most recent call last):
+  File "C:\Users\gyuni\anaconda3\envs\rasa\lib\site-packages\rasa\core\nlg\interpolator.py", line 27, in interpolate_text
+    text = text.format(values)
+KeyError: "'type':'button','intent':'int00002','text':'동행'"
+2024-05-20 15:38:46,805 [DEBUG]  Policy prediction ended with events '[<rasa.shared.core.events.DefinePrevUserUtteredFeaturization object at 0x000001960003CB88>]'.
+2024-05-20 15:38:46,806 [DEBUG]  Action 'utter_ask_Service' ended with events '[BotUttered('동행 또는 돌봄 서비스중 어떤 서비스를 원하시나요?', {"elements": null, "quick_replies": null, "buttons": [{"title": "BUTTON", "payload": "[{'type':'button','intent':'int00002','text':'\ub3d9\ud589'},{'type':'button','intent':'int00003','text':'\ub3cc\ubd04'}]"}], "attachment": null, "image": null, "custom": null}, {"utter_action": "utter_ask_Service"}, 1716187126.8053045)]'.
+2024-05-20 15:38:46,807 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: utter_ask_Service
+[state 1] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 2] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 3] user intent: int00001 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 4] user intent: int00001 | previous action name: utter_ask_Service | active loop: {'name': 'int00002_form'}
+2024-05-20 15:38:46,807 [DEBUG]  There is no memorised next action
+2024-05-20 15:38:46,808 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 9] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 10] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 11] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 12] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 13] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 14] user intent: int00001 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 15] user intent: int00001 | previous action name: utter_ask_Service | active loop: {'name': 'int00002_form'}
+2024-05-20 15:38:46,810 [DEBUG]  There is no applicable rule.
+2024-05-20 15:38:46,810 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:38:46,811 [DEBUG]  Skipping predictions for UnexpecTEDIntentPolicy as either there is no event of type `UserUttered`, event's intent is new and not in domain or there is an event of type `ActionExecuted` after the last `UserUttered`.
+2024-05-20 15:38:46,818 [DEBUG]  TED predicted 'action_listen' based on user intent.
+2024-05-20 15:38:46,819 [DEBUG]  Predicted next action using policy_4_TEDPolicy.
+2024-05-20 15:38:46,819 [DEBUG]  Predicted next action 'action_listen' with confidence 0.98.
+2024-05-20 15:38:46,820 [DEBUG]  Policy prediction ended with events '[]'.
+2024-05-20 15:38:46,820 [DEBUG]  Action 'action_listen' ended with events '[]'.
+2024-05-20 15:38:46,821 [DEBUG]  Deleted lock for conversation '0001'.
+2024-05-20 15:39:08,858 [DEBUG]  Issuing ticket for conversation '0001'.
+2024-05-20 15:39:08,859 [DEBUG]  Acquiring lock for conversation '0001'.
+2024-05-20 15:39:08,859 [DEBUG]  Acquired lock for conversation '0001'.
+2024-05-20 15:39:08,859 [DEBUG]  Recreating tracker for id '0001'
+2024-05-20 15:39:08,877 [DEBUG]  Inconsistent BILOU tagging found, B- tag, L- tag pair encloses multiple entity classes.i.e. [B-a, I-b, L-a] instead of [B-a, I-a, L-a].
+Assuming B- class is correct.
+2024-05-20 15:39:08,878 [DEBUG]  Inconsistent BILOU tagging found, B- tag not closed by L- tag, i.e [B-a, I-a, O] instead of [B-a, L-a, O].
+Assuming last tag is L- instead of I-.
+2024-05-20 15:39:08,879 [DEBUG]  There is no trained model for 'ResponseSelector': The component is either not trained or didn't receive enough training data.
+2024-05-20 15:39:08,879 [DEBUG]  Adding following selector key to message property: default
+2024-05-20 15:39:08,880 [DEBUG]  Received user message '돌봄' with intent '{'id': -6124723814421868662, 'name': 'int00003', 'confidence': 0.9850363731384277}' and entities '[{'entity': 'Service', 'start': 0, 'end': 2, 'confidence_entity': 0.9987395405769348, 'value': '돌봄', 'extractor': 'DIETClassifier'}, {'entity': 'Service', 'start': 0, 'end': 1, 'confidence_entity': 0.9965742826461792, 'value': '돌', 'extractor': 'DIETClassifier'}]'
+2024-05-20 15:39:08,881 [DEBUG]  Current slot values: 
+	Departure: None
+	Destination: None
+	EndDate: None
+	memberRelationCd: None
+	Name: None
+	requestContent: None
+	reserveDate: None
+	reserveTime: None
+	reserveYn: None
+	Service: 돌
+	service_detail_for_int00002: None
+	ServiceDetail: None
+	StartDate: None
+	userBirthDate: None
+	userGenderCd: None
+	userHealthCd: None
+	userPhoneNo: None
+	requested_slot: service_detail_for_int00002
+	session_started_metadata: None
+2024-05-20 15:39:08,883 [DEBUG]  Logged UserUtterance - tracker now has 51 events.
+2024-05-20 15:39:08,884 [DEBUG]  Current tracker state:
+[state 0] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 1] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 2] user intent: int00001 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 3] user intent: int00001 | previous action name: utter_ask_Service | active loop: {'name': 'int00002_form'}
+[state 4] user intent: int00003 | user entities: ('Service',) | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:39:08,885 [DEBUG]  There is no memorised next action
+2024-05-20 15:39:08,886 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 9] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 10] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 11] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 12] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 13] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 14] user intent: int00001 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 15] user intent: int00001 | previous action name: utter_ask_Service | active loop: {'name': 'int00002_form'}
+[state 16] user text: 돌봄 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:39:08,887 [DEBUG]  There is no applicable rule.
+2024-05-20 15:39:08,888 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 9] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 10] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 11] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 12] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 13] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 14] user intent: int00001 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 15] user intent: int00001 | previous action name: utter_ask_Service | active loop: {'name': 'int00002_form'}
+[state 16] user intent: int00003 | user entities: ('Service',) | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:39:08,890 [DEBUG]  There is a rule for the next action 'int00003_form'.
+2024-05-20 15:39:08,891 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:39:08,898 [DEBUG]  Querying for intent `int00003`.
+2024-05-20 15:39:08,899 [DEBUG]  Score for intent `int00003` is `1.7632901668548584`, while threshold is `-1.9066071510314941`.
+2024-05-20 15:39:08,899 [DEBUG]  Top 5 intents (in ascending order) that are likely here are: `[('out_of_scope', -1.231067), ('restart', -1.231067), ('session_start', -1.231067), ('int00003', 1.7632902), ('int00002', 1.8873944)]`.
+2024-05-20 15:39:08,907 [DEBUG]  TED predicted 'int00003_form' based on user intent.
+2024-05-20 15:39:08,907 [DEBUG]  Made prediction using user intent.
+2024-05-20 15:39:08,908 [DEBUG]  Added `DefinePrevUserUtteredFeaturization(False)` event.
+2024-05-20 15:39:08,908 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:39:08,908 [DEBUG]  Predicted next action 'int00003_form' with confidence 1.00.
+2024-05-20 15:39:08,909 [DEBUG]  Activated the form 'int00003_form'.
+2024-05-20 15:39:08,909 [DEBUG]  Validating pre-filled required slots: {'Service': '돌'}
+2024-05-20 15:39:08,909 [DEBUG]  Validating extracted slots: {'Service': '돌'}
+2024-05-20 15:39:08,910 [DEBUG]  Calling action endpoint to run action 'validate_int00003_form'.
+2024-05-20 15:39:10,975 [DEBUG]  Validating user input 'UserUttered(text: 돌봄, intent: int00003, entities: 돌봄 (Type: Service, Role: None, Group: None), 돌 (Type: Service, Role: None, Group: None), use_text_for_featurization: False)'.
+2024-05-20 15:39:10,976 [DEBUG]  Extracted '['돌봄', '돌']' for extra slot 'Service'.
+2024-05-20 15:39:10,976 [DEBUG]  Validating extracted slots: {'Service': ['돌봄', '돌']}
+2024-05-20 15:39:10,978 [DEBUG]  Calling action endpoint to run action 'validate_int00003_form'.
+2024-05-20 15:39:13,006 [DEBUG]  Request next slot 'Name'
+2024-05-20 15:39:13,007 [DEBUG]  Policy prediction ended with events '[<rasa.shared.core.events.DefinePrevUserUtteredFeaturization object at 0x0000019600031448>]'.
+2024-05-20 15:39:13,008 [DEBUG]  Action 'int00003_form' ended with events '[<rasa.shared.core.events.ActiveLoop object at 0x0000019600024088>, <rasa.shared.core.events.SlotSet object at 0x000001960003DD08>, <rasa.shared.core.events.SlotSet object at 0x000001960003FAC8>, <rasa.shared.core.events.SlotSet object at 0x000001964629E7C8>, BotUttered('성함을 입력해주세요.', {"elements": null, "quick_replies": null, "buttons": [{"title": "", "payload": ""}], "attachment": null, "image": null, "custom": null}, {"utter_action": "utter_ask_Name"}, 1716187153.0078342)]'.
+2024-05-20 15:39:13,009 [DEBUG]  Current slot values: 
+	Departure: None
+	Destination: None
+	EndDate: None
+	memberRelationCd: None
+	Name: None
+	requestContent: None
+	reserveDate: None
+	reserveTime: None
+	reserveYn: None
+	Service: ['돌봄', '돌']
+	service_detail_for_int00002: None
+	ServiceDetail: None
+	StartDate: None
+	userBirthDate: None
+	userGenderCd: None
+	userHealthCd: None
+	userPhoneNo: None
+	requested_slot: Name
+	session_started_metadata: None
+2024-05-20 15:39:13,012 [DEBUG]  Current tracker state:
+[state 0] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 1] user intent: int00001 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 2] user intent: int00001 | previous action name: utter_ask_Service | active loop: {'name': 'int00002_form'}
+[state 3] user intent: int00003 | user entities: ('Service',) | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 4] user intent: int00003 | user entities: ('Service',) | previous action name: int00003_form | active loop: {'name': 'int00003_form'}
+2024-05-20 15:39:13,013 [DEBUG]  There is no memorised next action
+2024-05-20 15:39:13,013 [DEBUG]  Predicted 'action_listen' after loop 'int00003_form'.
+2024-05-20 15:39:13,014 [DEBUG]  There is an active form 'int00003_form'
+2024-05-20 15:39:13,014 [DEBUG]  Skipping predictions for UnexpecTEDIntentPolicy as either there is no event of type `UserUttered`, event's intent is new and not in domain or there is an event of type `ActionExecuted` after the last `UserUttered`.
+2024-05-20 15:39:13,021 [DEBUG]  TED predicted 'utter_int00003_message' based on user intent.
+2024-05-20 15:39:13,022 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:39:13,022 [DEBUG]  Predicted next action 'action_listen' with confidence 1.00.
+2024-05-20 15:39:13,023 [DEBUG]  Policy prediction ended with events '[]'.
+2024-05-20 15:39:13,023 [DEBUG]  Action 'action_listen' ended with events '[]'.
+2024-05-20 15:39:13,024 [DEBUG]  Deleted lock for conversation '0001'.
+2024-05-20 15:39:23,011 [DEBUG]  Issuing ticket for conversation '0001'.
+2024-05-20 15:39:23,012 [DEBUG]  Acquiring lock for conversation '0001'.
+2024-05-20 15:39:23,012 [DEBUG]  Acquired lock for conversation '0001'.
+2024-05-20 15:39:23,012 [DEBUG]  Recreating tracker for id '0001'
+2024-05-20 15:39:23,018 [DEBUG]  Received user message '/restart' with intent '{'name': 'restart', 'confidence': 1.0}' and entities '[]'
+2024-05-20 15:39:23,020 [DEBUG]  Logged UserUtterance - tracker now has 60 events.
+2024-05-20 15:39:23,022 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 1] user intent: int00001 | previous action name: utter_ask_Service | active loop: {'name': 'int00002_form'}
+[state 2] user intent: int00003 | user entities: ('Service',) | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 3] user intent: int00003 | user entities: ('Service',) | previous action name: int00003_form | active loop: {'name': 'int00003_form'}
+[state 4] user intent: restart | previous action name: action_listen | active loop: {'name': 'int00003_form'}
+2024-05-20 15:39:23,023 [DEBUG]  There is no memorised next action
+2024-05-20 15:39:23,025 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00001 | previous action name: action_listen
+[state 4] user intent: int00001 | previous action name: action_unlikely_intent
+[state 5] user intent: int00001 | previous action name: utter_ask_Service
+[state 6] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 7] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 8] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 9] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 10] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 11] user intent: nlu_fallback | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 12] user intent: nlu_fallback | previous action name: action_default_fallback | active loop: {'name': 'int00002_form'}
+[state 13] user intent: nlu_fallback | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 14] user intent: int00001 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 15] user intent: int00001 | previous action name: utter_ask_Service | active loop: {'name': 'int00002_form'}
+[state 16] user intent: int00003 | user entities: ('Service',) | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 17] user intent: int00003 | user entities: ('Service',) | previous action name: int00003_form | active loop: {'name': 'int00003_form'}
+[state 18] user text: /restart | previous action name: action_listen | active loop: {'name': 'int00003_form'}
+2024-05-20 15:39:23,027 [DEBUG]  There is no applicable rule.
+2024-05-20 15:39:23,027 [DEBUG]  Predicted default action 'action_restart'.
+2024-05-20 15:39:23,027 [DEBUG]  There is an active form 'int00003_form'
+2024-05-20 15:39:23,035 [DEBUG]  Querying for intent `restart`.
+2024-05-20 15:39:23,035 [DEBUG]  Query intent index 20 not found in label thresholds - {1: -1.796614, 2: -1.927217, 3: -1.9066072}. Check for `action_unlikely_intent` prediction will be skipped.
+2024-05-20 15:39:23,043 [DEBUG]  TED predicted 'int00003_form' based on user intent.
+2024-05-20 15:39:23,044 [DEBUG]  Made prediction using user intent.
+2024-05-20 15:39:23,044 [DEBUG]  Added `DefinePrevUserUtteredFeaturization(False)` event.
+2024-05-20 15:39:23,044 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:39:23,045 [DEBUG]  Predicted next action 'action_restart' with confidence 1.00.
+2024-05-20 15:39:23,046 [DEBUG]  Calling action endpoint to run action 'action_restart'.
+2024-05-20 15:39:25,121 [DEBUG]  Policy prediction ended with events '[<rasa.shared.core.events.DefinePrevUserUtteredFeaturization object at 0x000001967D022048>]'.
+2024-05-20 15:39:25,122 [DEBUG]  Action 'action_restart' ended with events '[<rasa.shared.core.events.Restarted object at 0x00000196644F12C8>]'.
+2024-05-20 15:39:25,123 [DEBUG]  Current slot values: 
+	Departure: None
+	Destination: None
+	EndDate: None
+	memberRelationCd: None
+	Name: None
+	requestContent: None
+	reserveDate: None
+	reserveTime: None
+	reserveYn: None
+	Service: None
+	service_detail_for_int00002: None
+	ServiceDetail: None
+	StartDate: None
+	userBirthDate: None
+	userGenderCd: None
+	userHealthCd: None
+	userPhoneNo: None
+	requested_slot: None
+	session_started_metadata: None
+2024-05-20 15:39:25,126 [DEBUG]  Predicted next action 'action_session_start' with confidence 1.00.
+2024-05-20 15:39:25,127 [DEBUG]  Calling action endpoint to run action 'action_session_start'.
+2024-05-20 15:39:27,181 [DEBUG]  Policy prediction ended with events '[]'.
+2024-05-20 15:39:27,182 [DEBUG]  Action 'action_session_start' ended with events '[<rasa.shared.core.events.SessionStarted object at 0x000001964629EE48>, ActionExecuted(action: action_listen, policy: None, confidence: None)]'.
+2024-05-20 15:39:27,182 [DEBUG]  Current slot values: 
+	Departure: None
+	Destination: None
+	EndDate: None
+	memberRelationCd: None
+	Name: None
+	requestContent: None
+	reserveDate: None
+	reserveTime: None
+	reserveYn: None
+	Service: None
+	service_detail_for_int00002: None
+	ServiceDetail: None
+	StartDate: None
+	userBirthDate: None
+	userGenderCd: None
+	userHealthCd: None
+	userPhoneNo: None
+	requested_slot: None
+	session_started_metadata: None
+2024-05-20 15:39:27,185 [DEBUG]  Deleted lock for conversation '0001'.
+2024-05-20 15:39:44,800 [DEBUG]  Issuing ticket for conversation '0001'.
+2024-05-20 15:39:44,800 [DEBUG]  Acquiring lock for conversation '0001'.
+2024-05-20 15:39:44,800 [DEBUG]  Acquired lock for conversation '0001'.
+2024-05-20 15:39:44,801 [DEBUG]  Recreating tracker for id '0001'
+2024-05-20 15:39:44,819 [DEBUG]  There is no trained model for 'ResponseSelector': The component is either not trained or didn't receive enough training data.
+2024-05-20 15:39:44,820 [DEBUG]  Adding following selector key to message property: default
+2024-05-20 15:39:44,820 [DEBUG]  Received user message '예약해줘' with intent '{'id': 430812780738396880, 'name': 'int00001', 'confidence': 0.9952378869056702}' and entities '[]'
+2024-05-20 15:39:44,821 [DEBUG]  Logged UserUtterance - tracker now has 67 events.
+2024-05-20 15:39:44,822 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+2024-05-20 15:39:44,823 [DEBUG]  There is a memorised next action 'utter_ask_Service'
+2024-05-20 15:39:44,824 [DEBUG]  Current tracker state:
+[state 1] user text: 예약해줘 | previous action name: action_listen
+2024-05-20 15:39:44,824 [DEBUG]  There is no applicable rule.
+2024-05-20 15:39:44,825 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+2024-05-20 15:39:44,826 [DEBUG]  There is no applicable rule.
+2024-05-20 15:39:44,826 [DEBUG]  There is no active form
+2024-05-20 15:39:44,830 [DEBUG]  Querying for intent `int00001`.
+2024-05-20 15:39:44,830 [DEBUG]  Score for intent `int00001` is `1.548227071762085`, while threshold is `-1.7966140508651733`.
+2024-05-20 15:39:44,831 [DEBUG]  Top 5 intents (in ascending order) that are likely here are: `[('restart', -1.5153191), ('session_start', -1.5153191), ('int00017', -1.4189633), ('int00012', -1.4022956), ('int00001', 1.5482271)]`.
+2024-05-20 15:39:44,835 [DEBUG]  TED predicted 'utter_ask_Service' based on user intent.
+2024-05-20 15:39:44,836 [DEBUG]  Made prediction using user intent.
+2024-05-20 15:39:44,836 [DEBUG]  Added `DefinePrevUserUtteredFeaturization(False)` event.
+2024-05-20 15:39:44,837 [DEBUG]  Predicted next action using policy_0_MemoizationPolicy.
+2024-05-20 15:39:44,837 [DEBUG]  Predicted next action 'utter_ask_Service' with confidence 1.00.
+2024-05-20 15:39:44,838 [ERROR]  Failed to replace placeholders in response '[{'type':'button','intent':'int00002','text':'동행'},{'type':'button','intent':'int00003','text':'돌봄'}]'. Tried to replace ''type':'button','intent':'int00002','text':'동행'' but could not find a value for it. There is no slot with this name nor did you pass the value explicitly when calling the response. Return response without filling the response. 
+Traceback (most recent call last):
+  File "C:\Users\gyuni\anaconda3\envs\rasa\lib\site-packages\rasa\core\nlg\interpolator.py", line 27, in interpolate_text
+    text = text.format(values)
+KeyError: "'type':'button','intent':'int00002','text':'동행'"
+2024-05-20 15:39:44,840 [DEBUG]  Policy prediction ended with events '[<rasa.shared.core.events.DefinePrevUserUtteredFeaturization object at 0x000001964629ED08>]'.
+2024-05-20 15:39:44,840 [DEBUG]  Action 'utter_ask_Service' ended with events '[BotUttered('동행 또는 돌봄 서비스중 어떤 서비스를 원하시나요?', {"elements": null, "quick_replies": null, "buttons": [{"title": "BUTTON", "payload": "[{'type':'button','intent':'int00002','text':'\ub3d9\ud589'},{'type':'button','intent':'int00003','text':'\ub3cc\ubd04'}]"}], "attachment": null, "image": null, "custom": null}, {"utter_action": "utter_ask_Service"}, 1716187184.8409507)]'.
+2024-05-20 15:39:44,841 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+2024-05-20 15:39:44,841 [DEBUG]  There is a memorised next action 'action_listen'
+2024-05-20 15:39:44,842 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+2024-05-20 15:39:44,843 [DEBUG]  There is no applicable rule.
+2024-05-20 15:39:44,843 [DEBUG]  There is no active form
+2024-05-20 15:39:44,844 [DEBUG]  Skipping predictions for UnexpecTEDIntentPolicy as either there is no event of type `UserUttered`, event's intent is new and not in domain or there is an event of type `ActionExecuted` after the last `UserUttered`.
+2024-05-20 15:39:44,848 [DEBUG]  TED predicted 'action_listen' based on user intent.
+2024-05-20 15:39:44,849 [DEBUG]  Predicted next action using policy_0_MemoizationPolicy.
+2024-05-20 15:39:44,850 [DEBUG]  Predicted next action 'action_listen' with confidence 1.00.
+2024-05-20 15:39:44,851 [DEBUG]  Policy prediction ended with events '[]'.
+2024-05-20 15:39:44,851 [DEBUG]  Action 'action_listen' ended with events '[]'.
+2024-05-20 15:39:44,852 [DEBUG]  Deleted lock for conversation '0001'.
+2024-05-20 15:39:46,728 [DEBUG]  Issuing ticket for conversation '0001'.
+2024-05-20 15:39:46,729 [DEBUG]  Acquiring lock for conversation '0001'.
+2024-05-20 15:39:46,729 [DEBUG]  Acquired lock for conversation '0001'.
+2024-05-20 15:39:46,729 [DEBUG]  Recreating tracker for id '0001'
+2024-05-20 15:39:46,748 [DEBUG]  There is no trained model for 'ResponseSelector': The component is either not trained or didn't receive enough training data.
+2024-05-20 15:39:46,748 [DEBUG]  Adding following selector key to message property: default
+2024-05-20 15:39:46,749 [DEBUG]  Received user message '동행' with intent '{'id': -433874785546492062, 'name': 'int00002', 'confidence': 0.9544349908828735}' and entities '[{'entity': 'Service', 'start': 0, 'end': 2, 'confidence_entity': 0.9550744295120239, 'value': '동행', 'extractor': 'DIETClassifier'}]'
+2024-05-20 15:39:46,750 [DEBUG]  Current slot values: 
+	Departure: None
+	Destination: None
+	EndDate: None
+	memberRelationCd: None
+	Name: None
+	requestContent: None
+	reserveDate: None
+	reserveTime: None
+	reserveYn: None
+	Service: 동행
+	service_detail_for_int00002: None
+	ServiceDetail: None
+	StartDate: None
+	userBirthDate: None
+	userGenderCd: None
+	userHealthCd: None
+	userPhoneNo: None
+	requested_slot: None
+	session_started_metadata: None
+2024-05-20 15:39:46,751 [DEBUG]  Logged UserUtterance - tracker now has 73 events.
+2024-05-20 15:39:46,752 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+2024-05-20 15:39:46,753 [DEBUG]  There is no memorised next action
+2024-05-20 15:39:46,753 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user text: 동행 | previous action name: action_listen
+2024-05-20 15:39:46,754 [DEBUG]  There is no applicable rule.
+2024-05-20 15:39:46,755 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+2024-05-20 15:39:46,756 [DEBUG]  There is a rule for the next action 'int00002_form'.
+2024-05-20 15:39:46,756 [DEBUG]  There is no active form
+2024-05-20 15:39:46,761 [DEBUG]  Querying for intent `int00002`.
+2024-05-20 15:39:46,762 [DEBUG]  Score for intent `int00002` is `1.8533614873886108`, while threshold is `-1.9272170066833496`.
+2024-05-20 15:39:46,762 [DEBUG]  Top 5 intents (in ascending order) that are likely here are: `[('out_of_scope', -1.261534), ('restart', -1.261534), ('session_start', -1.261534), ('int00003', 1.7178969), ('int00002', 1.8533615)]`.
+2024-05-20 15:39:46,768 [DEBUG]  TED predicted 'int00002_form' based on user intent.
+2024-05-20 15:39:46,769 [DEBUG]  Made prediction using user intent.
+2024-05-20 15:39:46,769 [DEBUG]  Added `DefinePrevUserUtteredFeaturization(False)` event.
+2024-05-20 15:39:46,769 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:39:46,770 [DEBUG]  Predicted next action 'int00002_form' with confidence 1.00.
+2024-05-20 15:39:46,770 [DEBUG]  Activated the form 'int00002_form'.
+2024-05-20 15:39:46,771 [DEBUG]  Validating pre-filled required slots: {'Service': '동행'}
+2024-05-20 15:39:46,771 [DEBUG]  Validating extracted slots: {'Service': '동행'}
+2024-05-20 15:39:46,773 [DEBUG]  Calling action endpoint to run action 'validate_int00002_form'.
+2024-05-20 15:39:48,844 [DEBUG]  Validating user input 'UserUttered(text: 동행, intent: int00002, entities: 동행 (Type: Service, Role: None, Group: None), use_text_for_featurization: False)'.
+2024-05-20 15:39:48,845 [DEBUG]  Extracted '동행' for extra slot 'Service'.
+2024-05-20 15:39:48,845 [DEBUG]  Validating extracted slots: {'Service': '동행'}
+2024-05-20 15:39:48,846 [DEBUG]  Calling action endpoint to run action 'validate_int00002_form'.
+2024-05-20 15:39:50,915 [DEBUG]  Request next slot 'service_detail_for_int00002'
+2024-05-20 15:39:50,916 [ERROR]  Failed to replace placeholders in response '[{'type':'button','intent':'','text':'기타동행'},{'type':'button','intent':'','text':'One Day(9시간)'},{'type':'button','intent':'','text':'투석전용(5시간)'},{'type':'button','intent':'','text':'한시간전용(1시간)'},{'type':'button','intent':'','text':'정기검진'},{'type':'button','intent':'','text':'외래진료'}]'. Tried to replace ''type':'button','intent':'','text':'기타동행'' but could not find a value for it. There is no slot with this name nor did you pass the value explicitly when calling the response. Return response without filling the response. 
+Traceback (most recent call last):
+  File "C:\Users\gyuni\anaconda3\envs\rasa\lib\site-packages\rasa\core\nlg\interpolator.py", line 27, in interpolate_text
+    text = text.format(values)
+KeyError: "'type':'button','intent':'','text':'기타동행'"
+2024-05-20 15:39:50,917 [DEBUG]  Policy prediction ended with events '[<rasa.shared.core.events.DefinePrevUserUtteredFeaturization object at 0x000001960000F708>]'.
+2024-05-20 15:39:50,918 [DEBUG]  Action 'int00002_form' ended with events '[<rasa.shared.core.events.ActiveLoop object at 0x000001960004EB48>, <rasa.shared.core.events.SlotSet object at 0x000001960004E7C8>, <rasa.shared.core.events.SlotSet object at 0x0000019600001A88>, <rasa.shared.core.events.SlotSet object at 0x000001960004E788>, BotUttered('이용하실 서비스를 선택해 주세요', {"elements": null, "quick_replies": null, "buttons": [{"title": "BUTTON", "payload": "[{'type':'button','intent':'','text':'\uae30\ud0c0\ub3d9\ud589'},{'type':'button','intent':'','text':'One Day(9\uc2dc\uac04)'},{'type':'button','intent':'','text':'\ud22c\uc11d\uc804\uc6a9(5\uc2dc\uac04)'},{'type':'button','intent':'','text':'\ud55c\uc2dc\uac04\uc804\uc6a9(1\uc2dc\uac04)'},{'type':'button','intent':'','text':'\uc815\uae30\uac80\uc9c4'},{'type':'button','intent':'','text':'\uc678\ub798\uc9c4\ub8cc'}]"}], "attachment": null, "image": null, "custom": null}, {"utter_action": "utter_ask_service_detail_for_int00002"}, 1716187190.9176497)]'.
+2024-05-20 15:39:50,919 [DEBUG]  Current slot values: 
+	Departure: None
+	Destination: None
+	EndDate: None
+	memberRelationCd: None
+	Name: None
+	requestContent: None
+	reserveDate: None
+	reserveTime: None
+	reserveYn: None
+	Service: 동행
+	service_detail_for_int00002: None
+	ServiceDetail: None
+	StartDate: None
+	userBirthDate: None
+	userGenderCd: None
+	userHealthCd: None
+	userPhoneNo: None
+	requested_slot: service_detail_for_int00002
+	session_started_metadata: None
+2024-05-20 15:39:50,922 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 4] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+2024-05-20 15:39:50,922 [DEBUG]  There is no memorised next action
+2024-05-20 15:39:50,923 [DEBUG]  Predicted 'action_listen' after loop 'int00002_form'.
+2024-05-20 15:39:50,923 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:39:50,923 [DEBUG]  Skipping predictions for UnexpecTEDIntentPolicy as either there is no event of type `UserUttered`, event's intent is new and not in domain or there is an event of type `ActionExecuted` after the last `UserUttered`.
+2024-05-20 15:39:50,929 [DEBUG]  TED predicted 'utter_int00002_message' based on user intent.
+2024-05-20 15:39:50,930 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:39:50,930 [DEBUG]  Predicted next action 'action_listen' with confidence 1.00.
+2024-05-20 15:39:50,931 [DEBUG]  Policy prediction ended with events '[]'.
+2024-05-20 15:39:50,931 [DEBUG]  Action 'action_listen' ended with events '[]'.
+2024-05-20 15:39:50,932 [DEBUG]  Deleted lock for conversation '0001'.
+2024-05-20 15:40:14,672 [DEBUG]  Issuing ticket for conversation '0001'.
+2024-05-20 15:40:14,673 [DEBUG]  Acquiring lock for conversation '0001'.
+2024-05-20 15:40:14,673 [DEBUG]  Acquired lock for conversation '0001'.
+2024-05-20 15:40:14,673 [DEBUG]  Recreating tracker for id '0001'
+2024-05-20 15:40:14,694 [DEBUG]  There is no trained model for 'ResponseSelector': The component is either not trained or didn't receive enough training data.
+2024-05-20 15:40:14,695 [DEBUG]  Adding following selector key to message property: default
+2024-05-20 15:40:14,695 [DEBUG]  Received user message '정기검진' with intent '{'id': -3536285164893868737, 'name': 'int00008', 'confidence': 0.9902798533439636}' and entities '[]'
+2024-05-20 15:40:14,696 [DEBUG]  Logged UserUtterance - tracker now has 82 events.
+2024-05-20 15:40:14,697 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: action_listen
+[state 1] user intent: int00001 | previous action name: utter_ask_Service
+[state 2] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 4] user intent: int00008 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:40:14,697 [DEBUG]  There is no memorised next action
+2024-05-20 15:40:14,698 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 4] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 5] user text: 정기검진 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:40:14,699 [DEBUG]  There is no applicable rule.
+2024-05-20 15:40:14,699 [DEBUG]  Predicted loop 'int00002_form'.
+2024-05-20 15:40:14,700 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:40:14,707 [DEBUG]  Querying for intent `int00008`.
+2024-05-20 15:40:14,708 [DEBUG]  Query intent index 8 not found in label thresholds - {1: -1.796614, 2: -1.927217, 3: -1.9066072}. Check for `action_unlikely_intent` prediction will be skipped.
+2024-05-20 15:40:14,715 [DEBUG]  TED predicted 'int00003_form' based on user intent.
+2024-05-20 15:40:14,716 [DEBUG]  Made prediction using user intent.
+2024-05-20 15:40:14,717 [DEBUG]  Added `DefinePrevUserUtteredFeaturization(False)` event.
+2024-05-20 15:40:14,717 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:40:14,718 [DEBUG]  Predicted next action 'int00002_form' with confidence 1.00.
+2024-05-20 15:40:14,718 [DEBUG]  Validating user input 'UserUttered(text: 정기검진, intent: int00008, use_text_for_featurization: False)'.
+2024-05-20 15:40:14,719 [DEBUG]  Trying to extract requested slot 'service_detail_for_int00002' ...
+2024-05-20 15:40:14,719 [DEBUG]  Got mapping '{'type': 'from_entity', 'entity': 'service_detail_for_int00002'}'
+2024-05-20 15:40:14,719 [DEBUG]  Failed to extract requested slot 'service_detail_for_int00002'
+2024-05-20 15:40:14,719 [DEBUG]  Validating extracted slots: {}
+2024-05-20 15:40:14,720 [DEBUG]  Calling action endpoint to run action 'validate_int00002_form'.
+2024-05-20 15:40:16,796 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: action_listen
+[state 1] user intent: int00001 | previous action name: utter_ask_Service
+[state 2] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 4] user intent: int00008 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:40:16,797 [DEBUG]  There is no memorised next action
+2024-05-20 15:40:16,798 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 4] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 5] previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:40:16,799 [DEBUG]  There is no applicable rule.
+2024-05-20 15:40:16,801 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 4] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 5] user intent: int00008 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:40:16,802 [DEBUG]  There is a rule for the next action 'action_int00004'.
+2024-05-20 15:40:16,802 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:40:16,810 [DEBUG]  Querying for intent `int00008`.
+2024-05-20 15:40:16,811 [DEBUG]  Query intent index 8 not found in label thresholds - {1: -1.796614, 2: -1.927217, 3: -1.9066072}. Check for `action_unlikely_intent` prediction will be skipped.
+2024-05-20 15:40:16,817 [DEBUG]  TED predicted 'int00003_form' based on user intent.
+2024-05-20 15:40:16,818 [DEBUG]  Execution of 'int00002_form' was rejected. Setting its confidence to 0.0 in all predictions.
+2024-05-20 15:40:16,819 [DEBUG]  Made prediction using user intent.
+2024-05-20 15:40:16,819 [DEBUG]  Added `DefinePrevUserUtteredFeaturization(False)` event.
+2024-05-20 15:40:16,819 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:40:16,819 [DEBUG]  Predicted next action 'action_int00004' with confidence 1.00.
+2024-05-20 15:40:16,821 [DEBUG]  Calling action endpoint to run action 'action_int00004'.
+2024-05-20 15:40:18,876 [DEBUG]  Policy prediction ended with events '[<rasa.shared.core.events.DefinePrevUserUtteredFeaturization object at 0x0000019600024748>]'.
+2024-05-20 15:40:18,876 [DEBUG]  Action 'action_int00004' ended with events '[BotUttered('건강검진 동행
+
+모시미의 건강검진 동행 서비스는 검진을 위해 보호자 동행으로 병원 방문이 필요한 경우 이용 가능한 서비스입니다.
+
+모시미의 건강검진 동행 서비스 이럴 때 사용하세요.
+
+수면 내시경 시 보호자 동행을 요청한 경우
+
+안과 시술/ 수술로 보호자 동행이 필요한 경우
+
+마취를 필요로 하는 검사로 보호자 동행이 필요한 경우', {"elements": null, "quick_replies": null, "buttons": null, "attachment": null, "image": null, "custom": null}, {}, 1716187218.8755114)]'.
+2024-05-20 15:40:18,878 [DEBUG]  Current slot values: 
+	Departure: None
+	Destination: None
+	EndDate: None
+	memberRelationCd: None
+	Name: None
+	requestContent: None
+	reserveDate: None
+	reserveTime: None
+	reserveYn: None
+	Service: 동행
+	service_detail_for_int00002: None
+	ServiceDetail: None
+	StartDate: None
+	userBirthDate: None
+	userGenderCd: None
+	userHealthCd: None
+	userPhoneNo: None
+	requested_slot: service_detail_for_int00002
+	session_started_metadata: None
+2024-05-20 15:40:18,881 [DEBUG]  Current tracker state:
+[state 0] user intent: int00001 | previous action name: action_listen
+[state 1] user intent: int00001 | previous action name: utter_ask_Service
+[state 2] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 4] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+2024-05-20 15:40:18,882 [DEBUG]  There is no memorised next action
+2024-05-20 15:40:18,883 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 4] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+[state 5] user intent: int00008 | previous action name: action_listen | active loop: {'name': 'int00002_form'}
+[state 6] user intent: int00008 | previous action name: action_int00004 | active loop: {'name': 'int00002_form'}
+2024-05-20 15:40:18,884 [DEBUG]  Predicted loop 'int00002_form' by overwriting 'action_listen' predicted by general rule.
+2024-05-20 15:40:18,884 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:40:18,885 [DEBUG]  Skipping predictions for UnexpecTEDIntentPolicy as either there is no event of type `UserUttered`, event's intent is new and not in domain or there is an event of type `ActionExecuted` after the last `UserUttered`.
+2024-05-20 15:40:18,892 [DEBUG]  TED predicted 'int00002_form' based on user intent.
+2024-05-20 15:40:18,893 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:40:18,894 [DEBUG]  Predicted next action 'int00002_form' with confidence 1.00.
+2024-05-20 15:40:18,894 [DEBUG]  Validating extracted slots: {}
+2024-05-20 15:40:18,895 [DEBUG]  Calling action endpoint to run action 'validate_int00002_form'.
+2024-05-20 15:40:20,940 [DEBUG]  Request next slot 'service_detail_for_int00002'
+2024-05-20 15:40:20,941 [ERROR]  Failed to replace placeholders in response '[{'type':'button','intent':'','text':'기타동행'},{'type':'button','intent':'','text':'One Day(9시간)'},{'type':'button','intent':'','text':'투석전용(5시간)'},{'type':'button','intent':'','text':'한시간전용(1시간)'},{'type':'button','intent':'','text':'정기검진'},{'type':'button','intent':'','text':'외래진료'}]'. Tried to replace ''type':'button','intent':'','text':'기타동행'' but could not find a value for it. There is no slot with this name nor did you pass the value explicitly when calling the response. Return response without filling the response. 
+Traceback (most recent call last):
+  File "C:\Users\gyuni\anaconda3\envs\rasa\lib\site-packages\rasa\core\nlg\interpolator.py", line 27, in interpolate_text
+    text = text.format(values)
+KeyError: "'type':'button','intent':'','text':'기타동행'"
+2024-05-20 15:40:20,942 [DEBUG]  Policy prediction ended with events '[]'.
+2024-05-20 15:40:20,943 [DEBUG]  Action 'int00002_form' ended with events '[<rasa.shared.core.events.SlotSet object at 0x000001960005E8C8>, BotUttered('이용하실 서비스를 선택해 주세요', {"elements": null, "quick_replies": null, "buttons": [{"title": "BUTTON", "payload": "[{'type':'button','intent':'','text':'\uae30\ud0c0\ub3d9\ud589'},{'type':'button','intent':'','text':'One Day(9\uc2dc\uac04)'},{'type':'button','intent':'','text':'\ud22c\uc11d\uc804\uc6a9(5\uc2dc\uac04)'},{'type':'button','intent':'','text':'\ud55c\uc2dc\uac04\uc804\uc6a9(1\uc2dc\uac04)'},{'type':'button','intent':'','text':'\uc815\uae30\uac80\uc9c4'},{'type':'button','intent':'','text':'\uc678\ub798\uc9c4\ub8cc'}]"}], "attachment": null, "image": null, "custom": null}, {"utter_action": "utter_ask_service_detail_for_int00002"}, 1716187220.9428291)]'.
+2024-05-20 15:40:20,944 [DEBUG]  Current slot values: 
+	Departure: None
+	Destination: None
+	EndDate: None
+	memberRelationCd: None
+	Name: None
+	requestContent: None
+	reserveDate: None
+	reserveTime: None
+	reserveYn: None
+	Service: 동행
+	service_detail_for_int00002: None
+	ServiceDetail: None
+	StartDate: None
+	userBirthDate: None
+	userGenderCd: None
+	userHealthCd: None
+	userPhoneNo: None
+	requested_slot: service_detail_for_int00002
+	session_started_metadata: None
+2024-05-20 15:40:20,947 [DEBUG]  Current tracker state:
+[state 1] user intent: int00001 | previous action name: action_listen
+[state 2] user intent: int00001 | previous action name: utter_ask_Service
+[state 3] user intent: int00002 | user entities: ('Service',) | previous action name: action_listen
+[state 4] user intent: int00002 | user entities: ('Service',) | previous action name: int00002_form | active loop: {'name': 'int00002_form'}
+2024-05-20 15:40:20,948 [DEBUG]  There is no memorised next action
+2024-05-20 15:40:20,948 [DEBUG]  Predicted 'action_listen' after loop 'int00002_form'.
+2024-05-20 15:40:20,948 [DEBUG]  There is an active form 'int00002_form'
+2024-05-20 15:40:20,949 [DEBUG]  Skipping predictions for UnexpecTEDIntentPolicy as either there is no event of type `UserUttered`, event's intent is new and not in domain or there is an event of type `ActionExecuted` after the last `UserUttered`.
+2024-05-20 15:40:20,955 [DEBUG]  TED predicted 'utter_int00002_message' based on user intent.
+2024-05-20 15:40:20,955 [DEBUG]  Predicted next action using policy_1_RulePolicy.
+2024-05-20 15:40:20,956 [DEBUG]  Predicted next action 'action_listen' with confidence 1.00.
+2024-05-20 15:40:20,957 [DEBUG]  Policy prediction ended with events '[]'.
+2024-05-20 15:40:20,958 [DEBUG]  Action 'action_listen' ended with events '[]'.
+2024-05-20 15:40:20,959 [DEBUG]  Deleted lock for conversation '0001'.

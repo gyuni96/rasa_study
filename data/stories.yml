@@ -1,34 +1,31 @@
 version: '2.0'
 
 stories:
-  # 인사 상황
-  - story: greet
+  #  - story: int00001
+  #    steps:
+  #      - intent: int00001
+  #      - action: int00001_form
+  #      - active_loop: int00001_form
+  #      - active_loop: null
+  # 동행 서비스 요청 시작
+  - story: int00002
     steps:
-      - intent: greet
-      - action: utter_greet
-
-  # # 소개
-  # - story: introduce
-  #   steps:
-  #     - intent: introduce
-  #     - action: utter_introduce
-
-  # 예약 정상 실행
-  - story: booking
+      - intent: int00001
+      - action: utter_ask_Service
+      - intent: int00002
+      - action: int00002_form
+      - active_loop: int00002_form
+      - active_loop: null
+      - action: utter_int00002_message
+      - action: action_reserve
+  # 돌봄 서비스 요청 시작
+  - story: int00003
     steps:
-      - intent: request_booking
-      - action: action_return_sender_id
-      - action: booking_form
-      - active_loop: booking_form
-      # - action: utter_booking_slots_values
-      - action: action_check_termination
-
-  - story: 사용자 비활동으로 인한 대화 종료
-    steps:
-      - action: action_check_inactivity
-      - action: action_restart
-
-  - story: 안내
-    steps:
-      - intent : request_guide
-      - action : utter_request_guide
+      - intent: int00001
+      - action: utter_ask_Service
+      - intent: int00003
+      - action: int00003_form
+      - active_loop: int00003_form
+      - active_loop: null
+      - action: utter_int00003_message
+      - action: action_reserve
