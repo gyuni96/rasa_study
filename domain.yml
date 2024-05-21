@@ -44,12 +44,12 @@ forms:
           entity: Service
   int00002_form:
     required_slots:
-      service_detail_for_int00002:
-        - type: from_entity
-          entity: service_detail_for_int00002
       Service:
         - type: from_entity
           entity: Service
+      service_detail_for_int00002:
+        - type: from_entity
+          entity: service_detail_for_int00002
       Name:
         - type: from_text
       userBirthDate:
@@ -57,7 +57,8 @@ forms:
       userPhoneNo:
         - type: from_text
       userGenderCd:
-        - type: from_text
+        - type: from_entity
+          entity: userGenderCd
       memberRelationCd:
         - type: from_text
       StartDate:
@@ -75,7 +76,8 @@ forms:
       reserveTime:
         - type: from_text
       userHealthCd:
-        - type: from_text
+        - type: from_entity
+          entity: userHealthCd
       requestContent:
         - type: from_text
   int00003_form:
@@ -94,192 +96,170 @@ forms:
 slots:
   Departure:
     type: text
-    influence_conversation: False
+    influence_conversation: false
   Destination:
     type: text
-    influence_conversation: False
+    influence_conversation: false
   EndDate:
     type: text
-    influence_conversation: False
+    influence_conversation: false
   memberRelationCd:
     type: text
-    influence_conversation: False
+    influence_conversation: false
   Name:
     type: text
-    influence_conversation: False
+    influence_conversation: false
   requestContent:
     type: text
-    influence_conversation: False
+    influence_conversation: false
   reserveDate:
     type: text
-    influence_conversation: False
+    influence_conversation: false
   reserveTime:
     type: text
-    influence_conversation: False
+    influence_conversation: false
   reserveYn:
     type: text
-    influence_conversation: False
+    influence_conversation: false
   Service:
     type: categorical
-    influence_conversation: False
+    influence_conversation: false
     values:
-      - 돌봄서비스
-      - 돌봄
-      - 동행서비스
-      - 동행
+      - '동행'
+      - '동행서비스'
+      - '돌봄'
+      - '돌봄서비스'
   service_detail_for_int00002:
     type: categorical
-    influence_conversation: False
+    influence_conversation: false
     values:
-      - One Day(9시간)
-      - 기타동행
-      - 한시간전용(1시간)
-      - 정기검진
-      - 외래진료
-      - 투석전용(5시간)
+      - '외래진료'
+      - '정기검진'
+      - '투석전용(5시간)'
+      - '한시간전용(1시간)'
+      - 'One Day(9시간)'
+      - '기타동행'
   ServiceDetail:
     type: categorical
-    influence_conversation: False
+    influence_conversation: false
     values:
-      - 아이 돌봄
-      - 정기검진
-      - 투석전용(5시간)
-      - 정기검진
-      - 투석전용(5시간)
-      - 정기검진
-      - 외래진료
-      - 아이 돌봄
-      - 투석전용(5시간)
-      - 정기검진
+      - '투석전용(5시간)'
+      - '정기검진'
+      - '투석전용(5시간)'
+      - '정기검진'
+      - '아이 돌봄'
+      - '정기검진'
+      - '외래진료'
+      - '아이 돌봄'
+      - '정기검진'
+      - '투석전용(5시간)'
   StartDate:
     type: text
-    influence_conversation: False
+    influence_conversation: false
   userBirthDate:
     type: text
-    influence_conversation: False
+    influence_conversation: false
   userGenderCd:
-    type: text
-    influence_conversation: False
+    type: categorical
+    influence_conversation: false
+    values:
+      - '여성'
+      - '남성'
   userHealthCd:
-    type: text
-    influence_conversation: False
+    type: categorical
+    influence_conversation: false
+    values:
+      - '저혈압'
+      - '거동불편&부축필요'
+      - '심근경색'
+      - '휠체어 사용'
+      - '거동불편'
+      - '시력불편'
+      - '기타(상세기제필요)'
   userPhoneNo:
     type: text
-    influence_conversation: False
+    influence_conversation: false
 responses:
   utter_ask_Departure:
     - text: "출발지를 입력해주세요."
-      buttons:
-        - title: ""
-          payload: ""
   utter_ask_Destination:
     - text: "도착지를 입력해주세요."
-      buttons:
-        - title: ""
-          payload: ""
   utter_ask_EndDate:
     - text: "종료일자를 입력해주세요."
-      buttons:
-        - title: ""
-          payload: ""
   utter_ask_memberRelationCd:
     - text: "예약자분과 이용자분의 관계를 선택해 주세요"
-      buttons:
-        - title: ""
-          payload: ""
   utter_ask_Name:
     - text: "이름을 입력해주세요."
-      buttons:
-        - title: ""
-          payload: ""
     - text: "성함을 입력해주세요."
-      buttons:
-        - title: ""
-          payload: ""
   utter_ask_requestContent:
     - text: "이동방법 및 요청사항을 말씀해 주세요"
-      buttons:
-        - title: ""
-          payload: ""
   utter_ask_reserveDate:
     - text: "진료 및 검진 예약은 언제인가요?"
-      buttons:
-        - title: ""
-          payload: ""
   utter_ask_reserveTime:
     - text: "진료 및 검진 예약시간은 언제인가요?"
-      buttons:
-        - title: ""
-          payload: ""
   utter_ask_reserveYn:
     - text: "진료 및 검진 예약을 하셨나요?"
-      buttons:
-        - title: ""
-          payload: ""
   utter_ask_Service:
     - text: "동행 또는 돌봄 서비스중 어떤 서비스를 하시겠어요?"
       buttons:
-        - title: "동행"
-          payload: "/int00002"
         - title: "돌봄"
           payload: "/int00003"
+        - title: "동행"
+          payload: "/int00002"
     - text: "동행 또는 돌봄 서비스중 어떤 서비스를 원하시나요?"
       buttons:
-        - title: "동행"
-          payload: "/int00002"
         - title: "돌봄"
           payload: "/int00003"
+        - title: "동행"
+          payload: "/int00002"
     - text: "동행 또는 돌봄 서비스를 선택해주세요."
       buttons:
-        - title: "동행"
-          payload: "/int00002"
         - title: "돌봄"
           payload: "/int00003"
-    - text: "동행 또는 돌봄 서비스를 선택해주세요."
+        - title: "동행"
+          payload: "/int00002"
+    - text: "어떤 서비스를 하시겠어요?"
       buttons:
-        - title: "동행"
-          payload: "/int00002"
         - title: "돌봄"
           payload: "/int00003"
+        - title: "동행"
+          payload: "/int00002"
   utter_ask_service_detail_for_int00002:
     - text: "이용하실 서비스를 선택해 주세요"
       buttons:
-        - title: "BUTTON"
-          payload: "[{'type':'button','intent':'','text':'기타동행'},{'type':'button','intent':'','text':'One Day(9시간)'},{'type':'button','intent':'','text':'투석전용(5시간)'},{'type':'button','intent':'','text':'한시간전용(1시간)'},{'type':'button','intent':'','text':'정기검진'},{'type':'button','intent':'','text':'외래진료'}]"
+        - title: "한시간전용(1시간)"
+          payload: "/inform{"service_detail_for_int00002":"한시간전용(1시간)"}"
+        - title: "투석전용(5시간)"
+          payload: "/inform{"service_detail_for_int00002":"투석전용(5시간)"}"
+        - title: "정기검진"
+          payload: "/inform{"service_detail_for_int00002":"정기검진"}"
+        - title: "외래진료"
+          payload: "/inform{"service_detail_for_int00002":"외래진료"}"
+        - title: "기타동행"
+          payload: "/inform{"service_detail_for_int00002":"기타동행"}"
+        - title: "One Day(9시간)"
+          payload: "/inform{"service_detail_for_int00002":"One Day(9시간)"}"
   utter_ask_ServiceDetail:
     - text: "상세서비스를 입력해주세요."
-      buttons:
-        - title: ""
-          payload: ""
     - text: "상세서비스를 입력해주세요."
-      buttons:
-        - title: ""
-          payload: ""
   utter_ask_StartDate:
     - text: "시작일자를 입력해주세요."
-      buttons:
-        - title: ""
-          payload: ""
   utter_ask_userBirthDate:
     - text: "이용자분의 생년월일을 입력해 주세요 "
-      buttons:
-        - title: ""
-          payload: ""
   utter_ask_userGenderCd:
     - text: "이용자분의 성별을 선택해 주세요"
       buttons:
-        - title: ""
-          payload: ""
+        - title: "여성"
+          payload: "/inform{"userGenderCd":"여성"}"
+        - title: "남성"
+          payload: "/inform{"userGenderCd":"남성"}"
   utter_ask_userHealthCd:
     - text: "이용자분의 건강 특이사항이 있으신가요?"
       buttons:
-        - title: ""
-          payload: ""
+        type: "template"
+        payload: "{'elements': [{' - title': '휠체어 사용', '   subtitle': 'CHECKBOX'}, {' - title': '저혈압', '   subtitle': 'CHECKBOX'}, {' - title': '심근경색', '   subtitle': 'CHECKBOX'}, {' - title': '시력불편', '   subtitle': 'CHECKBOX'}, {' - title': '기타(상세기제필요)', '   subtitle': 'CHECKBOX'}, {' - title': '거동불편&부축필요', '   subtitle': 'CHECKBOX'}, {' - title': '거동불편', '   subtitle': 'CHECKBOX'}], 'template_type': 'list'}"
   utter_ask_userPhoneNo:
     - text: "이용자분의 전화번호를 입력해 주세요"
-      buttons:
-        - title: ""
-          payload: ""
   utter_int00001_message:
     - text: ""
       buttons: null
@@ -290,10 +270,8 @@ responses:
     - text: "돌봄서비스 예약완료되었습니다."
       buttons: null
   utter_int00004_message:
-    - text: "모시미는 고령화, 1인가구, 맞벌이 가족들이 많이 생기는 시대에 맞춰
-
-동행/돌봄 매니저를 AI, 빅데이터, 위치 정보 등 다양한 IT 기술을
-
+    - text: "모시미는 고령화, 1인가구, 맞벌이 가족들이 많이 생기는 시대에 맞춰
+동행/돌봄 매니저를 AI, 빅데이터, 위치 정보 등 다양한 IT 기술을
 활용하여 제공하는 매칭 플랫폼입니다."
       buttons:
         - title: "동행 서비스 소개"
@@ -301,30 +279,18 @@ responses:
         - title: "돌봄 서비스 소개"
           payload: "/int00006"
   utter_int00005_message:
-    - text: "동행 서비스는 가족이 함께할 수 없는 병원 방문, 지정 장소 등 동행이 필요할 때 
-
-가족을 안심하고 위탁할 수 있는 서비스입니다. 
-
-
-
-◎ 대상 : 본인, 직계가족(부모님, 자녀 등)
-
-
-
-◎ 서비스내용
-
-    ① 이동동행(Door to Door) : 지정장소(자택, 버스터미널 등) ↔ 지정장소(병원, 학교 등) 
-
-        - 고객님 소유 차량, 매니저 차량, 택시 등 이용
-
-    ② 업무도움 : 접수 및 수납, 외래진료, 검진, 진료 후 약국업무도움 등
-
-
-
-◎ 서비스시간
-
-    - 기본(2시간) + @
-
+    - text: "동행 서비스는 가족이 함께할 수 없는 병원 방문, 지정 장소 등 동행이 필요할 때 
+가족을 안심하고 위탁할 수 있는 서비스입니다. 
+
+◎ 대상 : 본인, 직계가족(부모님, 자녀 등)
+
+◎ 서비스내용
+    ① 이동동행(Door to Door) : 지정장소(자택, 버스터미널 등) ↔ 지정장소(병원, 학교 등) 
+        - 고객님 소유 차량, 매니저 차량, 택시 등 이용
+    ② 업무도움 : 접수 및 수납, 외래진료, 검진, 진료 후 약국업무도움 등
+
+◎ 서비스시간
+    - 기본(2시간) + @
     - One Day (9시간) : 지방에서 서울지역 등 장거리 병원 방문 시 이용 할 수 있는 옵션"
       buttons:
         - title: "외래진료 소개"
@@ -340,28 +306,17 @@ responses:
         - title: "기타 동행 서비스 소개"
           payload: "/int00012"
   utter_int00006_message:
-    - text: "돌봄 서비스는 가족이 함께할 수 없는 자택, 병원 등 지정 장소에서 돌봄이 필요할 때 
-
-가족을 안심하고 위탁할 수 있는 서비스입니다. 
-
-
-
-◎ 대 상 : 부모님, 우리아이
-
-
-
-◎ 장 소 : 병원, 자택 등 지정장소
-
-
-
-◎ 서비스내용 : 주변정돈, 산책/운동, 말벗, 복약도움, 식사도움 등
-
-
-
-◎ 서비스시간
-
-    - 기본(2시간) + @
-
+    - text: "돌봄 서비스는 가족이 함께할 수 없는 자택, 병원 등 지정 장소에서 돌봄이 필요할 때 
+가족을 안심하고 위탁할 수 있는 서비스입니다. 
+
+◎ 대 상 : 부모님, 우리아이
+
+◎ 장 소 : 병원, 자택 등 지정장소
+
+◎ 서비스내용 : 주변정돈, 산책/운동, 말벗, 복약도움, 식사도움 등
+
+◎ 서비스시간
+    - 기본(2시간) + @
     - One Day (9시간) : 하루 동안 돌봄 필요 시 이용 할 수 있는 옵션"
       buttons:
         - title: "가정 돌봄 서비스 소개"
@@ -375,236 +330,136 @@ responses:
         - title: "노인 돌봄 서비스 소개"
           payload: "/int00013"
   utter_int00007_message:
-    - text: "모시미의 병원 동행 서비스는 다양한 이유로 혼자 병원 방문이 어려운 경우 이용 가능한 서비스입니다.
-
-
-
-모시미의 병원 동행 서비스 이럴 때 사용하세요.
-
-
-
-휴가를 사용할 수 없는 날 가족이 아픈 경우
-
-
-
-보호자의 역할 을 혼자서 하기 힘든 경우
-
-
-
-거동이 불편해 혼자 병원을 방문하기 어려운 경우
-
-
-
+    - text: "모시미의 병원 동행 서비스는 다양한 이유로 혼자 병원 방문이 어려운 경우 이용 가능한 서비스입니다.
+
+모시미의 병원 동행 서비스 이럴 때 사용하세요.
+
+휴가를 사용할 수 없는 날 가족이 아픈 경우
+
+보호자의 역할 을 혼자서 하기 힘든 경우
+
+거동이 불편해 혼자 병원을 방문하기 어려운 경우
+
 장애(시각, 청각 등)로 혼자 병원 방문이 어려운 경우"
       buttons: null
   utter_int00008_message:
-    - text: "건강검진 동행
-
-
-
-모시미의 건강검진 동행 서비스는 검진을 위해 보호자 동행으로 병원 방문이 필요한 경우 이용 가능한 서비스입니다.
-
-
-
-모시미의 건강검진 동행 서비스 이럴 때 사용하세요.
-
-
-
-수면 내시경 시 보호자 동행을 요청한 경우
-
-
-
-안과 시술/ 수술로 보호자 동행이 필요한 경우
-
-
-
+    - text: "건강검진 동행
+
+모시미의 건강검진 동행 서비스는 검진을 위해 보호자 동행으로 병원 방문이 필요한 경우 이용 가능한 서비스입니다.
+
+모시미의 건강검진 동행 서비스 이럴 때 사용하세요.
+
+수면 내시경 시 보호자 동행을 요청한 경우
+
+안과 시술/ 수술로 보호자 동행이 필요한 경우
+
 마취를 필요로 하는 검사로 보호자 동행이 필요한 경우"
       buttons: null
   utter_int00009_message:
-    - text: "투석 전용 동행
-
-
-
-모시미의 투석 전용 서비스는 정기적인 투석치료가 필요한 환자와 가족을 위한 서비스 입니다.
-
-
-
-신장 질환 등으로 정기적인 투석을 받아야하는
-
-
-
-투석 환자와 가족들에게
-
-
-
-동행 서비스 비용에 대한 부담을 덜어주기 위해
-
-
-
+    - text: "투석 전용 동행
+
+모시미의 투석 전용 서비스는 정기적인 투석치료가 필요한 환자와 가족을 위한 서비스 입니다.
+
+신장 질환 등으로 정기적인 투석을 받아야하는
+
+투석 환자와 가족들에게
+
+동행 서비스 비용에 대한 부담을 덜어주기 위해
+
 출시된 전용 동행 서비스입니다."
       buttons: null
   utter_int00010_message:
-    - text: "한시간 전용 동행
-
-
-
-모시미의 한시간 전용 동행 서비스는 1시간 이내의 서비스가 필요한 경우 이용 가능한 서비스입니다.
-
-
-
-모시미의 한시간 전용 동행 서비스 이럴 때 사용하세요.
-
-
-
-병원 내에서 도움이 필요한 경우
-
-
-
-투석 치료 후 이동에만 도움이 필요한 경우
-
-
-
-내시경 검사로 보호자가 필요한 경우
-
-
-
+    - text: "한시간 전용 동행
+
+모시미의 한시간 전용 동행 서비스는 1시간 이내의 서비스가 필요한 경우 이용 가능한 서비스입니다.
+
+모시미의 한시간 전용 동행 서비스 이럴 때 사용하세요.
+
+병원 내에서 도움이 필요한 경우
+
+투석 치료 후 이동에만 도움이 필요한 경우
+
+내시경 검사로 보호자가 필요한 경우
+
 1시간 이내 짧은 동행 서비스가 필요한 경우"
       buttons: null
   utter_int00011_message:
-    - text: "OneDay 동행
-
-
-
+    - text: "OneDay 동행
+
 서비스 당일 9시간 동안 동행하는 서비스"
       buttons: null
   utter_int00012_message:
-    - text: "기타 동행
-
-
-
-모시미의 기타 동행 서비스는 그 외 동행이 필요한 경우 이용 가능한 서비스입니다.
-
-
-
-모시미의 기타 동행 서비스 이럴 때 사용하세요.
-
-
-
-은행에 혼자 방문하기 어려운 경우
-
-
-
-관공서에 혼자 방문하기 어려운 경우
-
-
-
+    - text: "기타 동행
+
+모시미의 기타 동행 서비스는 그 외 동행이 필요한 경우 이용 가능한 서비스입니다.
+
+모시미의 기타 동행 서비스 이럴 때 사용하세요.
+
+은행에 혼자 방문하기 어려운 경우
+
+관공서에 혼자 방문하기 어려운 경우
+
 그 외 동행 서비스가 필요한 경우"
       buttons: null
   utter_int00013_message:
-    - text: "노인 돌봄
-
-
-
-모시미의 노인 돌봄 서비스는 혼자서 부모님 케어가 어려운 경우 이용 가능한 서비스 입니다.
-
-
-
-모시미의 노인 돌봄 서비스 이럴 때 사용하세요.
-
-
-
-치매가 있으신 부모님을 혼자 케어하기 어려운 경우
-
-
-
-거동이 불편한 부모님을 혼자 케어하기 어려운 경우
-
-
-
-단시간 외출로 혼자 계신 부모님 케어가 필요할 경우
-
-
-
+    - text: "노인 돌봄
+
+모시미의 노인 돌봄 서비스는 혼자서 부모님 케어가 어려운 경우 이용 가능한 서비스 입니다.
+
+모시미의 노인 돌봄 서비스 이럴 때 사용하세요.
+
+치매가 있으신 부모님을 혼자 케어하기 어려운 경우
+
+거동이 불편한 부모님을 혼자 케어하기 어려운 경우
+
+단시간 외출로 혼자 계신 부모님 케어가 필요할 경우
+
 말벗, 산책, 식사 등 혼자 거주하는 부모님 케어가 필요한 경우"
       buttons: null
   utter_int00014_message:
-    - text: "아이 돌봄
-
-
-
-모시미의 아이 돌봄 서비스는 아이 돌봄이 어려운 경우 이용 가능한 서비스 입니다.
-
-
-
-모시미의 아이 돌봄 서비스 이럴 때 사용하세요.
-
-
-
-학교/어린이집 등의 휴교로 아이 혼자 집에 남게 된 경우
-
-
-
-단축 수업 등으로 아이가 일찍 집에 오게 된 경우
-
-
-
-재택 근무로 아이와 함께 있어도 케어가 어려운 경우
-
-
-
+    - text: "아이 돌봄
+
+모시미의 아이 돌봄 서비스는 아이 돌봄이 어려운 경우 이용 가능한 서비스 입니다.
+
+모시미의 아이 돌봄 서비스 이럴 때 사용하세요.
+
+학교/어린이집 등의 휴교로 아이 혼자 집에 남게 된 경우
+
+단축 수업 등으로 아이가 일찍 집에 오게 된 경우
+
+재택 근무로 아이와 함께 있어도 케어가 어려운 경우
+
 어린 자녀 케어로 다른 자녀 케어가 어려운 경우"
       buttons: null
   utter_int00015_message:
-    - text: "가정 돌봄
-
-
-
-모시미의 가정 돌봄 서비스는 가정에서 케어가 어려운 경우 이용 가능한 서비스 입니다.
-
-
-
-모시미의 가정 돌봄 서비스 이럴 때 사용하세요.
-
-
-
-갑작스러운 사고로 혼자 집에서 생활하기 어려운 경우
-
-
-
+    - text: "가정 돌봄
+
+모시미의 가정 돌봄 서비스는 가정에서 케어가 어려운 경우 이용 가능한 서비스 입니다.
+
+모시미의 가정 돌봄 서비스 이럴 때 사용하세요.
+
+갑작스러운 사고로 혼자 집에서 생활하기 어려운 경우
+
 가정 내에서 노인 또는 아이의 케어가 필요한 경우"
       buttons: null
   utter_int00016_message:
-    - text: "병원 돌봄
-
-
-
-모시미의 병원 돌봄 서비스는 병원에서 케어가 어려운 경우 이용 가능한 서비스 입니다.
-
-
-
-모시미의 병원 돌봄 서비스 이럴 때 사용하세요.
-
-
-
-병실 내 보호자가 필요한 경우
-
-
-
+    - text: "병원 돌봄
+
+모시미의 병원 돌봄 서비스는 병원에서 케어가 어려운 경우 이용 가능한 서비스 입니다.
+
+모시미의 병원 돌봄 서비스 이럴 때 사용하세요.
+
+병실 내 보호자가 필요한 경우
+
 단기 입원으로 단기간 케어가 필요한 경우"
       buttons: null
   utter_int00017_message:
-    - text: "기타 돌봄
-
-
-
-모시미의 기타 돌봄 서비스는 그 외 케어가 어려운 경우 이용 가능한 서비스 입니다.
-
-
-
-모시미의 기타 돌봄 서비스 이럴 때 사용하세요.
-
-
-
+    - text: "기타 돌봄
+
+모시미의 기타 돌봄 서비스는 그 외 케어가 어려운 경우 이용 가능한 서비스 입니다.
+
+모시미의 기타 돌봄 서비스 이럴 때 사용하세요.
+
 그 외 돌봄 서비스가 필요한 경우"
       buttons: null
   utter_default:

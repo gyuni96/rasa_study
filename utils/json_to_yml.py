@@ -294,13 +294,13 @@ def get_domain_json():
                             iem.entity_id, 
                             case when iec.entity_id is null then
                                     json_array(
-                                        json_object('type', 'text'), json_object('influence_conversation', false)
+                                        json_object('type', 'text'), json_object('influence_conversation', 'false')
                                     )
                                 else 
                                     json_array(
                                         json_object('type', 'categorical')
-                                        , json_object('influence_conversation', false)
-                                        , json_object('values', json_arrayagg(iec.entity_word))
+                                        , json_object('influence_conversation', 'false')
+                                        , json_object('values', json_arrayagg(CONCAT("'",iec.entity_word , "'") ))
                                     )
                                 end
                         )
@@ -344,12 +344,47 @@ def get_domain_json():
           from (
             /* 슬롯 메시지 */
             select json_object(concat('utter_ask_', main.entity_id), main.slot_prompt) as responses
-              from (           
-                select isp.entity_id , json_arrayagg(json_object('- text', isp.slot_prompt, '  buttons', json_array(json_object('- title', ifnull(isv.view_cd,'') , '  payload', ifnull(isv.view_script,''))))) as slot_prompt
-                  from mosimi_chat.itb_slot_prompt isp
-             left join mosimi_chat.itb_slot_view isv on isp.entity_id = isv.entity_id 
-              group by isp.entity_id
-             ) main
+              from (   
+                select sp.comp_cd , sp.entity_id 
+                     , json_arrayagg(json_merge(
+                            json_object('- text', sp.slot_prompt),
+                        case 
+                            when vt.view_cd = 'BUTTON' then json_object('  buttons', vt.view_type)
+                            when vt.view_cd != 'BUTTON' then json_object('  attachment' , vt.view_type)
+                            else json_object()
+                        end
+                      )) as slot_prompt
+                  from mosimi_chat.itb_slot_prompt sp 
+             left join (
+                select sv.intent_id , sv.entity_id , sv.view_cd 
+					 , case when sv.view_cd = 'BUTTON' 
+					 		then json_arrayagg(json_object(
+							'- title' , svd.view_text, 
+							'  payload' , case when ifnull(svd.relation_intent_id, '') != '' 
+												then concat('/',svd.relation_intent_id) 
+												else concat('/inform{"', sv.entity_id,'":"',svd.view_text,'"}') 
+									 	  end
+							))
+							when sv.view_cd = 'CHECKBOX'
+							then json_array(json_object(
+								'type' , 'template' ,
+								'payload' , json_object(
+								'template_type', 'list',
+								'elements' , json_arrayagg(json_object(
+									' - title' , svd.view_text ,
+									'   subtitle' , sv.view_cd 
+									))
+								))
+							)
+							else null end as view_type
+				  from itb_slot_view sv
+             left join itb_slot_view_detail svd 
+				    on sv.intent_id = svd.intent_id 
+				   and sv.entity_id = svd.entity_id 
+              group by sv.intent_id , sv.entity_id 
+                    )vt on vt.entity_id = sp.entity_id
+          group by sp.entity_id
+               ) main
              union
              /* 폼 작성 완료 메시지 */
              select json_object(concat('utter_', iam.intent_id, '_message')

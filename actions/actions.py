@@ -329,22 +329,21 @@ class ValidateInt00002Form(FormValidationAction):
         else:
             return {"Service": value}
         
-    async def validate_servce_detail_for_int00002(
-            self,
-            value: Text,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any],
+    async def validate_service_detail_for_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         
         print("#######################################################")
-        print('validate_servce_detail_for_int00002 ', value)
-        print('validate_servce_detail_for_int00002 ', dispatcher)
-        print('validate_servce_detail_for_int00002 ', tracker)
-        print('validate_servce_detail_for_int00002 ', domain)
 
-        print('validate_servce_detail_for_int00002 ', value)
-        return {"servce_detail_for_int00002": value}
+        """Validate service_detail_for_int00002 slot value."""
+        if slot_value not in ["One Day(9시간)", "기타동행", "한시간전용(1시간)", "정기검진", "외래진료", "투석전용(5시간)"]:
+            dispatcher.utter_message(text="잘못된 서비스 선택입니다. 다시 선택해주세요.")
+            return {"service_detail_for_int00002": None}
+        return {"service_detail_for_int00002": slot_value}
 
     # 이용자명 validation
     async def validate_Name(
