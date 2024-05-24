@@ -9,7 +9,6 @@ import re, json
 from utils.Database import Database
 from config.DatabaseConfig import DatabaseConfig
 import requests
-import time
 import logging
 
 global db_conn
@@ -134,6 +133,7 @@ class ActionSessionStart(Action):
         return events
 
 
+## 풀백 액션 클래스
 class ActionDefaultFallback(Action):
     """Executes the fallback action and goes back to the previous state of the dialogue"""
 
@@ -197,7 +197,11 @@ class ActionInt00004(Action):
             f"   and comp_cd='{compCd}'"
         )
         answer_result = db_conn.select_one(sql)
-        dispatcher.utter_message(text=answer_result['answer_phrase'])
+
+        # 메시지 json_string으로 변환
+        json_string = json.dumps([answer_result['answer_phrase']], ensure_ascii=False, indent=4)
+
+        dispatcher.utter_message(custom={ "text": json_string})
 
         # 임시
         # intents = {'int00005': '동행 서비스', 'int00006': '돌봄 서비스'}
@@ -219,64 +223,51 @@ class ActionInt00004(Action):
 
             dispatcher.utter_message(text='다음과 같은 서비스들이 있습니다.', buttons=buttons)
 
-class ValidateInt00001Form(FormValidationAction):
+class TokenVerificationForService(Action):
+    ## 서비스 요청을 위한 트큰 검증 클래스
     def name(self) -> Text:
-        return "validate_int00001_form"
-
-    async def required_slots(
-            self,
-            slots_mapped_in_domain: List[Text],
-            dispatcher: "CollectingDispatcher",
-            tracker: "Tracker",
-            domain: "DomainDict",
-    ) -> Optional[List[Text]]:
-        print('ValidateInt00001Form Service', tracker.get_slot('Service'))
-        print('ValidateInt00001Form slots_mapped_in_domain', slots_mapped_in_domain)
-        return slots_mapped_in_domain
-
-    async def run(
-            self,
-            dispatcher: "CollectingDispatcher",
-            tracker: "Tracker",
-            domain: "DomainDict",
-    ) -> List[EventType]:
-        extraction_events = await self.extract_custom_slots(dispatcher, tracker, domain)
-        tracker.add_slots(extraction_events)
-        print('ValidateInt00001Form run extraction_events ', extraction_events)
-        latest_intent = tracker.latest_message['intent'].get('name')
-        print(latest_intent)
-        validation_events = await self.validate(dispatcher, tracker, domain)
-        tracker.add_slots(validation_events)
-        print('ValidateInt00001Form run validation_events ', validation_events)
-
-
-        next_slot = await self.next_requested_slot(dispatcher, tracker, domain)
-        print('ValidateInt00001Form run next_slot ', next_slot)
-
-        if next_slot:
-            validation_events.append(next_slot)
-
-        return validation_events
-
-    # 서비스 타입 validation
-    async def validate_Service(
-            self,
-            value: Text,
+        ## 액션 이름 정의
+        return "action_token_verification_for_service"
+    
+    def run (
+            self, 
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
-            domain: Dict[Text, Any],
-    ) -> Dict[Text, Any]:
-        print('ValidateInt00001Form validate_Service ', value)
-        latest_intent = tracker.latest_message['intent'].get('name')
-        if value.find('/') != -1:
-            value = value.replace('/', '')
-            value = value.replace(latest_intent, '')
-            value_json = json.loads(value)
-            value = value_json['Service']
-        print(latest_intent)
-        print(value)
-        print('latest_message intent ', latest_intent)
-        return {"Service": value}
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        # 토큰정보 metadata에서 추출
+        auth_token = tracker.latest_message.get('metadata', {}).get('Authorization', '')
+
+        if not auth_token :
+            dispatcher.utter_message(text='서비스 요청을 위해서는 로그인이 필요합니다.\n 로그인 후 다시 시도해주세요.')
+            return [SlotSet("active_loop", None)]
+        else : 
+            response = requests.api.post("http://localhost:8010/api/use/get/chatbot/user", headers={'Authorization': auth_token})
+            user_list = response.json()
+
+            if user_list :
+                dispatcher.utter_message(custom={ "text" : "['이용하실 고객님을 선택해주세요.']" , "buttons" : user_list})
+                return [SlotSet("active_loop", None)]
+            else :
+                ## 데이터가 없는 경우 다음 단계로 넘어간다.
+                return [SlotSet("userSysId" , None),SlotSet("active_loop", None)]
+    
+class ActionSetUserInfo(Action): 
+    def name(self) -> Text:
+        return "action_set_user_info"
+    
+    def run(
+            self, 
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]
+        )-> List[Dict[Text, Any]]:
+
+            print("############################사용자 정보 설정")
+            print(tracker.latest_message.get('text'))
+
+
+            return []
 
 # 서비스 요청하기 검증 액션 클래스
 class ValidateInt00002Form(FormValidationAction):
@@ -287,23 +278,17 @@ class ValidateInt00002Form(FormValidationAction):
     async def required_slots(
             self,
             slots_mapped_in_domain: List[Text],
-            dispatcher: "CollectingDispatcher",
-            tracker: "Tracker",
-            domain: "DomainDict",
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any],
     ) -> Optional[List[Text]]:
-        compCd = tracker.latest_message.get('metadata', {}).get('compCd', '')
-        print('ValidateInt00002Form compCd: ', compCd)
-        print('ValidateInt00002Form required_slots Service', tracker.get_slot('Service'))
-        print('ValidateInt00002Form required_slots current_slot_values', tracker.current_slot_values())
-        service = tracker.get_slot('Service')
-        print('ValidateInt00002Form required_slots slots_mapped_in_domain', slots_mapped_in_domain)
-        # print('ValidateInt00002Form domain', domain)
-        print('ValidateInt00002Form required_slots slots[service]', domain['slots']['Service']['values'])
-        # 돌봄 서비스는 출발지 슬롯을 필수 슬롯에서 제외
-        # if tracker.get_slot('serviceType') == '돌봄':
-        #     slots_mapped_in_domain.remove('departure')
-        # print('slots_mapped_in_domain', slots_mapped_in_domain)
-        # if service is not None and service
+        if tracker.get_slot('reserveYn') == '아니요' :
+            # 예약이 없는 경우 reserveDate와 reserveTime 슬롯을 제거
+            if 'reserveDate' in slots_mapped_in_domain:
+                slots_mapped_in_domain.remove('reserveDate')
+            if 'reserveTime' in slots_mapped_in_domain:
+                slots_mapped_in_domain.remove('reserveTime')
+
         return slots_mapped_in_domain
 
     # 서비스 타입 validation
@@ -314,17 +299,17 @@ class ValidateInt00002Form(FormValidationAction):
             tracker: Tracker,
             domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        print('ValidateInt00002Form validate_Service ', value)
-        print('ValidateInt00002Form validate_Service current_slot_values', tracker.current_slot_values())
-        latest_intent = tracker.latest_message['intent'].get('name')
-        if value.find('/') != -1:
-            value = value.replace('/', '')
-            value = value.replace(latest_intent, '')
-            value_json = json.loads(value)
-            value = value_json['Service']
-            print(value)
+        print("############################서비스 검증")
+        # latest_intent = tracker.latest_message['intent'].get('name')
 
-        if value is None:
+        # print("latest_intent : ", latest_intent)
+        # if value.find('/') != -1:
+        #     value = value.replace('/', '')
+        #     value = value.replace(latest_intent, '')
+        #     value_json = json.loads(value)
+        #     value = value_json['Service']
+        #     print(value)
+        if value not in ['동행' , '동행서비스' , '동행 서비스']:
             dispatcher.utter_message('동행 또는 돌봄과 함께 다시 입력해주세요.')
         else:
             return {"Service": value}
@@ -337,10 +322,19 @@ class ValidateInt00002Form(FormValidationAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         
-        print("#######################################################")
+        print("############################상세 서비스 검증")
 
-        """Validate service_detail_for_int00002 slot value."""
-        if slot_value not in ["One Day(9시간)", "기타동행", "한시간전용(1시간)", "정기검진", "외래진료", "투석전용(5시간)"]:
+        sql = """
+            select JSON_ARRAYAGG(entity_word) as entity_word
+              from mosimi_chat.itb_entity_collection
+             where entity_id = 'service_detail_for_int00002'
+        """
+
+        result = db_conn.select_one(sql)
+
+        print(result['entity_word'])
+
+        if slot_value not in result['entity_word']:
             dispatcher.utter_message(text="잘못된 서비스 선택입니다. 다시 선택해주세요.")
             return {"service_detail_for_int00002": None}
         return {"service_detail_for_int00002": slot_value}
@@ -353,7 +347,10 @@ class ValidateInt00002Form(FormValidationAction):
             tracker: Tracker,
             domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        print('ValidateInt00002Form validate_Name ', value)
+        
+        print("############################사용자 명 검증")
+
+        # print('ValidateInt00002Form validate_Name ', value)
         return {"Name": value}
 
     # 서비스 시작일자 validation
@@ -414,6 +411,19 @@ class ValidateInt00002Form(FormValidationAction):
             domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         return {"Destination": value}
+    
+    def validate_reserveYn(
+            self,
+            value: Text,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        
+        print("############################예약 여부 검증")
+        print(value)
+
+        return {"reserveYn": value}
 
 # 서비스 요청하기 검증 액션 클래스
 class Validateint00003Form(FormValidationAction):

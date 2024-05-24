@@ -16,145 +16,7 @@ def generate_nlu_yaml_text(intent_examples):
         for example in examples:
             nlu_text += f"    - {example}\n"
     return nlu_text
-# 사용자 의도와 예제들
-intent_examples = {
-    "greet": ["hello", "hi", "hey"],
-    "goodbye": ["goodbye", "see you later"],
-    "inform": ["I want to book a flight", "I'd like to make a reservation"]
-}
-domain_keys = ["intents", "entities", "forms", "slots", "responses"]
-domain = {
-    "intents": ["int00001", "int00002", "int00003", "serviceType", "userName"],
-    "entities": ["serviceType", "userName", "serviceStartDate", "serviceEndDate"
-                , "departure", "destination"],
-    # "excluded_intents": ["affirm", "deny"],
-    "forms": [{"gowith_booking_form":
-                   {"required_slots": [
-                       {"serviceType": [{"- type": "from_entity"},
-                                        {"  entity": "serviceType"}]},
-                       {"userName": [{"- type": "from_text"},
-                                     {"  not_include": "excludes_intents"}]},
-                       {"serviceStartDate": [{"- type": "from_text"},
-                                             {"  not_intent": "excluded_intents"}]},
-                       {"serviceEndDate": [{"- type": "from_text"},
-                                           {"  not_include": "excludes_intents"}]},
-                       {"departure": [{"- type": "from_text"},
-                                      {"  not_include": "excludes_intents"}]},
-                       {"destination": [{"- type": "from_text"},
-                                        {"  not_include": "excludes_intents"}]}
-                   ]}}
-            , {"care_booking_form":  [
-                       {"serviceType": [{"- type": "from_entity"},
-                                        {"  entity": "serviceType"}]},
-                       {"userName": [{"- type": "from_text"},
-                                     {"  not_include": "excludes_intents"}]},
-                       {"serviceStartDate": [{"- type": "from_text"},
-                                             {"  not_intent": "excluded_intents"}]},
-                       {"serviceEndDate": [{"- type": "from_text"},
-                                           {"  not_include": "excludes_intents"}]},
-                       {"destination": [{"- type": "from_text"},
-                                        {"  not_include": "excludes_intents"}]}
-                   ]}],
-    "slots": [
-        {"serviceType": [
-            {"type": "categorical"},
-            {"values": ["- 동행", "- 돌봄"]},
-            {"influence_conversation": "false"}
-        ]},
-        {"userName": [
-            {"type": "text"},
-            {"influence_conversation": "false"}
-        ]},
-        {"serviceStartDate": [
-            {"type": "text"},
-            {"influence_conversation": "false"}
-        ]},
-        {"serviceEndDate": [
-            {"type": "text"},
-            {"influence_conversation": "false"}
-        ]},
-        {"departure": [
-            {"type": "text"},
-            {"influence_conversation": "false"}
-        ]},
-        {"destination": [
-            {"type": "text"},
-            {"influence_conversation": "false"}
-        ]}
-    ],
-    "responses": [
-        {"utter_ask_serviceType": [
-            {"- text": "서비스 종류를 선택해 주세요."},
-            {"  buttons": [
-                {"- title": "동행"},
-                {"  payload": "/int00002{{'serviceType':'동행'}}"},
-                {"- title": "돌봄"},
-                {"  payload": "/int00003{{'serviceType':'돌봄'}}"}
-            ]}
-        ]},
-        {"utter_ask_userName": [
-            {"- text": "이용자명을 입력해주세요."}
-        ]},
-        {"utter_ask_serviceStartDate": [
-            {"- text": "서비스 시작일을 입력해주세요.\n\nex) 2024-03-21"}
-        ]},
-        {"utter_ask_serviceEndDate": [
-            {"- text": "서비스 종료일을 입력해주세요.\n\nex) 2024-03-21"}
-        ]},
-        {"utter_ask_departure": [
-            {"- text": "출발지를 입력해주세요."}
-        ]},
-        {"utter_ask_destination": [
-            {"- text": "도착지를 입력해주세요."}
-        ]},
-        {"utter_gowith_booking_complete": [
-            {"- text": "서비스 요청이 완료 됐습니다.\n- 서비스명: {serviceType}\n- 이용자명: {userName}\n- 서비스 시작일: {serviceStartDate}\n- 서비스 종료일: {serviceEndDate}\n- 출발지: {departure}\n- 도착지: {destination}\n"}
-        ]},
-        {"utter_care_booking_complete": [
-            {"- text": "서비스 요청이 완료 됐습니다.\n- 서비스명: {serviceType}\n- 이용자명: {userName}\n- 서비스 시작일: {serviceStartDate}\n- 서비스 종료일: {serviceEndDate}\n- 도착지: {destination}\n"}
-        ]},
-        {"utter_please_rephrase": [
-            {"- text": "죄송합니다. 질문을 이해하지 못했습니다. 다시 말씀해 주시겠어요?"}
-        ]},
-        {"utter_please_rephrase": [
-            {"- text": "죄송합니다. 질문을 인식하지 못했습니다. 다시 말씀해 주시겠어요?"}
-        ]},
-        {"utter_ask_confirm_continue": [
-            {"- text": "대화와 무관한 내용이 입력되었습니다. 계속 할까요?"},
-            {"  buttons": [
-                {"- title": "네"},
-                {"  payload": "/yes"},
-                {"- title": "아니오"},
-                {"  payload": "/no"}
-            ]}
-        ]},
-        {"utter_ask_confirm_stop": [
-            {"- text": "그만 할까요?"},
-            {"  buttons": [
-                {"- title": "네"},
-                {"  payload": "/affirm"},
-                {"- title": "아니오"},
-                {"  payload": "/deny"}
-            ]}
-        ]},
-        {"utter_stop_booking": [
-            {"- text": "서비스 요청이 중단되었습니다. 다음에 다시 이용해 주세요."}
-        ]}
-    ],
-    "actions": [
-        "action_restart",
-      "action_gowith_check_termination",
-      "action_care_check_termination",
-      "action_session_start",
-      "action_deactive_loop",
-      "validate_gowith_booking_form",
-      "validate_care_booking_form"
-    ],
-    "session_config": [
-        {"session_expiration_time": 60},
-        {"carry_over_slots_to_new_session": "true"}
-    ]
-}
+
 def generate_yaml_file(yaml_text, file_name):
     # NLU YAML 텍스트 생성
     # yaml_text = generate_nlu_yaml_text(intent_examples)
@@ -163,11 +25,13 @@ def generate_yaml_file(yaml_text, file_name):
     # yaml_json = json.dumps({"nlu": yaml_text})
     # # 출력
     # print(yaml_json)
-    print(yaml_text)
+    
+    # print(yaml_text)
+
     with open(file_name, "w", encoding='utf-8') as yml_file:
         yml_file.write(yaml_text)
 
-    print("NLU data generated and saved as 'nlu_data.yml'")
+    # print("NLU data generated and saved as 'nlu_data.yml'")
 
 def get_intent_json():
     sql = """
@@ -251,16 +115,63 @@ def generate_domain_yaml_text(domain_json):
         domain_text += f"{padding}{key}:\n"                                                 #  utter_ask_service:
         for response_item in response.get(key):
             for k, v in list(response_item.items()):
-                if type(v) is list:             # buttons(itb_entity_mgmt.event_script)가 있으면
-                    domain_text += f"{padding * 3}buttons:\n"
-                    for item in v:  # [{title, payload}]
-                        for k2, v2 in item.items(): # - title, payload
-                            domain_text += f'{padding * 4}{k2}: "{v2}"\n'
-                else:
-                    if v is None:
-                        domain_text += f'{padding * 2}{k}: null\n'                          #    -text: 서비스 종류를 입력해주세요
-                    else:
-                        domain_text += f'{padding * 2}{k}: "{v}"\n'
+                # print("k : ", k)
+                # print("v : ", v)
+                domain_text += f"{padding * 2}{k}:\n"
+                if type(v) is list:
+                    for data in v :
+                        for key, value in data.items():
+                            if key in 'text' :
+                                domain_text += f"{padding * 4}{key}: \"{value}\"\n"
+                            if key in 'slot' :
+                                domain_text += f"{padding * 4}{key}: '{value}'\n"
+                            if key in 'buttons' :
+                                domain_text += f"{padding * 4}{key}:\n"
+                                for item in value:
+                                    for k2, v2 in item.items():
+                                        domain_text += f"{padding * 5}{k2}: '{v2}'\n"
+                            if key in 'attachment' :
+                                domain_text += f"{padding * 4}{key}:\n"
+                                for item in value:
+                                    for k2, v2 in item.items():
+                                        if k2 == 'payload' :
+                                            domain_text += f'{padding * 5}{k2}:\n'
+                                            for item2 in v2:
+                                                for k3, v3 in item2.items():
+                                                    domain_text += f'{padding * 6}{k3}: "{v3}"\n'
+                                        else: 
+                                            domain_text += f'{padding * 5}{k2}: "{v2}"\n'
+                #    - text: 서비스 종류를 입력해주세요
+                # if type(v) is list:             # buttons(itb_entity_mgmt.event_script)가 있으면
+                #     domain_text += f"{padding * 3}{k}:\n"
+                #     if k in '  slot' :
+                #         for item in v: # [{slot}]
+                #             for k2, v2 in item.items(): # - title, payload
+                #                 domain_text += f"{padding * 4}{k2}: '{v2}'\n"
+                #     if k in '  buttons' :
+                #         for item in v:  # [{title, payload}]
+                #             for k2, v2 in item.items(): # - title, payload
+                #                 domain_text += f"{padding * 4}{k2}: '{v2}'\n"
+                #     if k in '  attachment' :
+                #         for item in v: # [{type, payload}]
+                #             for k2, v2 in item.items():
+                #                 if k2 == '  payload' :
+                #                     domain_text += f'{padding * 4}{k2}:\n'
+                #                     for item2 in v2:
+                #                         if type(v2[item2]) is list :
+                #                             domain_text += f'{padding * 6}{item2}:\n'
+                #                             for item3 in v2[item2]:
+                #                                 for k3, v3 in item3.items():
+                #                                     domain_text += f'{padding * 6}{k3}: "{v3}"\n'   
+                #                         else : 
+                #                             domain_text += f'{padding * 6}{item2}: "{v2[item2]}"\n'
+                #                 else: 
+                #                     domain_text += f'{padding * 4}{k2}: "{v2}"\n'
+                # else:
+                #     if v is None:
+                #         domain_text += f'{padding * 2}{k}: null\n'                          #    -text: 서비스 종류를 입력해주세요
+                #     else:
+                #         domain_text += f'{padding * 2}{k}: "{v}"\n'
     domain_text += "actions:\n"                                                             #actions:
     for action in actions:
         domain_text += f"{padding}- {action}\n"                                             #  - action_restart
@@ -269,7 +180,7 @@ def generate_domain_yaml_text(domain_json):
     for config in session_config:                                                           #session_config:
         for k, v in config.items():
             domain_text += f"{padding}{k}: {v}\n"                                           #  session_expiration_time:
-    print(domain_text)
+    # print(domain_text)
     return domain_text
 def get_domain_json():
     intents_sql = """
@@ -345,68 +256,89 @@ def get_domain_json():
             /* 슬롯 메시지 */
             select json_object(concat('utter_ask_', main.entity_id), main.slot_prompt) as responses
               from (   
-                select sp.comp_cd , sp.entity_id 
-                     , json_arrayagg(json_merge(
-                            json_object('- text', sp.slot_prompt),
+                with slot_prompts as (
+    	            select sp.entity_id
+           	             , json_arrayagg(json_merge_patch(
+           		            json_object('text', sp.slot_prompt),
                         case 
-                            when vt.view_cd = 'BUTTON' then json_object('  buttons', vt.view_type)
-                            when vt.view_cd != 'BUTTON' then json_object('  attachment' , vt.view_type)
+                            when sp.slot is not null then json_object('slot', sp.slot)
+                            else json_object()
+                        end,
+                        case
+                            when vt.view_cd = 'BUTTON' then json_object('buttons', vt.view_type)
+                            when vt.view_cd = 'CHECKBOX' then json_object('attachment', vt.view_type)
                             else json_object()
                         end
-                      )) as slot_prompt
-                  from mosimi_chat.itb_slot_prompt sp 
-             left join (
-                select sv.intent_id , sv.entity_id , sv.view_cd 
-					 , case when sv.view_cd = 'BUTTON' 
-					 		then json_arrayagg(json_object(
-							'- title' , svd.view_text, 
-							'  payload' , case when ifnull(svd.relation_intent_id, '') != '' 
-												then concat('/',svd.relation_intent_id) 
-												else concat('/inform{"', sv.entity_id,'":"',svd.view_text,'"}') 
-									 	  end
-							))
-							when sv.view_cd = 'CHECKBOX'
-							then json_array(json_object(
-								'type' , 'template' ,
-								'payload' , json_object(
-								'template_type', 'list',
-								'elements' , json_arrayagg(json_object(
-									' - title' , svd.view_text ,
-									'   subtitle' , sv.view_cd 
-									))
-								))
-							)
-							else null end as view_type
-				  from itb_slot_view sv
-             left join itb_slot_view_detail svd 
-				    on sv.intent_id = svd.intent_id 
-				   and sv.entity_id = svd.entity_id 
-              group by sv.intent_id , sv.entity_id 
-                    )vt on vt.entity_id = sp.entity_id
-          group by sp.entity_id
+                        )) as slot_prompt
+      	              from (
+      	              	select sp.entity_id 
+      	              	     , ec.entity_id as slot
+      	              	     , json_arrayagg(sp.slot_prompt) as slot_prompt 
+                 	      from mosimi_chat.itb_slot_prompt sp
+              	     left join (select entity_id from mosimi_chat.itb_entity_collection group by entity_id )ec on sp.entity_id = ec.entity_id
+                 	  group by sp.entity_id
+      	                    )sp
+                 left join (
+     		        select sv.entity_id, sv.view_cd,
+                        case
+	                        when sv.view_cd = 'BUTTON' then json_arrayagg(json_object(
+                                '- title', svd.view_text, 
+                                '  payload', 
+                                            -- CONCAT('/inform{\"', sv.entity_id, '\":\"', svd.view_text, '\"}')
+                                            case 
+                               			        when ifnull(svd.relation_intent_id, '') != '' then concat('/', svd.relation_intent_id)
+                               	 	            else CONCAT('/inform{\"', sv.entity_id, '\":\"', svd.view_text, '\"}')
+                           			         end
+                                            ))
+                            when sv.view_cd != 'BUTTON' THEN json_array(json_object(
+                                '- type', 'template',
+                                '  payload', json_object(
+                                            'template_type', 'list',
+                                            'elements', json_arrayagg(json_object(
+                                                    'title', svd.view_text,
+                                                    'subtitle', sv.view_cd)))))
+                            else null 
+                        end as view_type
+                      from mosimi_chat.itb_slot_view sv
+                 left join mosimi_chat.itb_slot_view_detail svd 
+           	            on sv.intent_id = svd.intent_id and sv.entity_id = svd.entity_id 
+                  group by sv.intent_id, sv.entity_id, sv.view_cd) vt 
+                        on vt.entity_id = sp.entity_id
+                  group by sp.entity_id
+	            )
+	            select sp.entity_id
+	                 , json_arrayagg(json_object('- custom', slot_prompt)) AS slot_prompt
+	              from slot_prompts sp
+              group by sp.entity_id
                ) main
-             union
-             /* 폼 작성 완료 메시지 */
-             select json_object(concat('utter_', iam.intent_id, '_message')
-                  , json_array(json_object('- text', iam.answer_phrase, '  buttons', 
-                        /* 연계되는 인텐트가 있으면 buttons에 연계 인텐트 추가*/
-                        (case when iir.parent_intent_id is not null then 
-                            json_arrayagg(json_object('- title', (select iim2.intent_nm 
-                                                                  from mosimi_chat.itb_intent_mgmt iim2
-                                                                 where iim2.intent_id = iir.child_intent_id)
-                                                        , '  payload', concat('/', iir.child_intent_id)))
-                            else null end)
-                        ))) as responses
-               from mosimi_chat.itb_intent_mgmt iim
-               join mosimi_chat.itb_answer_mgmt iam  
-                 on iim.intent_id = iam.intent_id
-               left join mosimi_chat.itb_intent_relation iir
-                 on iir.parent_intent_id = iim.intent_id
-              group by iam.intent_id
+--              union
+--              /* 폼 작성 완료 메시지 */
+--              select json_object(concat('utter_', iam.intent_id, '_message')
+--                   , json_array(json_object('- custom' , json_array(json_merge_patch(
+--         				json_object('text', json_array(iam.answer_phrase)),
+--         				    case when iir.parent_intent_id is not null
+--         					     then json_object('buttons',
+--         						    json_arrayagg(json_object('- title', (select iim2.intent_nm
+--     								  									    from mosimi_chat.itb_intent_mgmt iim2
+--     																       where iim2.intent_id = iir.child_intent_id) ,
+-- 														      '  payload', concat('/', iir.child_intent_id))))
+-- 							     else json_object() 
+-- 						    end
+--         			))))) as responses
+--                from mosimi_chat.itb_intent_mgmt iim
+--                join mosimi_chat.itb_answer_mgmt iam  
+--                  on iim.intent_id = iam.intent_id
+--                left join mosimi_chat.itb_intent_relation iir
+--                  on iir.parent_intent_id = iim.intent_id
+--               group by iam.intent_id
               union
              /* 인식하지 못한 입력에 대한 기본 메시지 */
-             select json_object('utter_default', json_arrayagg(json_object('- text', ifm.fallback_prompt))) as 'default_response'
+             (with fallback as (select json_object('- custom',json_arrayagg(json_object('text', z.fallback))) as default_response
+              from(
+              select json_arrayagg(ifm.fallback_prompt) as fallback
                from mosimi_chat.itb_fallback_mgmt ifm
+              )z
+              )select json_object('utter_default' ,json_arrayagg(fallback.default_response)) as default_response from fallback)
         ) main
     """
     response_result = db_conn.select_one(response_sql)
@@ -422,13 +354,13 @@ def get_domain_json():
                     'action_session_start',
                     'action_deactive_loop',
                     'action_default_fallback',
-                    'validate_int00001_form',
+                    'action_token_verification_for_service',
                     'validate_int00002_form',
                     'validate_int00003_form',
                     'action_int00004',],
         'session_config': [{"session_expiration_time": 60}, {"carry_over_slots_to_new_session": "true"}]
     }
-    print(domain_json)
+    # print(domain_json)
     return domain_json
 def main():
     global db_conn
