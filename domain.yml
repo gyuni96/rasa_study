@@ -18,258 +18,544 @@ intents:
   - int00015
   - int00016
   - int00017
+  - select_user
+  - inform
 entities:
-  - Departure
-  - Destination
-  - EndDate
-  - memberRelationCd
-  - Name
-  - requestContent
-  - reserveDate
-  - reserveTime
-  - reserveYn
-  - Service
-  - service_detail_for_int00002
-  - ServiceDetail
-  - serviceTime
-  - StartDate
-  - startTime
-  - userBirthDate
-  - userGenderCd
-  - userHealthCd
-  - userPhoneNo
-  - userSysId
+  - buldMnnm_int00002
+  - buldSlno_int00002
+  - departAddr_int00002
+  - departAddrDtl_int00002
+  - departAdmCd_int00002
+  - destAddr_int00002
+  - destAddrDtl_int00002
+  - destAdmCd_int00002
+  - destination_int00003
+  - memberRelationCd_int00002
+  - memberRelationCd_int00003
+  - requestContent_int00002
+  - requestContent_int00003
+  - requestContentYn_int00002
+  - reserveDate_int00002
+  - reserveTime_int00002
+  - reserveYn_int00002
+  - rnMgtSn_int00002
+  - serviceCd_int00001
+  - service_int00003
+  - serviceCd_int00002
+  - serviceDetail_int00003
+  - serviceDtlCd_int00002
+  - serviceStartDate_int00002
+  - serviceStartTime_int00002
+  - serviceTime_int00003
+  - serviceUseTimeCd_int00002
+  - startDate_int00003
+  - startTime_int00003
+  - udrtYn_int00002
+  - userBirthDate_int00002
+  - userBirthDate_int00003
+  - userGenderCd_int00002
+  - userGenderCd_int00003
+  - userHealthCd_int00002
+  - userHealthYn_int00002
+  - userName_int00003
+  - userNm_int00002
+  - userPhoneNo_int00002
+  - userPhoneNo_int00003
+  - userSysId_int00002
+  - userSysId_int00003
 forms:
+  int00001_form:
+    required_slots:
+      serviceCd_int00001:
+        - type: from_entity
+          entity: serviceCd_int00001
   int00002_form:
     required_slots:
-      userSysId:
+      userSysId_int00002:
         - type: from_text
-      Service:
+      serviceCd_int00002:
         - type: from_entity
-          entity: Service
-      service_detail_for_int00002:
+          entity: serviceCd_int00002
+      serviceDtlCd_int00002:
         - type: from_entity
-          entity: service_detail_for_int00002
-      Name:
+          entity: serviceDtlCd_int00002
+      userNm_int00002:
         - type: from_text
-      userBirthDate:
+      userBirthDate_int00002:
         - type: from_text
-      userPhoneNo:
+      userPhoneNo_int00002:
         - type: from_text
-      userGenderCd:
+      userGenderCd_int00002:
         - type: from_entity
-          entity: userGenderCd
-      memberRelationCd:
-        - type: from_text
-      StartDate:
-        - type: from_text
-      serviceTime:
-        - type: from_text
-      startTime:
-        - type: from_text
-      Departure:
-        - type: from_text
-      Destination:
-        - type: from_text
-      reserveYn:
+          entity: userGenderCd_int00002
+      memberRelationCd_int00002:
         - type: from_entity
-          entity: reserveYn
-      reserveDate:
+          entity: memberRelationCd_int00002
+      serviceStartDate_int00002:
         - type: from_text
-      reserveTime:
+      serviceUseTimeCd_int00002:
         - type: from_text
-      userHealthCd:
+      serviceStartTime_int00002:
         - type: from_text
-      requestContent:
+      departAddr_int00002:
+        - type: from_text
+      departAddrDtl_int00002:
+        - type: from_text
+      buldMnnm_int00002:
+        - type: from_text
+      udrtYn_int00002:
+        - type: from_text
+      buldSlno_int00002:
+        - type: from_text
+      rnMgtSn_int00002:
+        - type: from_text
+      departAdmCd_int00002:
+        - type: from_text
+      destAddr_int00002:
+        - type: from_text
+      destAddrDtl_int00002:
+        - type: from_text
+      destAdmCd_int00002:
+        - type: from_text
+      reserveYn_int00002:
+        - type: from_entity
+          entity: reserveYn_int00002
+      reserveDate_int00002:
+        - type: from_text
+      reserveTime_int00002:
+        - type: from_text
+      userHealthYn_int00002:
+        - type: from_entity
+          entity: userHealthYn_int00002
+      userHealthCd_int00002:
+        - type: from_text
+      requestContentYn_int00002:
+        - type: from_entity
+          entity: requestContentYn_int00002
+      requestContent_int00002:
         - type: from_text
   int00003_form:
     required_slots:
-      Service:
+      userSysId_int00003:
+        - type: from_text
+      userPhoneNo_int00003:
+        - type: from_text
+      userName_int00003:
+        - type: from_text
+      userGenderCd_int00003:
         - type: from_entity
-          entity: Service
-      Name:
+          entity: userGenderCd_int00003
+      userBirthDate_int00003:
         - type: from_text
-      StartDate:
+      startTime_int00003:
         - type: from_text
-      EndDate:
+      startDate_int00003:
         - type: from_text
-      Destination:
+      serviceTime_int00003:
+        - type: from_text
+      serviceDetail_int00003:
+        - type: from_entity
+          entity: serviceDetail_int00003
+      service_int00003:
+        - type: from_entity
+          entity: service_int00003
+      requestContent_int00003:
+        - type: from_text
+      memberRelationCd_int00003:
+        - type: from_entity
+          entity: memberRelationCd_int00003
+      destination_int00003:
         - type: from_text
 slots:
-  Departure:
+  buldMnnm_int00002:
     type: text
     influence_conversation: true
-  Destination:
+  buldSlno_int00002:
     type: text
     influence_conversation: true
-  EndDate:
+  departAddr_int00002:
     type: text
     influence_conversation: true
-  memberRelationCd:
+  departAddrDtl_int00002:
     type: text
     influence_conversation: true
-  Name:
+  departAdmCd_int00002:
     type: text
     influence_conversation: true
-  requestContent:
+  destAddr_int00002:
     type: text
     influence_conversation: true
-  reserveDate:
+  destAddrDtl_int00002:
     type: text
-    influence_conversation: false
-  reserveTime:
+    influence_conversation: true
+  destAdmCd_int00002:
     type: text
-    influence_conversation: false
-  reserveYn:
+    influence_conversation: true
+  destination_int00003:
+    type: text
+    influence_conversation: true
+  memberRelationCd_int00002:
+    type: categorical
+    influence_conversation: true
+    values:
+      - '할머니'
+      - '배우자'
+      - '본인'
+      - '자녀'
+      - '형제'
+      - '어머니'
+      - '할아버지'
+      - '아버지'
+      - '사촌'
+  memberRelationCd_int00003:
+    type: categorical
+    influence_conversation: true
+    values:
+      - '아버지'
+      - '배우자'
+      - '본인'
+      - '자녀'
+      - '형제'
+      - '어머니'
+      - '할머니'
+      - '할아버지'
+      - '사촌'
+  requestContent_int00002:
+    type: text
+    influence_conversation: true
+  requestContent_int00003:
+    type: text
+    influence_conversation: true
+  requestContentYn_int00002:
     type: categorical
     influence_conversation: true
     values:
       - '예'
       - '아니요'
-  Service:
+  reserveDate_int00002:
+    type: text
+    influence_conversation: true
+  reserveTime_int00002:
+    type: text
+    influence_conversation: true
+  reserveYn_int00002:
     type: categorical
     influence_conversation: true
     values:
-      - '돌봄서비스'
+      - '아니요'
+      - '예'
+  rnMgtSn_int00002:
+    type: text
+    influence_conversation: true
+  serviceCd_int00001:
+    type: categorical
+    influence_conversation: true
+    values:
       - '돌봄'
-      - '동행서비스'
       - '동행'
-  service_detail_for_int00002:
+  service_int00003:
     type: categorical
     influence_conversation: true
     values:
-      - '기타동행'
+      - '돌봄'
+  serviceCd_int00002:
+    type: categorical
+    influence_conversation: true
+    values:
+      - '동행'
+  serviceDetail_int00003:
+    type: categorical
+    influence_conversation: true
+    values:
+      - '기타돌봄'
       - 'One Day(9시간)'
+      - '어르신 돌봄'
+      - '성인 돌봄'
+      - '아이 돌봄'
+  serviceDtlCd_int00002:
+    type: categorical
+    influence_conversation: true
+    values:
       - '한시간전용(1시간)'
-      - '정기검진'
       - '외래진료'
+      - '정기검진'
       - '투석전용(5시간)'
-  ServiceDetail:
+      - 'One Day(9시간)'
+      - '기타동행'
+  serviceStartDate_int00002:
+    type: text
+    influence_conversation: true
+  serviceStartTime_int00002:
+    type: text
+    influence_conversation: true
+  serviceTime_int00003:
+    type: text
+    influence_conversation: true
+  serviceUseTimeCd_int00002:
+    type: text
+    influence_conversation: true
+  startDate_int00003:
+    type: text
+    influence_conversation: true
+  startTime_int00003:
+    type: text
+    influence_conversation: true
+  udrtYn_int00002:
+    type: text
+    influence_conversation: true
+  userBirthDate_int00002:
+    type: text
+    influence_conversation: true
+  userBirthDate_int00003:
+    type: text
+    influence_conversation: true
+  userGenderCd_int00002:
     type: categorical
     influence_conversation: true
     values:
-      - '정기검진'
-      - '정기검진'
-      - '투석전용(5시간)'
-      - '아이 돌봄'
-      - '투석전용(5시간)'
-      - '정기검진'
-      - '외래진료'
-      - '아이 돌봄'
-      - '투석전용(5시간)'
-      - '정기검진'
-  serviceTime:
-    type: text
-    influence_conversation: true
-  StartDate:
-    type: text
-    influence_conversation: true
-  startTime:
-    type: text
-    influence_conversation: true
-  userBirthDate:
-    type: text
-    influence_conversation: true
-  userGenderCd:
+      - '여자'
+      - '남자'
+  userGenderCd_int00003:
     type: categorical
     influence_conversation: true
     values:
-      - '남성'
-      - '여성'
-  userHealthCd:
+      - '여자'
+      - '남자'
+  userHealthCd_int00002:
     type: text
     influence_conversation: true
-  userPhoneNo:
+  userHealthYn_int00002:
+    type: categorical
+    influence_conversation: true
+    values:
+      - '예'
+      - '아니요'
+  userName_int00003:
     type: text
     influence_conversation: true
-  userSysId:
+  userNm_int00002:
     type: text
-    influence_conversation: false
-
+    influence_conversation: true
+  userPhoneNo_int00002:
+    type: text
+    influence_conversation: true
+  userPhoneNo_int00003:
+    type: text
+    influence_conversation: true
+  userSysId_int00002:
+    type: text
+    influence_conversation: true
+  userSysId_int00003:
+    type: text
+    influence_conversation: true
 responses:
-  utter_ask_Departure:
+  utter_ask_departAddr_int00002:
     - custom:
+        JUSO: "['JUSO']"
         text: "['출발지를 입력해주세요.']"
-  utter_ask_Destination:
+  utter_ask_departAddrDtl_int00002:
+    - custom:
+        text: "['상세 주소를 적어주세요 \\n ex) 101동 1901호']"
+  utter_ask_destAddr_int00002:
+    - custom:
+        JUSO: "['JUSO']"
+        text: "['도착지를 입력해주세요.']"
+  utter_ask_destAddrDtl_int00002:
+    - custom:
+        text: "['상세 주소를 적어주세요 \\n ex) 101동 1901호']"
+  utter_ask_destination_int00003:
     - custom:
         text: "['도착지를 입력해주세요.']"
-  utter_ask_EndDate:
+  utter_ask_memberRelationCd_int00002:
     - custom:
-        text: "['종료일자를 입력해주세요.']"
-  utter_ask_memberRelationCd:
-    - custom:
+        slot: 'memberRelationCd_int00002'
         text: "['예약자분과 이용자분의 관계를 선택해 주세요']"
-  utter_ask_Name:
+        BUTTON:
+          - title: '사촌'
+            payload: '/inform{"memberRelationCd_int00002":"RL10"}'
+          - title: '배우자'
+            payload: '/inform{"memberRelationCd_int00002":"RL90"}'
+          - title: '본인'
+            payload: '/inform{"memberRelationCd_int00002":"RL80"}'
+          - title: '아버지'
+            payload: '/inform{"memberRelationCd_int00002":"RL20"}'
+          - title: '어머니'
+            payload: '/inform{"memberRelationCd_int00002":"RL50"}'
+          - title: '자녀'
+            payload: '/inform{"memberRelationCd_int00002":"RL70"}'
+          - title: '할머니'
+            payload: '/inform{"memberRelationCd_int00002":"RL40"}'
+          - title: '할아버지'
+            payload: '/inform{"memberRelationCd_int00002":"RL30"}'
+          - title: '형제'
+            payload: '/inform{"memberRelationCd_int00002":"RL60"}'
+  utter_ask_memberRelationCd_int00003:
     - custom:
-        text: "['이름을 입력해주세요.', '성함을 입력해주세요.']"
-  utter_ask_requestContent:
+        slot: 'memberRelationCd_int00003'
+        text: "['예약자분과 이용자분의 관계를 선택해 주세요']"
+        BUTTON:
+          - title: '어머니'
+            payload: '/inform{"memberRelationCd_int00003":"RL50"}'
+          - title: '배우자'
+            payload: '/inform{"memberRelationCd_int00003":"RL90"}'
+          - title: '본인'
+            payload: '/inform{"memberRelationCd_int00003":"RL80"}'
+          - title: '사촌'
+            payload: '/inform{"memberRelationCd_int00003":"RL10"}'
+          - title: '아버지'
+            payload: '/inform{"memberRelationCd_int00003":"RL20"}'
+          - title: '자녀'
+            payload: '/inform{"memberRelationCd_int00003":"RL70"}'
+          - title: '할머니'
+            payload: '/inform{"memberRelationCd_int00003":"RL40"}'
+          - title: '할아버지'
+            payload: '/inform{"memberRelationCd_int00003":"RL30"}'
+          - title: '형제'
+            payload: '/inform{"memberRelationCd_int00003":"RL60"}'
+  utter_ask_requestContent_int00002:
     - custom:
         text: "['이동방법 및 요청사항을 말씀해 주세요']"
-  utter_ask_reserveDate:
+  utter_ask_requestContent_int00003:
+    - custom:
+        text: "['이동방법 및 요청사항을 말씀해 주세요']"
+  utter_ask_requestContentYn_int00002:
+    - custom:
+        slot: 'requestContentYn_int00002'
+        text: "['이동방법 및 요청사항이 있으신가요?']"
+        BUTTON:
+          - title: '예'
+            payload: '/inform{"requestContentYn_int00002":"Y"}'
+          - title: '아니요'
+            payload: '/inform{"requestContentYn_int00002":"N"}'
+  utter_ask_reserveDate_int00002:
     - custom:
         text: "['진료 및 검진 예약은 언제인가요?']"
-  utter_ask_reserveTime:
+  utter_ask_reserveTime_int00002:
     - custom:
         text: "['진료 및 검진 예약시간은 언제인가요?']"
-  utter_ask_reserveYn:
+  utter_ask_reserveYn_int00002:
     - custom:
-        slot: 'reserveYn'
+        slot: 'reserveYn_int00002'
         text: "['진료 및 검진 예약을 하셨나요?']"
-  utter_ask_Service:
-    - custom:
-        slot: 'Service'
-        text: "['동행 또는 돌봄 서비스중 어떤 서비스를 하시겠어요?', '동행 또는 돌봄 서비스중 어떤 서비스를 원하시나요?', '동행 또는 돌봄 서비스를 선택해주세요.', '어떤 서비스를 하시겠어요?']"
-        buttons:
-          - title: '동행'
-            payload: '/int00002'
-          - title: '돌봄'
-            payload: '/int00003'
+        BUTTON:
+          - title: '예'
+            payload: '/inform{"reserveYn_int00002":"Y"}'
+          - title: '아니요'
+            payload: '/inform{"reserveYn_int00002":"N"}'
   utter_ask_service_detail_for_int00002:
     - custom:
-        slot: 'service_detail_for_int00002'
         text: "['이용하실 서비스를 선택해 주세요']"
-        buttons:
-          - title: '한시간전용(1시간)'
-            payload: '/inform{"service_detail_for_int00002":"한시간전용(1시간)"}'
-          - title: '투석전용(5시간)'
-            payload: '/inform{"service_detail_for_int00002":"투석전용(5시간)"}'
-          - title: '정기검진'
-            payload: '/inform{"service_detail_for_int00002":"정기검진"}'
-          - title: '외래진료'
-            payload: '/inform{"service_detail_for_int00002":"외래진료"}'
-          - title: '기타동행'
-            payload: '/inform{"service_detail_for_int00002":"기타동행"}'
+  utter_ask_service_detail_for_int00003:
+    - custom:
+        text: "['이용하실 서비스를 선택해 주세요']"
+  utter_ask_serviceCd_int00001:
+    - custom:
+        slot: 'serviceCd_int00001'
+        text: "['원하시는 서비스를 선택해주세요']"
+        BUTTON:
+          - title: '돌봄'
+            payload: '/int00003{"serviceCd_int00003":"SV20"}'
+          - title: '동행'
+            payload: '/int00002{"serviceCd_int00002":"SV10"}'
+  utter_ask_serviceDetail_int00003:
+    - custom:
+        slot: 'serviceDetail_int00003'
+        text: "['이용하실 서비스를 선택해주세요']"
+        BUTTON:
+          - title: '어르신 돌봄'
+            payload: '/inform{"serviceDetail_int00003":"SD50"}'
+          - title: '아이 돌봄'
+            payload: '/inform{"serviceDetail_int00003":"SD40"}'
+          - title: '성인 돌봄'
+            payload: '/inform{"serviceDetail_int00003":"SD45"}'
+          - title: '기타돌봄'
+            payload: '/inform{"serviceDetail_int00003":"SD90"}'
           - title: 'One Day(9시간)'
-            payload: '/inform{"service_detail_for_int00002":"One Day(9시간)"}'
-  utter_ask_ServiceDetail:
+            payload: '/inform{"serviceDetail_int00003":"SD70"}'
+  utter_ask_serviceDtlCd_int00002:
     - custom:
-        slot: 'ServiceDetail'
-        text: "['상세서비스를 입력해주세요.']"
-  utter_ask_serviceTime:
+        slot: 'serviceDtlCd_int00002'
+        text: "['이용하실 서비스를 선택해주세요']"
+        BUTTON:
+          - title: '기타동행'
+            payload: '/inform{"serviceDtlCd_int00002":"SD80"}'
+          - title: 'One Day(9시간)'
+            payload: '/inform{"serviceDtlCd_int00002":"SD60"}'
+          - title: '외래진료'
+            payload: '/inform{"serviceDtlCd_int00002":"SD10"}'
+          - title: '투석전용(5시간)'
+            payload: '/inform{"serviceDtlCd_int00002":"SD30"}'
+          - title: '한시간전용(1시간)'
+            payload: '/inform{"serviceDtlCd_int00002":"SD55"}'
+          - title: '정기검진'
+            payload: '/inform{"serviceDtlCd_int00002":"SD20"}'
+  utter_ask_serviceStartDate_int00002:
     - custom:
-        text: "['이용하실 서비스 시간을 선택해주세요']"
-  utter_ask_StartDate:
-    - custom:
-        text: "['시작일자를 입력해주세요.']"
-  utter_ask_startTime:
+        text: "['서비스 시작일자를 입력해주세요. \\n ex)2025-01-01 또는 20250101']"
+  utter_ask_serviceStartTime_int00002:
     - custom:
         text: "['서비스 시작 시간을 알려주세요']"
-  utter_ask_userBirthDate:
+  utter_ask_serviceTime_int00003:
+    - custom:
+        text: "['이용하실 서비스 시간을 선택해주세요']"
+  utter_ask_serviceUseTimeCd_int00002:
+    - custom:
+        text: "['이용하실 서비스 시간을 선택해주세요']"
+  utter_ask_startDate_int00003:
+    - custom:
+        text: "['서비스 시작일자를 입력해주세요. \\n ex)2025-01-01 또는 20250101']"
+  utter_ask_startTime_int00003:
+    - custom:
+        text: "['서비스 시작 시간을 알려주세요']"
+  utter_ask_userBirthDate_int00002:
     - custom:
         text: "['이용자분의 생년월일을 입력해 주세요 ']"
-  utter_ask_userGenderCd:
+  utter_ask_userBirthDate_int00003:
     - custom:
-        slot: 'userGenderCd'
+        text: "['이용자분의 생년월일을 입력해 주세요 ']"
+  utter_ask_userGenderCd_int00002:
+    - custom:
+        slot: 'userGenderCd_int00002'
         text: "['이용자분의 성별을 선택해 주세요']"
-        buttons:
-          - title: '여성'
-            payload: '/inform{"userGenderCd":"여성"}'
-          - title: '남성'
-            payload: '/inform{"userGenderCd":"남성"}'
-  utter_ask_userHealthCd:
+        BUTTON:
+          - title: '여자'
+            payload: '/inform{"userGenderCd_int00002":"F"}'
+          - title: '남자'
+            payload: '/inform{"userGenderCd_int00002":"M"}'
+  utter_ask_userGenderCd_int00003:
+    - custom:
+        slot: 'userGenderCd_int00003'
+        text: "['이용자분의 성별을 선택해 주세요']"
+        BUTTON:
+          - title: '여자'
+            payload: '/inform{"userGenderCd_int00003":"F"}'
+          - title: '남자'
+            payload: '/inform{"userGenderCd_int00003":"M"}'
+  utter_ask_userHealthCd_int00002:
+    - custom:
+        text: "['이용자의 건강 특이사항을 적어주세요']"
+  utter_ask_userHealthCd_int00003:
     - custom:
         text: "['이용자분의 건강 특이사항이 있으신가요? \\n ex) 거동불편 , 고혈압 등등']"
-  utter_ask_userPhoneNo:
+  utter_ask_userHealthYn_int00002:
+    - custom:
+        slot: 'userHealthYn_int00002'
+        text: "['이용자의 건강 특이사항이 있나요? \\n ex ) 고혈압, 거동불편 등등']"
+        BUTTON:
+          - title: '예'
+            payload: '/inform{"userHealthYn_int00002":"Y"}'
+          - title: '아니요'
+            payload: '/inform{"userHealthYn_int00002":"N"}'
+  utter_ask_userName_int00003:
+    - custom:
+        text: "['이름을 입력해주세요.']"
+  utter_ask_userNm_int00002:
+    - custom:
+        text: "['이름을 입력해주세요.']"
+  utter_ask_userPhoneNo_int00002:
+    - custom:
+        text: "['이용자분의 전화번호를 입력해 주세요']"
+  utter_ask_userPhoneNo_int00003:
     - custom:
         text: "['이용자분의 전화번호를 입력해 주세요']"
   utter_default:
@@ -286,6 +572,9 @@ actions:
   - validate_int00003_form
   - action_int00004
   - action_set_user_info
+  - action_fetch_user_list
+  - action_service_detail
+  - ValidateInt00001Form
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

@@ -10,6 +10,7 @@ from utils.Database import Database
 from config.DatabaseConfig import DatabaseConfig
 import requests
 import logging
+import datetime
 
 global db_conn
 def db_conn():
@@ -54,52 +55,7 @@ class ActionRestarted(Action):
         print(Restarted())
         return [Restarted()]
 
-# 서비스 요청 완료 액션 클래스
-class ActionReserve(Action):
 
-    def name(self):
-        return "action_reserve"
-
-    def run(self, dispatcher, tracker, domain):
-        print('ActionReserve self', self)
-        metadata = tracker.latest_message.get('metadata', {})
-        accessToken = metadata.get('accessToken')
-        print('ActionReserve dispatcher', dispatcher.messages)
-        print('ActionReserve tracker', tracker.slots)
-        print('ActionReserve metadata', metadata)
-        print('ActionReserve accessToken', accessToken)
-        # print('ActionGowithCheckTermination domain', domain)
-        first_message = tracker.events[0]
-        # 최초 메시지의 인텐트 확인
-        first_intent = None
-        # for message in tracker.events:
-        #     print('message', message)
-        #     if 'parse_data' in message:
-        #         intent = message['parse_data']['intent']['name']
-        #         print('intent ', intent)
-        if 'parse_data' in first_message:
-            first_intent = first_message['parse_data']['intent']['name']
-
-        print('first_message', first_message)
-        print('first_intent ', first_intent)
-
-        print(f'실행 확인용')
-
-        headers = {'Content-Type': 'application/json; charset=utf-8', 'Authorization': accessToken}
-        data = tracker.slots
-
-        # 테스트용임
-        res = requests.post('http://localhost:7077/common/test', data=json.dumps(data), headers=headers)
-
-        # res = requests.post('http://localhost:8010/api/use/post/reserve', data=json.dumps(data), headers=headers)
-        # print(f"{res.status_code} | {res.text}")
-        # your business logic here
-        # should_terminate = check_for_termination(<params>)
-
-        # if should_terminate:
-        #     return [FollowupAction("action_listen")]
-        return [Restarted()]
-        # return [FollowupAction("action_listen")]
 
 # 세션 시작 액션 클래스
 class ActionSessionStart(Action):
@@ -224,7 +180,6 @@ class ActionInt00004(Action):
             dispatcher.utter_message(text='다음과 같은 서비스들이 있습니다.', buttons=buttons)
 
 class TokenVerificationForService(Action):
-    ## 서비스 요청을 위한 트큰 검증 클래스
     def name(self) -> Text:
         ## 액션 이름 정의
         return "action_token_verification_for_service"
@@ -238,20 +193,66 @@ class TokenVerificationForService(Action):
         # 토큰정보 metadata에서 추출
         auth_token = tracker.latest_message.get('metadata', {}).get('Authorization', '')
 
-        if not auth_token :
-            dispatcher.utter_message(text='서비스 요청을 위해서는 로그인이 필요합니다.\n 로그인 후 다시 시도해주세요.')
-            return [SlotSet("active_loop", None)]
-        else : 
-            response = requests.api.post("http://localhost:8010/api/use/get/chatbot/user", headers={'Authorization': auth_token})
+        if auth_token :
+            # 토큰이 있는경우 - 서비스 묻기
+            # dispatcher.utter_message(response="utter_ask_serviceCd_int00001")
+            return [FollowupAction("int00001_form")] # 폼을 바로 시작
+
+        else :
+            # 토큰이 없는경우
+            dispatcher.utter_message(custom = { "text" : json.dumps(["서비스 요청을 위해서는 로그인이 필요합니다.\n로그인 후 다시 시도해주세요."])})
+
+class ValidateInt00001Form(FormValidationAction):
+    def name(self) -> Text:
+        return "validate_int00001_form"
+
+    def validate_serviceCd_int00001(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################서비스 설정")
+        print("slot_value : ", slot_value)
+        return {"serviceCd_int00001": slot_value}
+    
+
+class ActionFetchUserList(Action):
+
+    def name(self) -> Text:
+        return "action_fetch_user_list"
+
+    def run(self, 
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        # 토큰정보 metadata에서 추출
+        Authorization = tracker.latest_message.get('metadata', {}).get('Authorization', '')
+        
+        serivceCd = tracker.get_slot('serviceCd_int00002') if tracker.get_slot('serviceCd_int00002') != '' else tracker.get_slot('service_int00003')
+        service = 'int00002' if serivceCd == 'SV10' else 'int00003'
+
+        if Authorization :
+            
+            # 토큰이 있는경우 - 유저 정보를 가져온다.
+            url = "http://localhost:8010/api/use/get/chatbot/user"
+            headers = {'Content-Type': 'application/json; charset=utf-8', 'Authorization': Authorization}
+            data = {"intent" : service}
+
+            response = requests.api.post(url, data=json.dumps(data) , headers=headers)
             user_list = response.json()
 
             if user_list :
-                dispatcher.utter_message(custom={ "text" : "['이용하실 고객님을 선택해주세요.']" , "buttons" : user_list})
-                return [SlotSet("active_loop", None)]
+                dispatcher.utter_message(custom={ "text" : json.dumps(['이용하실 고객님을 선택해주세요.']) , "BUTTON" : user_list})
             else :
-                ## 데이터가 없는 경우 다음 단계로 넘어간다.
-                return [SlotSet("userSysId" , None),SlotSet("active_loop", None)]
+                dispatcher.utter_message(response="utter_ask_ServiceDetail")
+        else :
+            # 토큰이 없는경우
+            dispatcher.utter_message(custom = { "text" : json.dumps(["서비스 요청을 위해서는 로그인이 필요합니다.\n로그인 후 다시 시도해주세요."])})
     
+
 class ActionSetUserInfo(Action): 
     def name(self) -> Text:
         return "action_set_user_info"
@@ -264,15 +265,350 @@ class ActionSetUserInfo(Action):
         )-> List[Dict[Text, Any]]:
 
             print("############################사용자 정보 설정")
-            print(tracker.latest_message.get('text'))
+            
+            serivceCd = tracker.get_slot('serviceCd_int00002') if tracker.get_slot('serviceCd_int00002') != '' else tracker.get_slot('service_int00003')
+            service = 'int00002' if serivceCd == 'SV10' else 'int00003'
+            
+            userSysId = tracker.get_slot('userSysId_' + service)
+            Authorization = tracker.latest_message.get('metadata', {}).get('Authorization', '')
 
+            if userSysId != 'new' and Authorization :
 
-            return []
+                response = requests.api.post("http://localhost:8010/api/use/get/chatbot/user/"+userSysId, headers={'Authorization': Authorization})
+                user_info = response.json()
+                return [
+                    SlotSet("userNm_" + service, user_info["userNm"]),
+                    SlotSet("userBirthDate_" + service , user_info["userBirthdate"]),
+                    SlotSet("userGenderCd_" + service , user_info["userGenderCd"]),
+                    SlotSet("userPhoneNo_" + service , user_info["userPhoneNo"]),
+                    SlotSet("memberRelationCd_" + service , user_info["memberRelateionCd"]),
+                    FollowupAction(service + "_form") # 폼을 바로 시작
+                ]
+            else : 
+                return [
+                    FollowupAction(service + "_form") # 폼을 바로 시작
+                ]  
+
+# class ActionSeviceDetail(Action):
+#     def name(self) -> Text:
+#         return "action_service_detail"
+    
+#     def run (
+#             self, 
+#             dispatcher: CollectingDispatcher,
+#             tracker: Tracker,
+#             domain: Dict[Text, Any]
+#         )-> List[Dict[Text, Any]]:
+#             dispatcher.utter_message(custom = { "text" : json.dumps(["서비스 상세 정보를 입력해주세요."]) , "BUTTON" : [{'title' : '외진' , 'payload' : '/inform{"ServiceDetail" : "외진"}'}, {'title' : '외진' , 'payload' : '/inform{"ServiceDetail" : "외진"}'}]})
+
+#             return []
+#             # FollowupAction("int00002_form") # 폼을 바로 시작
 
 # 서비스 요청하기 검증 액션 클래스
 class ValidateInt00002Form(FormValidationAction):
     def name(self) -> Text:
         return "validate_int00002_form"
+
+    def validate_userSysId_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        # 사용자 정보가 없을경우 어떻게 들어오는지도 확인해야됨
+        print("##############################이용자 시스템 정보 설정")
+        return {"userSysId_int00002": slot_value}
+    
+    def validate_serviceCd_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################서비스 설정")
+        return {"serviceCd_int00002": slot_value}
+    
+    def validate_serviceDtlCd_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################서비스 상세 정보 설정")
+        return {"serviceDtlCd_int00002": slot_value}
+
+    def validate_userNm_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################이용자명 설정")
+        return {"userNm_int00002": slot_value}
+    
+    def validate_userBirthDate_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################이용자 생년월일 설정")
+        
+        try : 
+            userBirthDate = slot_value.replace("-", "")
+
+            valid_date = datetime.datetime.strptime(userBirthDate, "%Y%m%d")
+            return {"userBirthDate_int00002": userBirthDate}
+        except ValueError:
+            dispatcher.utter_message(custom = { "text" : json.dumps(["날짜 형식이 아닙니다.\nex) 2024-03-21 또는 20240321"])})
+            return {"userBirthDate_int00002": None}
+
+    def validate_userPhoneNo_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################이용자 전화번호 설정")
+        
+        userPhoneNo = slot_value.replace("-", "")
+
+        # 전화번호 형식 검사 (예: 10자리 또는 11자리 숫자)
+        phone_pattern = re.compile(r"^\d{10,11}$")
+        if phone_pattern.match(userPhoneNo):
+
+            formatted_phone_no = self.format_phone_no(userPhoneNo)
+
+            return {"userPhoneNo_int00002": formatted_phone_no}
+        else:
+            dispatcher.utter_message(custom= {"text" : json.dumps(["전화번호 형식이 아닙니다.\nex) 01012345678"])})
+            return {"userPhoneNo_int00002": None}
+    
+    @staticmethod
+    def format_phone_no(phone_no: str) -> str:
+        """전화번호를 하이픈 포함 형식으로 변환."""
+        if len(phone_no) == 10:
+            return f"{phone_no[:3]}-{phone_no[3:6]}-{phone_no[6:]}"
+        elif len(phone_no) == 11:
+            return f"{phone_no[:3]}-{phone_no[3:7]}-{phone_no[7:]}"
+        return phone_no
+
+    def validate_userGenderCd_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################이용자 성별 설정")
+        return {"userGenderCd_int00002": slot_value}
+
+    def validate_memberRelationCd_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################가족관계 설정")
+        return {"memberRelationCd_int00002": slot_value}
+
+    def validate_serviceStartDate_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################서비스 시작일자 설정")
+        return {"serviceStartDate_int00002": slot_value}
+    
+    def validate_serviceUseTimeCd_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################서비스 시간 설정")
+        return {"serviceUseTimeCd_int00002": slot_value}
+    
+    def validate_serviceStartTime_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################서비스 시작 시간 설정")
+        return {"serviceStartTime_int00002": slot_value}
+    
+    def validate_departAddr_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################출발지 설정")
+
+        buldMnnm = tracker.latest_message.get('metadata', {}).get('buldMnnm', '')
+        buldSlno = tracker.latest_message.get('metadata', {}).get('buldSlno', '')
+        admCd = tracker.latest_message.get('metadata', {}).get('admCd', '')
+        rnMgtSn = tracker.latest_message.get('metadata', {}).get('rnMgtSn', '')
+        udrtYn = tracker.latest_message.get('metadata', {}).get('udrtYn', '')
+
+        if buldMnnm == '' or buldSlno == '' or admCd == '' or rnMgtSn == '' or udrtYn == '' :
+            dispatcher.utter_message(custom = { "text" : json.dumps(["주소 정보가 없습니다.\n다시 입력해주세요."])})
+            return {"departAddr_int00002": None}
+        else :
+            return {
+                "departAddr_int00002": slot_value ,
+                "buldMnnm_int00002" :buldMnnm ,
+                "buldSlno_int00002" :buldSlno ,
+                "departAdmCd_int00002" :admCd ,
+                "rnMgtSn_int00002" :rnMgtSn ,
+                "udrtYn_int00002" : udrtYn
+                }
+    
+    def validate_departAddrDtl_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################출발지 상세 설정")
+
+        return {"departAddrDtl_int00002": slot_value}
+
+
+    def validate_destAddr_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################도착지 설정")
+
+        admCd = tracker.latest_message.get('metadata', {}).get('admCd', '')
+
+        return {"destAddr_int00002": slot_value , "destAdmCd_int00002" : admCd}
+
+    def validate_destAddrDtl_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################도착지 상세 설정")
+
+        return {"destAddrDtl_int00002": slot_value}
+
+
+    def validate_reserveYn_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################예약 여부 설정")
+        if slot_value.lower() in ["예", "네", "y", "yes"]:
+            return {"reserveYn_int00002": slot_value, "reserveDate_int00002": None, "reserveTime_int00002": None}
+        else:
+            return {"reserveYn_int00002": slot_value, "reserveDate_int00002": None, "reserveTime_int00002": None}
+
+    def validate_reserveDate_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("##############################예약 날짜 설정")
+        reserve_yn = tracker.get_slot("reserveYn_int00002")
+        if reserve_yn and reserve_yn.lower() in ["예", "네", "y", "yes"]:
+            return {"reserveDate_int00002": slot_value}
+        else:
+            return {"reserveDate_int00002": None}
+
+    def validate_reserveTime_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("###############################예약 시간 설정")
+        reserve_yn = tracker.get_slot("reserveYn_int00002")
+        if reserve_yn and reserve_yn.lower() in ["예", "네", "y", "yes"]:
+            return {"reserveTime_int00002": slot_value}
+        else:
+            return {"reserveTime_int00002": None}
+        
+    def validate_userHealthYn_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("###############################건강상태 유무 설정")
+        if slot_value.lower() in ["예", "네", "y", "yes"]:
+            return {"userHealthYn_int00002": slot_value, "userHealthCd_int00002": None}
+        else:
+            return {"userHealthYn_int00002": slot_value, "userHealthCd_int00002": None}
+
+    def validate_userHealthCd_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("###############################건강상태 설정")
+        userHealthYn = tracker.get_slot("userHealthYn_int00002")
+        if userHealthYn and userHealthYn.lower() in ["예", "네", "y", "yes"]:
+            return {"userHealthCd_int00002": slot_value}
+        else:
+            return {"userHealthCd_int00002": None}
+
+    def validate_requestContentYn_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("###############################요청사항 유무 설정")
+        if slot_value.lower() in ["예", "네", "y", "yes"]:
+            return {"requestContentYn_int00002": slot_value, "requestContent_int00002": None}
+        else:
+            return {"requestContentYn_int00002": slot_value, "requestContent_int00002": None}
+
+    def validate_requestContent_int00002(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        print("###############################요청사항 설정")
+        requestContentYn = tracker.get_slot("requestContentYn_int00002")
+        if requestContentYn and requestContentYn.lower() in ["예", "네", "y", "yes"]:
+            return {"requestContent_int00002": slot_value}
+        else:
+            return {"requestContent_int00002": None}
+
 
     # 필수 요청 슬롯 설정
     async def required_slots(
@@ -282,148 +618,23 @@ class ValidateInt00002Form(FormValidationAction):
             tracker: Tracker,
             domain: Dict[Text, Any],
     ) -> Optional[List[Text]]:
-        if tracker.get_slot('reserveYn') == '아니요' :
+        
+        if tracker.get_slot('userHealthYn_int00002') in ['아니요', 'N'] :
+            # 건강상태가 없는 경우 userHealthCd 슬롯을 제거
+            if 'userHealthCd_int00002' in slots_mapped_in_domain:
+                slots_mapped_in_domain.remove('userHealthCd_int00002')
+        if tracker.get_slot('requestContentYn_int00002') in ['아니요', 'N'] :
+            # 요청사항이 없는 경우 requestContent 슬롯을 제거
+            if 'requestContent_int00002' in slots_mapped_in_domain:
+                slots_mapped_in_domain.remove('requestContent_int00002')
+        if tracker.get_slot('reserveYn_int00002') in ['아니요', 'N'] :
             # 예약이 없는 경우 reserveDate와 reserveTime 슬롯을 제거
-            if 'reserveDate' in slots_mapped_in_domain:
-                slots_mapped_in_domain.remove('reserveDate')
-            if 'reserveTime' in slots_mapped_in_domain:
-                slots_mapped_in_domain.remove('reserveTime')
-
+            if 'reserveDate_int00002' in slots_mapped_in_domain:
+                slots_mapped_in_domain.remove('reserveDate_int00002')
+            if 'reserveTime_int00002' in slots_mapped_in_domain:
+                slots_mapped_in_domain.remove('reserveTime_int00002')
+   
         return slots_mapped_in_domain
-
-    # 서비스 타입 validation
-    async def validate_Service(
-            self,
-            value: Text,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any],
-    ) -> Dict[Text, Any]:
-        print("############################서비스 검증")
-        # latest_intent = tracker.latest_message['intent'].get('name')
-
-        # print("latest_intent : ", latest_intent)
-        # if value.find('/') != -1:
-        #     value = value.replace('/', '')
-        #     value = value.replace(latest_intent, '')
-        #     value_json = json.loads(value)
-        #     value = value_json['Service']
-        #     print(value)
-        if value not in ['동행' , '동행서비스' , '동행 서비스']:
-            dispatcher.utter_message('동행 또는 돌봄과 함께 다시 입력해주세요.')
-        else:
-            return {"Service": value}
-        
-    async def validate_service_detail_for_int00002(
-        self,
-        slot_value: Any,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any],
-    ) -> Dict[Text, Any]:
-        
-        print("############################상세 서비스 검증")
-
-        sql = """
-            select JSON_ARRAYAGG(entity_word) as entity_word
-              from mosimi_chat.itb_entity_collection
-             where entity_id = 'service_detail_for_int00002'
-        """
-
-        result = db_conn.select_one(sql)
-
-        print(result['entity_word'])
-
-        if slot_value not in result['entity_word']:
-            dispatcher.utter_message(text="잘못된 서비스 선택입니다. 다시 선택해주세요.")
-            return {"service_detail_for_int00002": None}
-        return {"service_detail_for_int00002": slot_value}
-
-    # 이용자명 validation
-    async def validate_Name(
-            self,
-            value: Text,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any],
-    ) -> Dict[Text, Any]:
-        
-        print("############################사용자 명 검증")
-
-        # print('ValidateInt00002Form validate_Name ', value)
-        return {"Name": value}
-
-    # 서비스 시작일자 validation
-    async def validate_StartDate(
-            self,
-            value: Text,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any],
-    ) -> Dict[Text, Any]:
-        # 날짜 형식에 일치하지 않으면 메시지 출력 후 슬롯 값 초기화
-        if not self.check_date_format(value):
-            dispatcher.utter_message(text="날짜 형식이 아닙니다.\nex) 2024-03-21")
-            return {"StartDate": None}
-
-        return {"StartDate": value}
-
-    # 서비스 종료일자 validation
-    def validate_EndDate(
-            self,
-            value: Text,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any],
-    ) -> Dict[Text, Any]:
-        if not self.check_date_format(value):
-            dispatcher.utter_message(text="날짜 형식이 아닙니다.\nex) 2024-03-21")
-            return {"EndDate": None}
-
-        return {"EndDate": value}
-
-    # 날짜 포맷 검증
-    def check_date_format(self, date) -> bool:
-        replace_value = re.sub('[^0-9]', '', date)  # 숫자 이외 문자 제거
-        print('check_date_format origin value ', date)
-        print('check_date_format origin value ', replace_value)
-        match = re.match("(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])", replace_value)  # replace_value가 YYYYMMDD에 일치하는지 검사
-        print(match)
-        # 일치 여부가 있으면 True, 없으면 False
-        return match is not None
-
-    # 서비스 출발지 validation
-    def validate_Departure(
-            self,
-            value: Text,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any],
-    ) -> Dict[Text, Any]:
-        return {"Departure": value}
-
-    # 서비스 도착지 validation
-    def validate_Destination(
-            self,
-            value: Text,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any],
-    ) -> Dict[Text, Any]:
-        return {"Destination": value}
-    
-    def validate_reserveYn(
-            self,
-            value: Text,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any],
-    ) -> Dict[Text, Any]:
-        
-        print("############################예약 여부 검증")
-        print(value)
-
-        return {"reserveYn": value}
 
 # 서비스 요청하기 검증 액션 클래스
 class Validateint00003Form(FormValidationAction):
@@ -531,3 +742,81 @@ class Validateint00003Form(FormValidationAction):
             domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         return {"Destination": value}
+
+class ActionPriceCheck(Action):
+    def name(self) -> Text:
+        return "action_price_check"
+    
+    def run(
+        self, 
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        metadata = tracker.latest_message.get('metadata', {})
+        Authorization = metadata.get('Authorization')
+        compCd = metadata.get('compCd')
+
+        serivceCd = tracker.get_slot('serviceCd_int00002') if tracker.get_slot('serviceCd_int00002') != '' else tracker.get_slot('service_int00003')
+        service = 'int00002' if serivceCd == 'SV10' else 'int00003'
+
+
+
+
+# 서비스 요청 완료 액션 클래스
+class ActionReserve(Action):
+
+    def name(self):
+        return "action_reserve"
+
+    def run(self, 
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        metadata = tracker.latest_message.get('metadata', {})
+        Authorization = metadata.get('Authorization')
+        compCd = metadata.get('compCd')
+
+        serivceCd = tracker.get_slot('serviceCd_int00002') if tracker.get_slot('serviceCd_int00002') != '' else tracker.get_slot('service_int00003')
+        service = 'int00002' if serivceCd == 'SV10' else 'int00003'
+
+        data = tracker.slots
+
+        new_data = {}
+
+        for key , value in data.items():
+            new_key = key.replace("_int00002", "")
+            new_data[new_key] = value
+
+        new_data['serviceEndDate'] = new_data['serviceStartDate']
+        new_data['serviceEndTime'] = '1500'
+        new_data['serviceBasicAmount'] = '40000'
+        new_data['stndVat'] = 0.1
+        new_data['chargeJson'] = [{"chargeCd": "CH10", "chargeAmount": new_data['serviceBasicAmount']}]
+
+        print("data : " , new_data)
+
+        # 테스트용임
+        url = "http://localhost:8010/api/use/post/chatbot/service"
+        headers = {'Content-Type': 'application/json; charset=utf-8', 'Authorization': Authorization}
+        response = requests.api.post(url, data=json.dumps(new_data) , headers=headers)
+        result = response.text
+
+        # if result == 'Y' :
+        #     sql = (
+        #         f"select answer_phrase"
+        #         f"  from mosimi_chat.itb_answer_mgmt"
+        #         f" where intent_id='{intentId}'"
+        #         f"   and comp_cd='{compCd}'"
+        #      )
+
+        #     answer_result = db_conn.select_one(sql)
+            
+        #     dispatcher.utter_message(custom ={"text" : "['" + answer_result['answer_phrase'] + "']" })
+
+        # else : 
+        #     dispatcher.utter_message(custom ={"text" : "['예약이 실패하였습니다.']" })
+
+        dispatcher.utter_message(custom ={"text" : "['예약이 완료되었습니다.']" })
+
+        return [Restarted()]    

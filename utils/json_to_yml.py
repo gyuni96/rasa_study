@@ -125,53 +125,14 @@ def generate_domain_yaml_text(domain_json):
                                 domain_text += f"{padding * 4}{key}: \"{value}\"\n"
                             if key in 'slot' :
                                 domain_text += f"{padding * 4}{key}: '{value}'\n"
-                            if key in 'buttons' :
+                            if key in 'BUTTON' :
                                 domain_text += f"{padding * 4}{key}:\n"
                                 for item in value:
                                     for k2, v2 in item.items():
                                         domain_text += f"{padding * 5}{k2}: '{v2}'\n"
-                            if key in 'attachment' :
-                                domain_text += f"{padding * 4}{key}:\n"
-                                for item in value:
-                                    for k2, v2 in item.items():
-                                        if k2 == 'payload' :
-                                            domain_text += f'{padding * 5}{k2}:\n'
-                                            for item2 in v2:
-                                                for k3, v3 in item2.items():
-                                                    domain_text += f'{padding * 6}{k3}: "{v3}"\n'
-                                        else: 
-                                            domain_text += f'{padding * 5}{k2}: "{v2}"\n'
-                #    - text: 서비스 종류를 입력해주세요
-                # if type(v) is list:             # buttons(itb_entity_mgmt.event_script)가 있으면
-                #     domain_text += f"{padding * 3}{k}:\n"
-                #     if k in '  slot' :
-                #         for item in v: # [{slot}]
-                #             for k2, v2 in item.items(): # - title, payload
-                #                 domain_text += f"{padding * 4}{k2}: '{v2}'\n"
-                #     if k in '  buttons' :
-                #         for item in v:  # [{title, payload}]
-                #             for k2, v2 in item.items(): # - title, payload
-                #                 domain_text += f"{padding * 4}{k2}: '{v2}'\n"
-                #     if k in '  attachment' :
-                #         for item in v: # [{type, payload}]
-                #             for k2, v2 in item.items():
-                #                 if k2 == '  payload' :
-                #                     domain_text += f'{padding * 4}{k2}:\n'
-                #                     for item2 in v2:
-                #                         if type(v2[item2]) is list :
-                #                             domain_text += f'{padding * 6}{item2}:\n'
-                #                             for item3 in v2[item2]:
-                #                                 for k3, v3 in item3.items():
-                #                                     domain_text += f'{padding * 6}{k3}: "{v3}"\n'   
-                #                         else : 
-                #                             domain_text += f'{padding * 6}{item2}: "{v2[item2]}"\n'
-                #                 else: 
-                #                     domain_text += f'{padding * 4}{k2}: "{v2}"\n'
-                # else:
-                #     if v is None:
-                #         domain_text += f'{padding * 2}{k}: null\n'                          #    -text: 서비스 종류를 입력해주세요
-                #     else:
-                #         domain_text += f'{padding * 2}{k}: "{v}"\n'
+                            if key in 'JUSO' :
+                                domain_text += f"{padding * 4}{key}: \"{value}\"\n"
+                                
     domain_text += "actions:\n"                                                             #actions:
     for action in actions:
         domain_text += f"{padding}- {action}\n"                                             #  - action_restart
@@ -184,15 +145,14 @@ def generate_domain_yaml_text(domain_json):
     return domain_text
 def get_domain_json():
     intents_sql = """
-        select group_concat(iim.intent_id) as intents
-          from mosimi_chat.itb_intent_mgmt iim
+        select concat(group_concat(iim.intent_id),',select_user',',inform') as intents
+  	      from mosimi_chat.itb_intent_mgmt iim 
     """
     intents_result = db_conn.select_one(intents_sql)
 
     # entities, slots
     entities_sql = """
         select group_concat(iem.entity_id) as entities
-             , json_arrayagg(json_object(iem.entity_id, json_array(json_object('type', 'text'), json_object('influence_conversation', false)))) as slots
           from mosimi_chat.itb_entity_mgmt iem
     """
 
@@ -205,12 +165,12 @@ def get_domain_json():
                             iem.entity_id, 
                             case when iec.entity_id is null then
                                     json_array(
-                                        json_object('type', 'text'), json_object('influence_conversation', 'false')
+                                        json_object('type', 'text'), json_object('influence_conversation', 'true')
                                     )
                                 else 
                                     json_array(
                                         json_object('type', 'categorical')
-                                        , json_object('influence_conversation', 'false')
+                                        , json_object('influence_conversation', 'true')
                                         , json_object('values', json_arrayagg(CONCAT("'",iec.entity_word , "'") ))
                                     )
                                 end
@@ -226,26 +186,18 @@ def get_domain_json():
     forms_sql = """
         select json_arrayagg(json_object(concat(main.intent_id, '_form'), main.entities)) as forms
           from (
-            select iim.intent_id
-                 , json_object('required_slots', cast(
-                        concat('[', group_concat(
-                            json_object(ism.entity_id, json_array(
-                                /* itb_entity_collection에 단어가 등록되어있는 슬롯이면 */
-                                (case when (select count(*) from mosimi_chat.itb_entity_collection iec where iec.entity_id = ism.entity_id) > 0 then
-                                        json_object('- type', 'from_entity', '  entity', ism.entity_id)
-                                    else 
-                                    json_object('- type', 'from_text')
+            select iim.intent_id 
+                 , json_object('required_slots' , json_arrayagg(json_object(ism.entity_id, 
+                        json_array(case when (select count(*) from mosimi_chat.itb_entity_collection iec where iec.entity_id = ism.entity_id) > 0 
+                                        then json_object('- type', 'from_entity', '  entity', ism.entity_id)
+                                        else json_object('- type', 'from_text')
                                     end
-                                )
-                            )
-                        ) order by ism.intent_id, ism.slot_seq), ']')
-                        as json)
-                    ) as entities
+                   )))) as entities
               from mosimi_chat.itb_intent_mgmt iim
               join mosimi_chat.itb_slot_mapping ism
                 on iim.intent_id = ism.intent_id
-             group by iim.intent_id
-        ) main
+          group by iim.intent_id 
+         )main
     """
 
     forms_result = db_conn.select_one(forms_sql)
@@ -265,8 +217,7 @@ def get_domain_json():
                             else json_object()
                         end,
                         case
-                            when vt.view_cd = 'BUTTON' then json_object('buttons', vt.view_type)
-                            when vt.view_cd = 'CHECKBOX' then json_object('attachment', vt.view_type)
+                            when vt.view_cd is not null then json_object(vt.view_cd , vt.view_type)
                             else json_object()
                         end
                         )) as slot_prompt
@@ -279,30 +230,25 @@ def get_domain_json():
                  	  group by sp.entity_id
       	                    )sp
                  left join (
-     		        select sv.entity_id, sv.view_cd,
-                        case
-	                        when sv.view_cd = 'BUTTON' then json_arrayagg(json_object(
-                                '- title', svd.view_text, 
-                                '  payload', 
-                                            -- CONCAT('/inform{\"', sv.entity_id, '\":\"', svd.view_text, '\"}')
-                                            case 
-                               			        when ifnull(svd.relation_intent_id, '') != '' then concat('/', svd.relation_intent_id)
-                               	 	            else CONCAT('/inform{\"', sv.entity_id, '\":\"', svd.view_text, '\"}')
-                           			         end
-                                            ))
-                            when sv.view_cd != 'BUTTON' THEN json_array(json_object(
-                                '- type', 'template',
-                                '  payload', json_object(
-                                            'template_type', 'list',
-                                            'elements', json_arrayagg(json_object(
-                                                    'title', svd.view_text,
-                                                    'subtitle', sv.view_cd)))))
-                            else null 
-                        end as view_type
-                      from mosimi_chat.itb_slot_view sv
-                 left join mosimi_chat.itb_slot_view_detail svd 
-           	            on sv.intent_id = svd.intent_id and sv.entity_id = svd.entity_id 
-                  group by sv.intent_id, sv.entity_id, sv.view_cd) vt 
+                        select sv.entity_id, sv.view_cd,
+                            case
+                                when sv.view_cd = 'BUTTON' then json_arrayagg(json_object(
+                                    '- title', svd.view_text, 
+                                    '  payload', 
+                                                -- CONCAT('/inform{\"', sv.entity_id, '\":\"', svd.view_text, '\"}')
+                                                case 
+                                                    when ifnull(svd.relation_intent_id, '') != '' then concat('/', svd.relation_intent_id , '{\"serviceCd_', svd.relation_intent_id, '":\"', ec.entity_cd , '\"}')
+                                                    else concat('/inform{\"', sv.entity_id, '\":\"', ec.entity_cd, '\"}')
+                                                end
+                                                ))
+                                else json_arrayagg(sv.view_cd) 
+                            end as view_type
+                        from mosimi_chat.itb_slot_view sv
+                    left join mosimi_chat.itb_slot_view_detail svd 
+                            on sv.intent_id = svd.intent_id and sv.entity_id = svd.entity_id 
+                    left join mosimi_chat.itb_entity_collection ec 
+                            on ec.entity_id = sv.entity_id and ec.entity_word = svd.view_text
+                    group by sv.intent_id, sv.entity_id, sv.view_cd) vt 
                         on vt.entity_id = sp.entity_id
                   group by sp.entity_id
 	            )
@@ -357,7 +303,10 @@ def get_domain_json():
                     'action_token_verification_for_service',
                     'validate_int00002_form',
                     'validate_int00003_form',
-                    'action_int00004',],
+                    'action_int00004',
+                    'action_set_user_info',
+                    'action_fetch_user_list',
+                    'action_service_detail'],
         'session_config': [{"session_expiration_time": 60}, {"carry_over_slots_to_new_session": "true"}]
     }
     # print(domain_json)

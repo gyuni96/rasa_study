@@ -1,113 +1,152 @@
 version: '2.0'
 
 rules:
-  # fallback
-  - rule: fallback
-    steps:
-      - intent: nlu_fallback
-      - action: action_default_fallback
+  # - rule: fetch user list after service detail selection for 동행
+  #   condition:
+  #     - slot_was_set:
+  #         - Service: '동행'
+  #   steps:
+  #     - intent: inform
+  #     - slot_was_set:
+  #         - ServiceDetail: '외진' # 실제 서비스 상세 값을 사용
+  #     - action: action_fetch_user_list
+  #     - active_loop: int00002_form
 
-  - rule: general reservation
-    steps:
-      - intent: int00001
-      - action: utter_ask_Service
-
-  - rule: accompany reservation with user selection
+  - rule: 동행 서비스 form 반복
     condition:
       - slot_was_set:
-          - userSysId
+          - serviceCd_int00002 : 'SV10'
     steps:
-      - intent: int00002
-      - action: action_token_verification_for_service
-      - action: action_set_user_info
+      - action: action_fetch_user_list
       - active_loop: int00002_form
 
-  - rule: accompany reservation without user selection
+  - rule: 동행 서비스 form 제출
+    condition:
+      - active_loop: int00002_form
+    steps:
+      - action: int00002_form
+      - active_loop: null
+      - action: action_reserve
+
+  - rule: 돌봄 서비스 form 반복
     condition:
       - slot_was_set:
-          - userSysId: null
+          - serviceCd_int00003 : 'SV20'
     steps:
-      - intent: int00002
-      - action: action_token_verification_for_service
-      - active_loop: int00002_form
+      - action: action_fetch_user_list
+      - active_loop: int00003_form
 
-  # 서비스 요청 시작
-  #  - rule: int00001
-  #    steps:
-  #      - intent: int00001
-  #      - action: int00001_form
-  #      - active_loop: null
+  - rule: 돌봄 서비스 form 제출
+    condition:
+      - active_loop: int00003_form
+    steps:
+      - action: int00003_form
+      - active_loop: null
+      - action: action_reserve
 
-  # 동행 서비스 요청 시작
-  # - rule: int00002
-  #   steps:
-  #     - intent: int00002
-  #     - action: int00002_form
-  #     - active_loop: null
-  #     # - action: utter_int00002_message
-  #     - action: action_reserve
+# version: '2.0'
 
-  # 돌봄 서비스 요청 시작
-  # - rule: int00003
-  #   steps:
-  #     - intent: int00003
-  #     - action: int00003_form
-  #     - active_loop: null
-  #     # - action: utter_int00003_message
-  #     - action: action_reserve
-  - rule: int00004
-    steps:
-      - intent: int00004
-      - action: action_int00004
-  - rule: int00005
-    steps:
-      - intent: int00005
-      - action: action_int00004
-  - rule: int00006
-    steps:
-      - intent: int00006
-      - action: action_int00004
-  - rule: int00007
-    steps:
-      - intent: int00007
-      - action: action_int00004
-  - rule: int00008
-    steps:
-      - intent: int00008
-      - action: action_int00004
-  - rule: int00009
-    steps:
-      - intent: int00009
-      - action: action_int00004
-  - rule: int00010
-    steps:
-      - intent: int00010
-      - action: action_int00004
-  - rule: int00011
-    steps:
-      - intent: int00011
-      - action: action_int00004
-  - rule: int00012
-    steps:
-      - intent: int00012
-      - action: action_int00004
-  - rule: int00013
-    steps:
-      - intent: int00013
-      - action: action_int00004
-  - rule: int00014
-    steps:
-      - intent: int00014
-      - action: action_int00004
-  - rule: int00015
-    steps:
-      - intent: int00015
-      - action: action_int00004
-  - rule: int00016
-    steps:
-      - intent: int00016
-      - action: action_int00004
-  - rule: int00017
-    steps:
-      - intent: int00017
-      - action: action_int00004
+# rules:
+#   # fallback
+#   - rule: fallback
+#     steps:
+#       - intent: nlu_fallback
+#       - action: action_default_fallback
+
+#   - rule: 서비스 예약 요청
+#     steps:
+#       - intent: int00001
+#       - action: action_token_verification_for_service
+
+#   - rule: 이전 이용자 선택
+#     steps:
+#       - intent: int00002
+#       - action: action_set_user_info
+#       - active_loop: int00002_form
+
+#   - rule: 바로 동행 서비스 예약 시도
+#     steps:
+#       - intent: int00002
+#       - action: action_token_verification_for_service
+#       - action: action_set_user_info
+#       - active_loop: int00002_form
+#   # 서비스 요청 시작
+#   #  - rule: int00001
+#   #    steps:
+#   #      - intent: int00001
+#   #      - action: int00001_form
+#   #      - active_loop: null
+
+#   # 동행 서비스 요청 시작
+#   # - rule: int00002
+#   #   steps:
+#   #     - intent: int00002
+#   #     - action: int00002_form
+#   #     - active_loop: null
+#   #     # - action: utter_int00002_message
+#   #     - action: action_reserve
+
+#   # 돌봄 서비스 요청 시작
+#   # - rule: int00003
+#   #   steps:
+#   #     - intent: int00003
+#   #     - action: int00003_form
+#   #     - active_loop: null
+#   #     # - action: utter_int00003_message
+#   #     - action: action_reserve
+#   - rule: int00004
+#     steps:
+#       - intent: int00004
+#       - action: action_int00004
+#   - rule: int00005
+#     steps:
+#       - intent: int00005
+#       - action: action_int00004
+#   - rule: int00006
+#     steps:
+#       - intent: int00006
+#       - action: action_int00004
+#   - rule: int00007
+#     steps:
+#       - intent: int00007
+#       - action: action_int00004
+#   - rule: int00008
+#     steps:
+#       - intent: int00008
+#       - action: action_int00004
+#   - rule: int00009
+#     steps:
+#       - intent: int00009
+#       - action: action_int00004
+#   - rule: int00010
+#     steps:
+#       - intent: int00010
+#       - action: action_int00004
+#   - rule: int00011
+#     steps:
+#       - intent: int00011
+#       - action: action_int00004
+#   - rule: int00012
+#     steps:
+#       - intent: int00012
+#       - action: action_int00004
+#   - rule: int00013
+#     steps:
+#       - intent: int00013
+#       - action: action_int00004
+#   - rule: int00014
+#     steps:
+#       - intent: int00014
+#       - action: action_int00004
+#   - rule: int00015
+#     steps:
+#       - intent: int00015
+#       - action: action_int00004
+#   - rule: int00016
+#     steps:
+#       - intent: int00016
+#       - action: action_int00004
+#   - rule: int00017
+#     steps:
+#       - intent: int00017
+#       - action: action_int00004
